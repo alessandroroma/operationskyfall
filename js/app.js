@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -66,14 +66,15 @@ function legHtml({ leg, game, grade, error }) {
   else if (state === "live") status = `<span class="live-dot">● LIVE</span> ${esc(st.shortDetail || st.detail || "")}`;
   else status = esc(st.shortDetail || "Final");
   const watch = state === "final" ? "" : watchText(whereToWatch(ev));
+  const link = gameLink(ev);
   const showScore = state !== "scheduled";
   return `<div class="leg ${grade.result}">${head}
-    <div class="matchup">
+    ${link ? `<a class="matchup" href="${esc(link)}" target="_blank" rel="noopener noreferrer" title="Open on ESPN">` : `<div class="matchup">`}
       ${teamHtml(away, "away", away === game.picked)}
       <div class="score">${showScore ? `${esc(away.score)} – ${esc(home.score)}` : "@"}</div>
       ${teamHtml(home, "home", home === game.picked)}
-    </div>
-    <div class="meta"><span>${status}</span>${watch ? `<span class="watch">📺 ${esc(watch)}</span>` : ""}</div>
+    ${link ? `</a>` : `</div>`}
+    <div class="meta"><span>${status}${link ? ` · <a class="gc" href="${esc(link)}" target="_blank" rel="noopener noreferrer">Gamecast ↗</a>` : ""}</span>${watch ? `<span class="watch">📺 ${esc(watch)}</span>` : ""}</div>
     ${leg.note ? `<div class="meta"><span>${esc(leg.note)}</span></div>` : ""}
   </div>`;
 }

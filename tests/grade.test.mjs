@@ -135,3 +135,14 @@ test("legs group into live/upcoming/final and sort by kickoff", () => {
   assert.deepEqual(g.final.map((l) => l.leg.id), ["done1", "done2", "manual"]);
   assert.deepEqual(chronological(legs).map((l) => l.leg.id), ["done1", "done2", "live", "early", "late", "nogame", "manual"]);
 });
+
+import { gameLink } from "../js/watch.js";
+test("game link only returns espn.com https urls", () => {
+  const link = (href, rel = ["summary"]) => ({ links: [{ rel, href }] });
+  assert.equal(gameLink(link("https://www.espn.com/nfl/game/_/gameId/1/x")), "https://www.espn.com/nfl/game/_/gameId/1/x");
+  assert.equal(gameLink(link("javascript:alert(1)")), "");
+  assert.equal(gameLink(link("https://evil.example/espn.com/")), "");
+  assert.equal(gameLink(link("http://www.espn.com/x")), "");
+  assert.equal(gameLink({}), "");
+  assert.equal(gameLink({ links: [{ rel: ["other"], href: "https://www.espn.com/a" }, { rel: ["summary"], href: "https://www.espn.com/b" }] }), "https://www.espn.com/b");
+});

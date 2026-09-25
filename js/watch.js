@@ -22,3 +22,11 @@ export function watchText({ tv, streaming }) {
   if (streaming.length) parts.push(`stream: ${streaming.join(", ")}`);
   return parts.join(" · ");
 }
+
+// ESPN Gamecast URL for an event; only espn.com https links are returned.
+export function gameLink(event) {
+  const links = event?.links ?? [];
+  const l = links.find((x) => x?.rel?.includes("summary")) ?? links[0];
+  const href = l?.href ?? "";
+  return /^https:\/\/([a-z0-9-]+\.)?espn\.com\//i.test(href) ? href : "";
+}
