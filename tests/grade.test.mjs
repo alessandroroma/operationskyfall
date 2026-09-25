@@ -88,3 +88,16 @@ test("findGame picks the right side and honours opponent", () => {
   assert.equal(findGame(events, { team: "Illinois", opponent: "Texas" }), null);
   assert.equal(findGame(events, { team: "Nobody" }), null);
 });
+
+import { whereToWatch, watchText } from "../js/watch.js";
+const ev = (comp) => ({ competitions: [comp] });
+test("where to watch", () => {
+  const geo = (kind, market, name) => ({ type: { shortName: kind }, market: { type: market }, media: { shortName: name } });
+  const w = whereToWatch(ev({ geoBroadcasts: [geo("TV", "National", "ESPN"), geo("Streaming", "National", "Disney+"), geo("TV", "Local", "KXAS"), geo("TV", "National", "ESPN")] }));
+  assert.deepEqual(w, { tv: ["ESPN"], streaming: ["Disney+"] });
+  assert.equal(watchText(w), "ESPN · stream: Disney+");
+  assert.deepEqual(whereToWatch(ev({ broadcasts: [{ names: ["CBS"] }] })), { tv: ["CBS"], streaming: [] });
+  assert.deepEqual(whereToWatch(ev({})), { tv: [], streaming: [] });
+  assert.equal(watchText({ tv: [], streaming: [] }), "");
+  assert.deepEqual(whereToWatch(null), { tv: [], streaming: [] });
+});

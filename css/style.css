@@ -45,3 +45,5 @@ code { background: #1f2630; padding: 1px 4px; border-radius: 4px; }
 .record b { color: var(--text); }
 .error { color: var(--red); font-size: .85rem; }
 @media (max-width: 480px) { .team .name { font-size: .78rem; } .team img { width: 22px; height: 22px; } }
+
+.watch { color: var(--text); }

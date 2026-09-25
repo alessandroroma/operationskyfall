@@ -1,5 +1,6 @@
 import { findLegGame } from "./espn.js";
 import { clearCache } from "./espn.js";
+import { whereToWatch, watchText } from "./watch.js";
 import { gradeLeg, parlayStatus, seasonRecord, describeLeg, gameState } from "./grade.js";
 
 const $ = (id) => document.getElementById(id);
@@ -64,6 +65,7 @@ function legHtml({ leg, game, grade, error }) {
   if (state === "scheduled") status = `Kickoff ${esc(fmtKickoff(ev.date))} · <span data-kickoff="${esc(ev.date)}">${esc(countdown(ev.date))}</span>`;
   else if (state === "live") status = `<span class="live-dot">● LIVE</span> ${esc(st.shortDetail || st.detail || "")}`;
   else status = esc(st.shortDetail || "Final");
+  const watch = state === "final" ? "" : watchText(whereToWatch(ev));
   const showScore = state !== "scheduled";
   return `<div class="leg ${grade.result}">${head}
     <div class="matchup">
@@ -71,7 +73,8 @@ function legHtml({ leg, game, grade, error }) {
       <div class="score">${showScore ? `${esc(away.score)} – ${esc(home.score)}` : "@"}</div>
       ${teamHtml(home, "home", home === game.picked)}
     </div>
-    <div class="meta"><span>${status}</span>${leg.note ? `<span>${esc(leg.note)}</span>` : ""}</div>
+    <div class="meta"><span>${status}</span>${watch ? `<span class="watch">📺 ${esc(watch)}</span>` : ""}</div>
+    ${leg.note ? `<div class="meta"><span>${esc(leg.note)}</span></div>` : ""}
   </div>`;
 }
 
