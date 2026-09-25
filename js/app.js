@@ -1,7 +1,7 @@
 import { findLegGame } from "./espn.js";
 import { clearCache } from "./espn.js";
 import { whereToWatch, watchText } from "./watch.js";
-import { gradeLeg, parlayStatus, seasonRecord, describeLeg, gameState } from "./grade.js";
+import { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState } from "./grade.js";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -18,12 +18,12 @@ const frozen = new Map(); // week id -> evaluation once every leg is final (no n
 
 async function evaluateWeek(week) {
   const legs = await Promise.all(
-    week.legs.map(async (leg) => {
+    (week.legs ?? []).map(async (leg) => {
       const { game, error } = await findLegGame(leg);
       return { leg, game, grade: gradeLeg(leg, game), error };
     })
   );
-  const { status, counts } = parlayStatus(legs.map((l) => l.grade.result));
+  const { status, counts } = weekStatus(week, legs.map((l) => l.grade.result));
   return { week, legs, status, counts };
 }
 
@@ -108,7 +108,7 @@ function parlayHtml(ev) {
 
 function historyHtml(ev) {
   return `<details class="hist-week"><summary><span>${esc(ev.week.label)}</span><span class="pill ${ev.status}">${ev.status}</span></summary>
-    <div class="legs">${ev.legs.map(legHtml).join("")}</div></details>`;
+    ${ev.legs.length ? `<div class="legs">${ev.legs.map(legHtml).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
 }
 
 function render() {

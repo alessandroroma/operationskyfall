@@ -31,9 +31,9 @@ Leg fields:
 | `line` | spread from the picked team's view (`-3.5`, `+7`), or the total for over/under; ignored for moneyline |
 | `date` | game date `YYYY-MM-DD` (US Eastern, as ESPN lists it; the day before/after is also searched) |
 | `note` | optional text shown on the card |
-| `result` | optional manual override: `hit`, `miss` or `push` (use for `other` legs like props) |
+| `result` (on a leg) | optional manual override: `hit`, `miss` or `push` (use for `other` legs like props) |
 
-Rules: one parlay per week, newest `weekOf` shows on top and the rest go under History. A single missed leg busts the parlay; pushes are dropped. Spreads are graded against **your** line (bet365's), not ESPN's. Set `"example": true` on a week to mark it as demo data (excluded from the season record).
+Rules: one parlay per week, newest `weekOf` shows on top and the rest go under History. A single missed leg busts the parlay; pushes are dropped. Spreads are graded against **your** line (bet365's), not ESPN's. A week can also carry `"result": "WON" | "BUSTED" | "VOID"` (with `"legs": []`) to record a past parlay whose legs weren't saved; it counts toward the season record. Set `"example": true` on a week to mark it as demo data (excluded from the season record).
 
 ## Publish
 

@@ -101,3 +101,11 @@ test("where to watch", () => {
   assert.equal(watchText({ tv: [], streaming: [] }), "");
   assert.deepEqual(whereToWatch(null), { tv: [], streaming: [] });
 });
+
+import { weekStatus } from "../js/grade.js";
+test("week status: manual result overrides, computed otherwise", () => {
+  assert.equal(weekStatus({ result: "busted" }, []).status, "BUSTED");
+  assert.equal(weekStatus({ result: "WON" }, ["miss"]).status, "WON");
+  assert.equal(weekStatus({}, ["hit", "miss"]).status, "BUSTED");
+  assert.equal(weekStatus({ result: "nonsense" }, ["hit", "pending"]).status, "ALIVE");
+});

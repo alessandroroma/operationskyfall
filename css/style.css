@@ -47,3 +47,4 @@ code { background: #1f2630; padding: 1px 4px; border-radius: 4px; }
 @media (max-width: 480px) { .team .name { font-size: .78rem; } .team img { width: 22px; height: 22px; } }
 
 .watch { color: var(--text); }
+.pad { padding: 0 12px 12px; margin: 0; }

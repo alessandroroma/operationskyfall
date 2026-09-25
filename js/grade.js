@@ -94,3 +94,12 @@ export function describeLeg(leg) {
       return `${leg.team}${leg.note ? ` – ${leg.note}` : ""}`;
   }
 }
+
+// A week can carry a manual `result` ("WON" | "BUSTED" | "VOID") for parlays whose legs
+// weren't recorded; otherwise the status is computed from the legs.
+export function weekStatus(week, results) {
+  const computed = parlayStatus(results);
+  const manual = String(week?.result ?? "").toUpperCase();
+  if (["WON", "BUSTED", "VOID"].includes(manual)) return { ...computed, status: manual };
+  return computed;
+}
