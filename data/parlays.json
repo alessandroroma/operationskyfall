@@ -2,56 +2,117 @@
   "weeks": [
     {
       "id": "2026-w2",
-      "label": "Week 2 (EXAMPLE \u2013 replace with the real slip)",
+      "label": "Week 2",
       "weekOf": "2026-09-24",
-      "example": true,
-      "stake": "$20",
-      "payout": "$480",
+      "stake": "$6",
+      "payout": "$7,640.41",
       "legs": [
         {
           "id": "l1",
           "league": "college-football",
-          "team": "Ohio State",
-          "opponent": "Illinois",
+          "team": "Oregon",
+          "opponent": "USC",
           "type": "spread",
-          "line": -14.5,
+          "line": -3.5,
           "date": "2026-09-26"
         },
         {
           "id": "l2",
           "league": "college-football",
-          "team": "Texas",
-          "opponent": "Tennessee",
+          "team": "California",
+          "opponent": "Clemson",
+          "type": "moneyline",
+          "date": "2026-09-25"
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "team": "Ole Miss",
+          "opponent": "Florida",
           "type": "spread",
           "line": 3.5,
           "date": "2026-09-26"
         },
         {
-          "id": "l3",
-          "league": "nfl",
-          "team": "Buffalo Bills",
-          "opponent": "Los Angeles Chargers",
-          "type": "spread",
-          "line": -3,
-          "date": "2026-09-27"
+          "id": "l4",
+          "league": "college-football",
+          "team": "Army",
+          "opponent": "Temple",
+          "type": "moneyline",
+          "date": "2026-09-25"
         },
         {
-          "id": "l4",
+          "id": "l5",
           "league": "nfl",
-          "team": "Kansas City Chiefs",
-          "opponent": "Miami Dolphins",
+          "team": "Carolina Panthers",
+          "opponent": "Cleveland Browns",
           "type": "spread",
           "line": -2.5,
           "date": "2026-09-27"
         },
         {
-          "id": "l5",
-          "league": "nfl",
-          "team": "Philadelphia Eagles",
-          "opponent": "Chicago Bears",
+          "id": "l6",
+          "league": "college-football",
+          "team": "Wisconsin",
+          "opponent": "Penn State",
+          "type": "total_over",
+          "line": 43.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l7",
+          "league": "college-football",
+          "team": "Michigan",
+          "opponent": "Iowa",
           "type": "spread",
-          "line": -1.5,
-          "date": "2026-09-28"
+          "line": -5.5,
+          "date": "2026-09-26",
+          "note": "Same-game parlay (+200) with Underwood TD"
+        },
+        {
+          "id": "l8",
+          "league": "college-football",
+          "team": "Michigan",
+          "opponent": "Iowa",
+          "type": "other",
+          "date": "2026-09-26",
+          "note": "Bryce Underwood anytime TD (SGP leg) \u2013 set result by hand"
+        },
+        {
+          "id": "l9",
+          "league": "college-football",
+          "team": "Oklahoma State",
+          "opponent": "West Virginia",
+          "type": "total_over",
+          "line": 62.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l10",
+          "league": "college-football",
+          "team": "LSU",
+          "opponent": "Texas A&M",
+          "type": "spread",
+          "line": -8.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l11",
+          "league": "college-football",
+          "team": "Notre Dame",
+          "opponent": "Purdue",
+          "type": "spread",
+          "line": -27.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l12",
+          "league": "college-football",
+          "team": "Eastern Michigan",
+          "opponent": "Lindenwood",
+          "type": "spread",
+          "line": -25.5,
+          "date": "2026-09-26"
         }
       ]
     },
