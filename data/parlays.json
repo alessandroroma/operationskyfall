@@ -1,0 +1,19 @@
+{
+  "weeks": [
+    {
+      "id": "2026-w4",
+      "label": "Week 4 (EXAMPLE – replace with the real slip)",
+      "weekOf": "2026-09-24",
+      "example": true,
+      "stake": "$20",
+      "payout": "$480",
+      "legs": [
+        { "id": "l1", "league": "college-football", "team": "Ohio State", "opponent": "Illinois", "type": "spread", "line": -14.5, "date": "2026-09-26" },
+        { "id": "l2", "league": "college-football", "team": "Texas", "opponent": "Tennessee", "type": "spread", "line": 3.5, "date": "2026-09-26" },
+        { "id": "l3", "league": "nfl", "team": "Buffalo Bills", "opponent": "Los Angeles Chargers", "type": "spread", "line": -3, "date": "2026-09-27" },
+        { "id": "l4", "league": "nfl", "team": "Kansas City Chiefs", "opponent": "Miami Dolphins", "type": "spread", "line": -2.5, "date": "2026-09-27" },
+        { "id": "l5", "league": "nfl", "team": "Philadelphia Eagles", "opponent": "Chicago Bears", "type": "spread", "line": -1.5, "date": "2026-09-28" }
+      ]
+    }
+  ]
+}

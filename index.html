@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operation Skyfall – Weekly Parlay Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Operation Skyfall</h1>
+    <p class="sub">Weekly parlay tracker · NFL + college football</p>
+  </header>
+  <main>
+    <section id="current"><p class="muted">Loading…</p></section>
+    <section id="record"></section>
+    <details id="history-wrap" class="history" hidden>
+      <summary>History</summary>
+      <div id="history"></div>
+    </details>
+  </main>
+  <footer>
+    <span id="updated" class="muted"></span>
+    <span class="muted">Scores from ESPN · spreads graded against the line entered in <code>data/parlays.json</code></span>
+  </footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
