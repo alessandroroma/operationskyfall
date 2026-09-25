@@ -1,8 +1,7 @@
-import { findLegGame } from "./espn.js";
-import { clearCache } from "./espn.js";
-import { whereToWatch, watchText } from "./watch.js";
-import { chronological, groupLegs } from "./order.js";
-import { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState } from "./grade.js";
+// Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
+const q = new URL(import.meta.url).search;
+const [{ findLegGame, clearCache }, { whereToWatch, watchText }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState }] =
+  await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -50,7 +49,7 @@ function teamHtml(c, cls, picked) {
 }
 
 function legHtml({ leg, game, grade, error }) {
-  const label = RESULT_LABEL[grade.result] ?? grade.result;
+  const label = grade.result === "live_push" && leg.type === "moneyline" ? "Tied" : (RESULT_LABEL[grade.result] ?? grade.result);
   const badge = `<span class="pill ${grade.result}">${label}${grade.margin != null && grade.result !== "pending" ? ` (${grade.margin > 0 ? "+" : ""}${grade.margin.toFixed(1).replace(/\.0$/, "")})` : ""}</span>`;
   const head = `<div class="leg-top"><span class="pick">${esc(describeLeg(leg))}</span>${badge}</div>`;
   if (!game) {

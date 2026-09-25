@@ -1,4 +1,5 @@
-import { gameState } from "./grade.js";
+const q = new URL(import.meta.url).search;
+const { gameState } = await import(`./grade.js${q}`);
 
 const kickoff = (l) => {
   const t = l.game?.event?.date ? new Date(l.game.event.date).getTime() : NaN;

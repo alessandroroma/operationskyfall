@@ -1,4 +1,5 @@
-import { findGame } from "./match.js";
+const q = new URL(import.meta.url).search;
+const { findGame } = await import(`./match.js${q}`);
 
 const BASE = "https://site.api.espn.com/apis/site/v2/sports/football";
 const cache = new Map();
