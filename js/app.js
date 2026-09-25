@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -51,7 +51,7 @@ function teamHtml(c, cls, picked) {
 function legHtml({ leg, game, grade, error }) {
   const label = grade.result === "live_push" && leg.type === "moneyline" ? "Tied" : (RESULT_LABEL[grade.result] ?? grade.result);
   const badge = `<span class="pill ${grade.result}">${label}${grade.margin != null && grade.result !== "pending" ? ` (${grade.margin > 0 ? "+" : ""}${grade.margin.toFixed(1).replace(/\.0$/, "")})` : ""}</span>`;
-  const head = `<div class="leg-top"><span class="pick">${esc(describeLeg(leg))}</span>${badge}</div>`;
+  const head = `<div class="leg-top"><span class="pick">${esc(describeLeg(leg))}${leg.by ? ` <span class="by">${esc(leg.by)}</span>` : ""}</span>${badge}</div>`;
   if (!game) {
     return `<div class="leg unknown">${head}<div class="meta"><span class="error">Game not found for ${esc(leg.team)} on ${esc(leg.date)}${error ? " (ESPN unreachable?)" : ""}</span></div></div>`;
   }
@@ -103,6 +103,17 @@ function sectionsHtml(legs) {
   return sec("live", "🔴 Live now", g.live) + sec("upcoming", "Upcoming", g.upcoming) + sec("final", "Final", g.final);
 }
 
+function contributorsHtml(ev) {
+  const rows = byContributor(ev.legs.map((l) => ({ leg: l.leg, result: l.grade.result })));
+  if (!rows.length) return "";
+  const chip = (c) => {
+    const cls = c.miss ? "miss" : c.hit === c.total ? "hit" : "";
+    const parts = [c.hit && `${c.hit}✓`, c.miss && `${c.miss}✗`, c.push && `${c.push} push`, c.live && `${c.live} live`, c.pending && `${c.pending} pending`, c.unknown && `${c.unknown} ?`].filter(Boolean);
+    return `<span class="chip ${cls}"><b>${esc(c.name)}</b> ${parts.join(" ")}</span>`;
+  };
+  return `<div class="contrib">${rows.map(chip).join("")}</div>`;
+}
+
 function parlayHtml(ev) {
   const w = ev.week;
   const money = [w.stake && `Stake ${esc(w.stake)}`, w.payout && `To win ${esc(w.payout)}`].filter(Boolean).join(" · ");
@@ -110,12 +121,14 @@ function parlayHtml(ev) {
     <div class="parlay-head"><div><h2>${esc(w.label)}</h2>${money ? `<div class="muted">${money}</div>` : ""}</div><span class="pill ${ev.status}">${ev.status}</span></div>
     ${w.example ? `<div class="banner">Example data – edit <code>data/parlays.json</code> to enter the real parlay.</div>` : ""}
     ${statsHtml(ev)}
+    ${contributorsHtml(ev)}
     ${sectionsHtml(ev.legs)}
   </article>`;
 }
 
 function historyHtml(ev) {
   return `<details class="hist-week"><summary><span>${esc(ev.week.label)}</span><span class="pill ${ev.status}">${ev.status}</span></summary>
+    ${contributorsHtml(ev)}
     ${ev.legs.length ? `<div class="legs">${chronological(ev.legs).map(legHtml).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
 }
 

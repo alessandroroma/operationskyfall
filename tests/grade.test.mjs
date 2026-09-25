@@ -146,3 +146,17 @@ test("game link only returns espn.com https urls", () => {
   assert.equal(gameLink({}), "");
   assert.equal(gameLink({ links: [{ rel: ["other"], href: "https://www.espn.com/a" }, { rel: ["summary"], href: "https://www.espn.com/b" }] }), "https://www.espn.com/b");
 });
+
+import { byContributor } from "../js/grade.js";
+test("per-contributor tally keeps first-appearance order and skips untagged legs", () => {
+  const rows = byContributor([
+    { leg: { by: "Roma" }, result: "hit" },
+    { leg: { by: "Dalton" }, result: "miss" },
+    { leg: { by: "Roma" }, result: "pending" },
+    { leg: {}, result: "hit" },
+    { leg: { by: "Dalton" }, result: "live_on_track" },
+  ]);
+  assert.deepEqual(rows.map((r) => r.name), ["Roma", "Dalton"]);
+  assert.deepEqual(rows[0], { name: "Roma", hit: 1, miss: 0, push: 0, live: 0, pending: 1, unknown: 0, total: 2 });
+  assert.deepEqual(rows[1], { name: "Dalton", hit: 0, miss: 1, push: 0, live: 1, pending: 0, unknown: 0, total: 2 });
+});

@@ -30,6 +30,7 @@ Leg fields:
 | `type` | `spread`, `moneyline`, `total_over`, `total_under` (game total), `team_total_over`, `team_total_under` (picked team's own points), or `other` (props etc.; set `result` manually) |
 | `line` | spread from the picked team's view (`-3.5`, `+7`), or the total for over/under; ignored for moneyline |
 | `date` | game date `YYYY-MM-DD` (US Eastern, as ESPN lists it; the day before/after is also searched) |
+| `by` | who contributed the pick (`Roma`, `Dalton`, ...); shown as a tag on the card and tallied per person for the week |
 | `note` | optional text shown on the card |
 | `result` (on a leg) | optional manual override: `hit`, `miss` or `push` (use for `other` legs like props) |
 

@@ -111,3 +111,22 @@ export function weekStatus(week, results) {
   if (["WON", "BUSTED", "VOID"].includes(manual)) return { ...computed, status: manual };
   return computed;
 }
+
+// Per-contributor tally. legs: [{ leg: { by }, result }]; people keep first-appearance order.
+export function byContributor(legs) {
+  const map = new Map();
+  for (const { leg, result } of legs) {
+    const name = leg.by;
+    if (!name) continue;
+    if (!map.has(name)) map.set(name, { name, hit: 0, miss: 0, push: 0, live: 0, pending: 0, unknown: 0, total: 0 });
+    const c = map.get(name);
+    c.total++;
+    if (result === "hit") c.hit++;
+    else if (result === "miss") c.miss++;
+    else if (result === "push") c.push++;
+    else if (result.startsWith("live")) c.live++;
+    else if (result === "unknown") c.unknown++;
+    else c.pending++;
+  }
+  return [...map.values()];
+}

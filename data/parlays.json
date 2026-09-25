@@ -9,6 +9,7 @@
       "legs": [
         {
           "id": "l1",
+          "by": "Roma",
           "league": "college-football",
           "team": "Oregon",
           "opponent": "USC",
@@ -18,6 +19,7 @@
         },
         {
           "id": "l2",
+          "by": "Vuke",
           "league": "college-football",
           "team": "California",
           "opponent": "Clemson",
@@ -26,6 +28,7 @@
         },
         {
           "id": "l3",
+          "by": "Jacob",
           "league": "college-football",
           "team": "Ole Miss",
           "opponent": "Florida",
@@ -35,6 +38,7 @@
         },
         {
           "id": "l4",
+          "by": "Mark",
           "league": "college-football",
           "team": "Army",
           "opponent": "Temple",
@@ -43,6 +47,7 @@
         },
         {
           "id": "l5",
+          "by": "Paul",
           "league": "nfl",
           "team": "Carolina Panthers",
           "opponent": "Cleveland Browns",
@@ -52,6 +57,7 @@
         },
         {
           "id": "l6",
+          "by": "Paul",
           "league": "college-football",
           "team": "Wisconsin",
           "opponent": "Penn State",
@@ -61,6 +67,7 @@
         },
         {
           "id": "l7",
+          "by": "Dalton",
           "league": "college-football",
           "team": "Michigan",
           "opponent": "Iowa",
@@ -71,6 +78,7 @@
         },
         {
           "id": "l8",
+          "by": "Dalton",
           "league": "college-football",
           "team": "Michigan",
           "opponent": "Iowa",
@@ -80,6 +88,7 @@
         },
         {
           "id": "l9",
+          "by": "Dalton",
           "league": "college-football",
           "team": "Oklahoma State",
           "opponent": "West Virginia",
@@ -89,6 +98,7 @@
         },
         {
           "id": "l10",
+          "by": "Vuke",
           "league": "college-football",
           "team": "LSU",
           "opponent": "Texas A&M",
@@ -98,6 +108,7 @@
         },
         {
           "id": "l11",
+          "by": "Mark",
           "league": "college-football",
           "team": "Notre Dame",
           "opponent": "Purdue",
@@ -107,6 +118,7 @@
         },
         {
           "id": "l12",
+          "by": "Roma",
           "league": "college-football",
           "team": "Eastern Michigan",
           "opponent": "Lindenwood",
@@ -123,6 +135,7 @@
       "legs": [
         {
           "id": "l1",
+          "by": "Dalton",
           "league": "college-football",
           "team": "Michigan",
           "opponent": "UTEP",
@@ -133,6 +146,7 @@
         },
         {
           "id": "l2",
+          "by": "Roma",
           "league": "college-football",
           "team": "Michigan",
           "opponent": "UTEP",
@@ -143,6 +157,7 @@
         },
         {
           "id": "l3",
+          "by": "Mark",
           "league": "college-football",
           "team": "Portland State",
           "opponent": "Oregon",
@@ -152,6 +167,7 @@
         },
         {
           "id": "l4",
+          "by": "Jacob",
           "league": "college-football",
           "team": "LSU",
           "opponent": "Ole Miss",
@@ -161,6 +177,7 @@
         },
         {
           "id": "l5",
+          "by": "Vuke",
           "league": "college-football",
           "team": "Houston",
           "opponent": "Texas Tech",
@@ -170,6 +187,7 @@
         },
         {
           "id": "l6",
+          "by": "Dalton",
           "league": "college-football",
           "team": "Toledo",
           "opponent": "Temple",
@@ -179,6 +197,7 @@
         },
         {
           "id": "l7",
+          "by": "Roma",
           "league": "college-football",
           "team": "Louisville",
           "opponent": "SMU",
@@ -187,6 +206,7 @@
         },
         {
           "id": "l8",
+          "by": "Paul",
           "league": "nfl",
           "team": "Minnesota Vikings",
           "opponent": "Chicago Bears",
@@ -196,6 +216,7 @@
         },
         {
           "id": "l9",
+          "by": "Mark",
           "league": "college-football",
           "team": "Clemson",
           "opponent": "North Carolina",
@@ -205,6 +226,7 @@
         },
         {
           "id": "l10",
+          "by": "Vuke",
           "league": "college-football",
           "team": "Eastern Michigan",
           "opponent": "Wisconsin",
