@@ -1,6 +1,7 @@
 import { findLegGame } from "./espn.js";
 import { clearCache } from "./espn.js";
 import { whereToWatch, watchText } from "./watch.js";
+import { chronological, groupLegs } from "./order.js";
 import { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState } from "./grade.js";
 
 const $ = (id) => document.getElementById(id);
@@ -95,6 +96,13 @@ function statsHtml(ev) {
   </div>`;
 }
 
+function sectionsHtml(legs) {
+  const g = groupLegs(legs);
+  const sec = (key, title, items) =>
+    items.length ? `<h3 class="sec ${key}">${title} <span class="muted">(${items.length})</span></h3><div class="legs">${items.map(legHtml).join("")}</div>` : "";
+  return sec("live", "🔴 Live now", g.live) + sec("upcoming", "Upcoming", g.upcoming) + sec("final", "Final", g.final);
+}
+
 function parlayHtml(ev) {
   const w = ev.week;
   const money = [w.stake && `Stake ${esc(w.stake)}`, w.payout && `To win ${esc(w.payout)}`].filter(Boolean).join(" · ");
@@ -102,13 +110,13 @@ function parlayHtml(ev) {
     <div class="parlay-head"><div><h2>${esc(w.label)}</h2>${money ? `<div class="muted">${money}</div>` : ""}</div><span class="pill ${ev.status}">${ev.status}</span></div>
     ${w.example ? `<div class="banner">Example data – edit <code>data/parlays.json</code> to enter the real parlay.</div>` : ""}
     ${statsHtml(ev)}
-    <div class="legs">${ev.legs.map(legHtml).join("")}</div>
+    ${sectionsHtml(ev.legs)}
   </article>`;
 }
 
 function historyHtml(ev) {
   return `<details class="hist-week"><summary><span>${esc(ev.week.label)}</span><span class="pill ${ev.status}">${ev.status}</span></summary>
-    ${ev.legs.length ? `<div class="legs">${ev.legs.map(legHtml).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
+    ${ev.legs.length ? `<div class="legs">${chronological(ev.legs).map(legHtml).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
 }
 
 function render() {

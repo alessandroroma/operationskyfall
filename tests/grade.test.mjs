@@ -116,3 +116,22 @@ test("team totals use only the picked team's score", () => {
   assert.equal(gradeLeg({ type: "team_total_under", line: 34.5 }, g).result, "hit");
   assert.equal(gradeLeg({ type: "team_total_over", line: 24 }, g).result, "push");
 });
+
+import { groupLegs, chronological } from "../js/order.js";
+test("legs group into live/upcoming/final and sort by kickoff", () => {
+  const L = (id, state, date, extra = {}) => ({ leg: { id, ...extra }, game: state ? { event: { date, status: { type: { state, completed: state === "post" } } } } : null });
+  const legs = [
+    L("late", "pre", "2026-09-26T23:30Z"),
+    L("done2", "post", "2026-09-25T20:00Z"),
+    L("live", "in", "2026-09-26T16:00Z"),
+    L("early", "pre", "2026-09-26T16:00Z"),
+    L("done1", "post", "2026-09-19T16:00Z"),
+    L("nogame", null, undefined),
+    L("manual", null, undefined, { result: "hit" }),
+  ];
+  const g = groupLegs(legs);
+  assert.deepEqual(g.live.map((l) => l.leg.id), ["live"]);
+  assert.deepEqual(g.upcoming.map((l) => l.leg.id), ["early", "late", "nogame"]);
+  assert.deepEqual(g.final.map((l) => l.leg.id), ["done1", "done2", "manual"]);
+  assert.deepEqual(chronological(legs).map((l) => l.leg.id), ["done1", "done2", "live", "early", "late", "nogame", "manual"]);
+});

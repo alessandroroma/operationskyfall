@@ -48,3 +48,6 @@ code { background: #1f2630; padding: 1px 4px; border-radius: 4px; }
 
 .watch { color: var(--text); }
 .pad { padding: 0 12px 12px; margin: 0; }
+.sec { margin: 16px 0 6px; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.sec.live { color: var(--red); }
+.sec + .legs { margin-top: 0; }
