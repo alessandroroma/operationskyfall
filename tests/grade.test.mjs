@@ -109,3 +109,10 @@ test("week status: manual result overrides, computed otherwise", () => {
   assert.equal(weekStatus({}, ["hit", "miss"]).status, "BUSTED");
   assert.equal(weekStatus({ result: "nonsense" }, ["hit", "pending"]).status, "ALIVE");
 });
+
+test("team totals use only the picked team's score", () => {
+  const g = game("post", comp(ill, "away", 24), comp(osu, "home", 32));
+  assert.equal(gradeLeg({ type: "team_total_over", line: 34.5 }, g).result, "miss");
+  assert.equal(gradeLeg({ type: "team_total_under", line: 34.5 }, g).result, "hit");
+  assert.equal(gradeLeg({ type: "team_total_over", line: 24 }, g).result, "push");
+});

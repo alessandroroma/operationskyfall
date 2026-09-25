@@ -1,6 +1,6 @@
 // Pure grading logic: no DOM, no network.
 
-export const TYPES = ["spread", "moneyline", "total_over", "total_under", "other"];
+export const TYPES = ["spread", "moneyline", "total_over", "total_under", "team_total_over", "team_total_under", "other"];
 
 export function gameState(event) {
   const s = event?.status?.type;
@@ -29,6 +29,10 @@ export function legMargin(leg, pickedScore, otherScore) {
       return p + o - line;
     case "total_under":
       return line - (p + o);
+    case "team_total_over":
+      return p - line;
+    case "team_total_under":
+      return line - p;
     default:
       return null;
   }
@@ -90,6 +94,10 @@ export function describeLeg(leg) {
       return `Over ${leg.line} (${leg.team}${leg.opponent ? ` / ${leg.opponent}` : ""})`;
     case "total_under":
       return `Under ${leg.line} (${leg.team}${leg.opponent ? ` / ${leg.opponent}` : ""})`;
+    case "team_total_over":
+      return `${leg.team} Over ${leg.line} pts`;
+    case "team_total_under":
+      return `${leg.team} Under ${leg.line} pts`;
     default:
       return `${leg.team}${leg.note ? ` – ${leg.note}` : ""}`;
   }

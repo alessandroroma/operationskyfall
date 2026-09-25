@@ -27,7 +27,7 @@ Leg fields:
 | `league` | `nfl` or `college-football` |
 | `team` | side you picked: name, nickname or ESPN abbreviation (`Ohio State`, `Buckeyes`, `OSU`) |
 | `opponent` | optional, but recommended; disambiguates the game |
-| `type` | `spread`, `moneyline`, `total_over`, `total_under`, or `other` |
+| `type` | `spread`, `moneyline`, `total_over`, `total_under` (game total), `team_total_over`, `team_total_under` (picked team's own points), or `other` (props etc.; set `result` manually) |
 | `line` | spread from the picked team's view (`-3.5`, `+7`), or the total for over/under; ignored for moneyline |
 | `date` | game date `YYYY-MM-DD` (US Eastern, as ESPN lists it; the day before/after is also searched) |
 | `note` | optional text shown on the card |

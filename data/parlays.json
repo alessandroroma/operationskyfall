@@ -59,8 +59,101 @@
       "id": "2026-w1",
       "label": "Week 1",
       "weekOf": "2026-09-17",
-      "result": "BUSTED",
-      "legs": []
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "team": "Michigan",
+          "opponent": "UTEP",
+          "type": "spread",
+          "line": -35.5,
+          "date": "2026-09-19",
+          "note": "Same-game parlay (+260) with Underwood prop"
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "team": "Michigan",
+          "opponent": "UTEP",
+          "type": "other",
+          "result": "hit",
+          "date": "2026-09-19",
+          "note": "Bryce Underwood 200+ pass yards (SGP leg)"
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "team": "Portland State",
+          "opponent": "Oregon",
+          "type": "spread",
+          "line": 59.0,
+          "date": "2026-09-19"
+        },
+        {
+          "id": "l4",
+          "league": "college-football",
+          "team": "LSU",
+          "opponent": "Ole Miss",
+          "type": "team_total_over",
+          "line": 34.5,
+          "date": "2026-09-19"
+        },
+        {
+          "id": "l5",
+          "league": "college-football",
+          "team": "Houston",
+          "opponent": "Texas Tech",
+          "type": "total_over",
+          "line": 52.5,
+          "date": "2026-09-19"
+        },
+        {
+          "id": "l6",
+          "league": "college-football",
+          "team": "Toledo",
+          "opponent": "Temple",
+          "type": "spread",
+          "line": -6.0,
+          "date": "2026-09-19"
+        },
+        {
+          "id": "l7",
+          "league": "college-football",
+          "team": "Louisville",
+          "opponent": "SMU",
+          "type": "moneyline",
+          "date": "2026-09-19"
+        },
+        {
+          "id": "l8",
+          "league": "nfl",
+          "team": "Minnesota Vikings",
+          "opponent": "Chicago Bears",
+          "type": "total_over",
+          "line": 48.5,
+          "date": "2026-09-20"
+        },
+        {
+          "id": "l9",
+          "league": "college-football",
+          "team": "Clemson",
+          "opponent": "North Carolina",
+          "type": "spread",
+          "line": -3.0,
+          "date": "2026-09-19"
+        },
+        {
+          "id": "l10",
+          "league": "college-football",
+          "team": "Eastern Michigan",
+          "opponent": "Wisconsin",
+          "type": "spread",
+          "line": 23.5,
+          "date": "2026-09-19"
+        }
+      ],
+      "stake": "$6",
+      "payout": "$0 returned"
     }
   ]
 }
