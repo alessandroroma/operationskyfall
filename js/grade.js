@@ -130,3 +130,19 @@ export function byContributor(legs) {
   }
   return [...map.values()];
 }
+
+export function formatOdds(n) {
+  const v = Number(n);
+  if (!Number.isFinite(v) || v === 0) return "";
+  return v > 0 ? `+${v}` : `${v}`;
+}
+
+// Odds label for a leg: its own price, or the shared price of its same-game-parlay group.
+export function legOdds(leg, week) {
+  if (leg.group) {
+    const g = week?.groups?.[leg.group];
+    const o = formatOdds(g?.odds);
+    return o ? `${g.label ?? "Group"} ${o}` : "";
+  }
+  return formatOdds(leg.odds);
+}

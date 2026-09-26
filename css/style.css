@@ -62,3 +62,4 @@ a.gc:hover { text-decoration: underline; }
 .chip.miss { border-color: var(--red); }
 .chip.hit { border-color: var(--green); }
 .hist-week > .contrib { padding: 0 12px; }
+.odds { display: inline-block; margin-left: 6px; font-size: .78rem; font-weight: 700; color: var(--amber); vertical-align: middle; font-variant-numeric: tabular-nums; }

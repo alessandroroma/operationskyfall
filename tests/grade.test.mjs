@@ -160,3 +160,14 @@ test("per-contributor tally keeps first-appearance order and skips untagged legs
   assert.deepEqual(rows[0], { name: "Roma", hit: 1, miss: 0, push: 0, live: 0, pending: 1, unknown: 0, total: 2 });
   assert.deepEqual(rows[1], { name: "Dalton", hit: 0, miss: 1, push: 0, live: 1, pending: 0, unknown: 0, total: 2 });
 });
+
+import { formatOdds, legOdds } from "../js/grade.js";
+test("odds formatting and same-game-parlay group price", () => {
+  assert.equal(formatOdds(100), "+100");
+  assert.equal(formatOdds(-115), "-115");
+  assert.equal(formatOdds(undefined), "");
+  assert.equal(legOdds({ odds: -110 }, {}), "-110");
+  assert.equal(legOdds({ group: "sgp" }, { groups: { sgp: { label: "Same-game parlay", odds: 260 } } }), "Same-game parlay +260");
+  assert.equal(legOdds({ group: "nope" }, {}), "");
+  assert.equal(legOdds({}, {}), "");
+});

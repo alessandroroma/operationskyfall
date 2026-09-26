@@ -10,6 +10,7 @@
         {
           "id": "l1",
           "by": "Roma",
+          "odds": 100,
           "league": "college-football",
           "team": "Oregon",
           "opponent": "USC",
@@ -20,6 +21,7 @@
         {
           "id": "l2",
           "by": "Vuke",
+          "odds": 115,
           "league": "college-football",
           "team": "California",
           "opponent": "Clemson",
@@ -29,6 +31,7 @@
         {
           "id": "l3",
           "by": "Jacob",
+          "odds": -115,
           "league": "college-football",
           "team": "Ole Miss",
           "opponent": "Florida",
@@ -39,6 +42,7 @@
         {
           "id": "l4",
           "by": "Mark",
+          "odds": -180,
           "league": "college-football",
           "team": "Army",
           "opponent": "Temple",
@@ -48,6 +52,7 @@
         {
           "id": "l5",
           "by": "Paul",
+          "odds": -115,
           "league": "nfl",
           "team": "Carolina Panthers",
           "opponent": "Cleveland Browns",
@@ -58,6 +63,7 @@
         {
           "id": "l6",
           "by": "Paul",
+          "odds": -115,
           "league": "college-football",
           "team": "Wisconsin",
           "opponent": "Penn State",
@@ -68,17 +74,18 @@
         {
           "id": "l7",
           "by": "Dalton",
+          "group": "sgp",
           "league": "college-football",
           "team": "Michigan",
           "opponent": "Iowa",
           "type": "spread",
           "line": -5.5,
-          "date": "2026-09-26",
-          "note": "Same-game parlay (+200) with Underwood TD"
+          "date": "2026-09-26"
         },
         {
           "id": "l8",
           "by": "Dalton",
+          "group": "sgp",
           "league": "college-football",
           "team": "Michigan",
           "opponent": "Iowa",
@@ -89,6 +96,7 @@
         {
           "id": "l9",
           "by": "Dalton",
+          "odds": -105,
           "league": "college-football",
           "team": "Oklahoma State",
           "opponent": "West Virginia",
@@ -99,6 +107,7 @@
         {
           "id": "l10",
           "by": "Vuke",
+          "odds": -115,
           "league": "college-football",
           "team": "LSU",
           "opponent": "Texas A&M",
@@ -109,6 +118,7 @@
         {
           "id": "l11",
           "by": "Mark",
+          "odds": -120,
           "league": "college-football",
           "team": "Notre Dame",
           "opponent": "Purdue",
@@ -119,6 +129,7 @@
         {
           "id": "l12",
           "by": "Roma",
+          "odds": -110,
           "league": "college-football",
           "team": "Eastern Michigan",
           "opponent": "Lindenwood",
@@ -126,7 +137,13 @@
           "line": -25.5,
           "date": "2026-09-26"
         }
-      ]
+      ],
+      "groups": {
+        "sgp": {
+          "label": "Same-game parlay",
+          "odds": 200
+        }
+      }
     },
     {
       "id": "2026-w1",
@@ -136,17 +153,18 @@
         {
           "id": "l1",
           "by": "Dalton",
+          "group": "sgp",
           "league": "college-football",
           "team": "Michigan",
           "opponent": "UTEP",
           "type": "spread",
           "line": -35.5,
-          "date": "2026-09-19",
-          "note": "Same-game parlay (+260) with Underwood prop"
+          "date": "2026-09-19"
         },
         {
           "id": "l2",
           "by": "Roma",
+          "group": "sgp",
           "league": "college-football",
           "team": "Michigan",
           "opponent": "UTEP",
@@ -158,6 +176,7 @@
         {
           "id": "l3",
           "by": "Mark",
+          "odds": -128,
           "league": "college-football",
           "team": "Portland State",
           "opponent": "Oregon",
@@ -168,6 +187,7 @@
         {
           "id": "l4",
           "by": "Jacob",
+          "odds": 135,
           "league": "college-football",
           "team": "LSU",
           "opponent": "Ole Miss",
@@ -178,6 +198,7 @@
         {
           "id": "l5",
           "by": "Vuke",
+          "odds": -110,
           "league": "college-football",
           "team": "Houston",
           "opponent": "Texas Tech",
@@ -188,6 +209,7 @@
         {
           "id": "l6",
           "by": "Dalton",
+          "odds": -110,
           "league": "college-football",
           "team": "Toledo",
           "opponent": "Temple",
@@ -198,6 +220,7 @@
         {
           "id": "l7",
           "by": "Roma",
+          "odds": -125,
           "league": "college-football",
           "team": "Louisville",
           "opponent": "SMU",
@@ -207,6 +230,7 @@
         {
           "id": "l8",
           "by": "Paul",
+          "odds": -105,
           "league": "nfl",
           "team": "Minnesota Vikings",
           "opponent": "Chicago Bears",
@@ -217,6 +241,7 @@
         {
           "id": "l9",
           "by": "Mark",
+          "odds": -115,
           "league": "college-football",
           "team": "Clemson",
           "opponent": "North Carolina",
@@ -227,6 +252,7 @@
         {
           "id": "l10",
           "by": "Vuke",
+          "odds": -105,
           "league": "college-football",
           "team": "Eastern Michigan",
           "opponent": "Wisconsin",
@@ -236,7 +262,13 @@
         }
       ],
       "stake": "$6",
-      "payout": "$0 returned"
+      "payout": "$0 returned",
+      "groups": {
+        "sgp": {
+          "label": "Same-game parlay",
+          "odds": 260
+        }
+      }
     }
   ]
 }

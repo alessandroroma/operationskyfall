@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -48,10 +48,10 @@ function teamHtml(c, cls, picked) {
   return `<div class="team ${cls}${picked ? " picked" : ""}">${cls === "away" && t.logo ? `<img src="${esc(t.logo)}" alt="" loading="lazy">` : ""}<span class="name">${esc(t.displayName)}</span>${cls === "home" && t.logo ? `<img src="${esc(t.logo)}" alt="" loading="lazy">` : ""}</div>`;
 }
 
-function legHtml({ leg, game, grade, error }) {
+function legHtml({ leg, game, grade, error }, week) {
   const label = grade.result === "live_push" && leg.type === "moneyline" ? "Tied" : (RESULT_LABEL[grade.result] ?? grade.result);
   const badge = `<span class="pill ${grade.result}">${label}${grade.margin != null && grade.result !== "pending" ? ` (${grade.margin > 0 ? "+" : ""}${grade.margin.toFixed(1).replace(/\.0$/, "")})` : ""}</span>`;
-  const head = `<div class="leg-top"><span class="pick">${esc(describeLeg(leg))}${leg.by ? ` <span class="by">${esc(leg.by)}</span>` : ""}</span>${badge}</div>`;
+  const head = `<div class="leg-top"><span class="pick">${esc(describeLeg(leg))}${leg.by ? ` <span class="by">${esc(leg.by)}</span>` : ""}${legOdds(leg, week) ? ` <span class="odds">${esc(legOdds(leg, week))}</span>` : ""}</span>${badge}</div>`;
   if (!game) {
     return `<div class="leg unknown">${head}<div class="meta"><span class="error">Game not found for ${esc(leg.team)} on ${esc(leg.date)}${error ? " (ESPN unreachable?)" : ""}</span></div></div>`;
   }
@@ -96,10 +96,10 @@ function statsHtml(ev) {
   </div>`;
 }
 
-function sectionsHtml(legs) {
+function sectionsHtml(legs, week) {
   const g = groupLegs(legs);
   const sec = (key, title, items) =>
-    items.length ? `<h3 class="sec ${key}">${title} <span class="muted">(${items.length})</span></h3><div class="legs">${items.map(legHtml).join("")}</div>` : "";
+    items.length ? `<h3 class="sec ${key}">${title} <span class="muted">(${items.length})</span></h3><div class="legs">${items.map((l) => legHtml(l, week)).join("")}</div>` : "";
   return sec("live", "🔴 Live now", g.live) + sec("upcoming", "Upcoming", g.upcoming) + sec("final", "Final", g.final);
 }
 
@@ -122,14 +122,14 @@ function parlayHtml(ev) {
     ${w.example ? `<div class="banner">Example data – edit <code>data/parlays.json</code> to enter the real parlay.</div>` : ""}
     ${statsHtml(ev)}
     ${contributorsHtml(ev)}
-    ${sectionsHtml(ev.legs)}
+    ${sectionsHtml(ev.legs, ev.week)}
   </article>`;
 }
 
 function historyHtml(ev) {
   return `<details class="hist-week"><summary><span>${esc(ev.week.label)}</span><span class="pill ${ev.status}">${ev.status}</span></summary>
     ${contributorsHtml(ev)}
-    ${ev.legs.length ? `<div class="legs">${chronological(ev.legs).map(legHtml).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
+    ${ev.legs.length ? `<div class="legs">${chronological(ev.legs).map((l) => legHtml(l, ev.week)).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
 }
 
 function render() {
