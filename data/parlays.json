@@ -1,6 +1,142 @@
 {
   "weeks": [
     {
+      "id": "2026-w2-5",
+      "label": "Week 2.5",
+      "weekOf": "2026-09-25",
+      "stake": "$6",
+      "payout": "$7,640.41",
+      "legs": [
+        {
+          "id": "l1",
+          "odds": 100,
+          "league": "college-football",
+          "team": "Oregon",
+          "opponent": "USC",
+          "type": "spread",
+          "line": -3.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l2",
+          "odds": 115,
+          "league": "college-football",
+          "team": "California",
+          "opponent": "Clemson",
+          "type": "moneyline",
+          "date": "2026-09-25"
+        },
+        {
+          "id": "l3",
+          "odds": -115,
+          "league": "college-football",
+          "team": "Ole Miss",
+          "opponent": "Florida",
+          "type": "spread",
+          "line": 3.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l4",
+          "odds": -180,
+          "league": "college-football",
+          "team": "Army",
+          "opponent": "Temple",
+          "type": "moneyline",
+          "date": "2026-09-25"
+        },
+        {
+          "id": "l5",
+          "odds": -115,
+          "league": "nfl",
+          "team": "Carolina Panthers",
+          "opponent": "Cleveland Browns",
+          "type": "spread",
+          "line": -2.5,
+          "date": "2026-09-27"
+        },
+        {
+          "id": "l6",
+          "odds": -115,
+          "league": "college-football",
+          "team": "Wisconsin",
+          "opponent": "Penn State",
+          "type": "total_over",
+          "line": 43.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l7",
+          "group": "sgp",
+          "league": "college-football",
+          "team": "Michigan",
+          "opponent": "Iowa",
+          "type": "spread",
+          "line": -5.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l8",
+          "group": "sgp",
+          "league": "college-football",
+          "team": "Michigan",
+          "opponent": "Iowa",
+          "type": "other",
+          "date": "2026-09-26",
+          "note": "Bryce Underwood anytime TD (SGP leg) \u2013 set result by hand"
+        },
+        {
+          "id": "l9",
+          "odds": -105,
+          "league": "college-football",
+          "team": "Oklahoma State",
+          "opponent": "West Virginia",
+          "type": "total_over",
+          "line": 62.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l10",
+          "odds": -115,
+          "league": "college-football",
+          "team": "LSU",
+          "opponent": "Texas A&M",
+          "type": "spread",
+          "line": -8.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l11",
+          "odds": -120,
+          "league": "college-football",
+          "team": "Notre Dame",
+          "opponent": "Purdue",
+          "type": "spread",
+          "line": -27.5,
+          "date": "2026-09-26"
+        },
+        {
+          "id": "l12",
+          "odds": -110,
+          "league": "college-football",
+          "team": "Eastern Michigan",
+          "opponent": "Lindenwood",
+          "type": "spread",
+          "line": -25.5,
+          "date": "2026-09-26"
+        }
+      ],
+      "groups": {
+        "sgp": {
+          "label": "Same-game parlay",
+          "odds": 200
+        }
+      },
+      "returned": "$0.00",
+      "result": "BUSTED",
+      "note": "Settled: California lost (Clemson 24-10). Ticket returned $0.00."
+    },
+    {
       "id": "2026-w2",
       "label": "Week 2",
       "weekOf": "2026-09-24",
