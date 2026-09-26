@@ -116,9 +116,9 @@ function contributorsHtml(ev) {
 
 function parlayHtml(ev) {
   const w = ev.week;
-  const money = [w.stake && `Stake ${esc(w.stake)}`, w.payout && `To win ${esc(w.payout)}`].filter(Boolean).join(" · ");
+  const money = [w.stake && `Stake ${esc(w.stake)}`, w.payout && `To win ${esc(w.payout)}`, w.boost && esc(w.boost), w.returned && `Returned ${esc(w.returned)}`].filter(Boolean).join(" · ");
   return `<article class="parlay">
-    <div class="parlay-head"><div><h2>${esc(w.label)}</h2>${money ? `<div class="muted">${money}</div>` : ""}</div><span class="pill ${ev.status}">${ev.status}</span></div>
+    <div class="parlay-head"><div><h2>${esc(w.label)}</h2>${money ? `<div class="muted">${money}</div>` : ""}${w.note ? `<div class="muted">${esc(w.note)}</div>` : ""}</div><span class="pill ${ev.status}">${ev.status}</span></div>
     ${w.example ? `<div class="banner">Example data – edit <code>data/parlays.json</code> to enter the real parlay.</div>` : ""}
     ${statsHtml(ev)}
     ${contributorsHtml(ev)}
@@ -128,7 +128,7 @@ function parlayHtml(ev) {
 
 function historyHtml(ev) {
   return `<details class="hist-week"><summary><span>${esc(ev.week.label)}</span><span class="pill ${ev.status}">${ev.status}</span></summary>
-    ${contributorsHtml(ev)}
+    ${ev.week.note ? `<p class="muted pad">${esc(ev.week.note)}</p>` : ""}${contributorsHtml(ev)}
     ${ev.legs.length ? `<div class="legs">${chronological(ev.legs).map((l) => legHtml(l, ev.week)).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
 }
 
