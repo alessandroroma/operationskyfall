@@ -1,6 +1,131 @@
 {
   "weeks": [
     {
+      "id": "2026-w3",
+      "label": "Week 3",
+      "weekOf": "2026-10-01",
+      "stake": "$7",
+      "payout": "$4,449.57",
+      "legs": [
+        {
+          "id": "l1",
+          "by": "Luke",
+          "group": "sgp",
+          "league": "nfl",
+          "team": "Detroit Lions",
+          "opponent": "Carolina Panthers",
+          "type": "moneyline",
+          "date": "2026-10-04",
+          "note": "Early payout offered on this leg"
+        },
+        {
+          "id": "l2",
+          "by": "Mark",
+          "group": "sgp",
+          "league": "nfl",
+          "team": "Detroit Lions",
+          "opponent": "Carolina Panthers",
+          "type": "other",
+          "date": "2026-10-04",
+          "note": "Amon-Ra St. Brown anytime TD scorer (SGP leg)"
+        },
+        {
+          "id": "l3",
+          "by": "Paul",
+          "odds": -125,
+          "league": "nfl",
+          "team": "Cleveland Browns",
+          "opponent": "Pittsburgh Steelers",
+          "type": "spread",
+          "line": 3.5,
+          "date": "2026-10-01"
+        },
+        {
+          "id": "l4",
+          "by": "Roma",
+          "odds": 185,
+          "league": "college-football",
+          "team": "Mississippi State",
+          "opponent": "Alabama",
+          "type": "moneyline",
+          "date": "2026-10-03",
+          "note": "Early payout offered on this leg"
+        },
+        {
+          "id": "l5",
+          "by": "Dalton",
+          "odds": -115,
+          "league": "college-football",
+          "team": "USC",
+          "opponent": "Washington",
+          "type": "spread",
+          "line": -8.5,
+          "date": "2026-10-03"
+        },
+        {
+          "id": "l6",
+          "by": "Dalton",
+          "odds": -110,
+          "league": "college-football",
+          "team": "Ohio State",
+          "opponent": "Iowa",
+          "type": "total_under",
+          "line": 45.5,
+          "date": "2026-10-03"
+        },
+        {
+          "id": "l7",
+          "by": "Vuke",
+          "odds": 112,
+          "league": "college-football",
+          "team": "Virginia Tech",
+          "opponent": "Pittsburgh",
+          "type": "spread",
+          "line": -3.5,
+          "date": "2026-10-02"
+        },
+        {
+          "id": "l8",
+          "by": "Roma",
+          "odds": -115,
+          "league": "college-football",
+          "team": "Texas Tech",
+          "opponent": "Colorado",
+          "type": "spread",
+          "line": -12.5,
+          "date": "2026-10-03"
+        },
+        {
+          "id": "l9",
+          "by": "Jacob",
+          "odds": -105,
+          "league": "college-football",
+          "team": "Air Force",
+          "opponent": "Navy",
+          "type": "spread",
+          "line": -3.5,
+          "date": "2026-10-03"
+        },
+        {
+          "id": "l10",
+          "by": "Paul",
+          "odds": -110,
+          "league": "college-football",
+          "team": "Michigan",
+          "opponent": "Minnesota",
+          "type": "spread",
+          "line": -5.5,
+          "date": "2026-10-03"
+        }
+      ],
+      "groups": {
+        "sgp": {
+          "label": "Same-game parlay",
+          "odds": 135
+        }
+      }
+    },
+    {
       "id": "2026-w2",
       "label": "Week 2",
       "weekOf": "2026-09-24",
