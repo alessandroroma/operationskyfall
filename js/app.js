@@ -157,7 +157,7 @@ function personTableHtml(rows) {
   return `<h3 class="bd">By person (all weeks)</h3><div class="table-wrap"><table class="bd">
     <thead><tr><th>Who</th><th class="num">Legs</th><th class="num">Hit</th><th class="num">Miss</th><th class="num">Push</th><th class="num">Open</th><th class="num">Hit rate</th><th class="num">Avg line</th><th class="num">Avg miss</th></tr></thead>
     <tbody>${body}</tbody>
-  </table></div>`;
+  </table></div><p class="muted">Avg line: mean of each pick's numeric betting line, including open picks; moneylines without a line are excluded. Avg miss: mean points short on misses with a measured margin; manual props without one are excluded.</p>`;
 }
 
 function moneyTableHtml(season) {

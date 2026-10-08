@@ -6,6 +6,7 @@ const [{ formatOdds, legOdds, describeLeg }, { chronological }] = await Promise.
 ]);
 
 const num = (v) => {
+  if (v == null || v === "") return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
 };
@@ -85,6 +86,7 @@ export function breakdownRows(evaluated) {
         note: l.leg.note ?? "",
         type: typeLabel(l.leg),
         spread: spreadText(l.leg),
+        line: num(l.leg.line),
         odds: oddsText(l.leg, ev.week),
         oddsFull: legOdds(l.leg, ev.week),
         result,
@@ -113,21 +115,18 @@ export function personTotals(rows) {
   const map = new Map();
   for (const r of rows) {
     if (!r.by) continue;
-    if (!map.has(r.by)) map.set(r.by, { name: r.by, hit: 0, miss: 0, push: 0, live: 0, pending: 0, unknown: 0, total: 0, settledMarginSum: 0, settledCount: 0, missMarginSum: 0, missCount: 0 });
+    if (!map.has(r.by)) map.set(r.by, { name: r.by, hit: 0, miss: 0, push: 0, live: 0, pending: 0, unknown: 0, total: 0, lineSum: 0, lineCount: 0, missMarginSum: 0, missCount: 0 });
     const p = map.get(r.by);
     p.total++;
+    if (r.line != null && Number.isFinite(r.line)) { p.lineSum += r.line; p.lineCount++; }
     if (r.result === "hit") {
       p.hit++;
-      const m = r.margin;
-      if (m != null && Number.isFinite(m)) { p.settledMarginSum += Math.abs(m); p.settledCount++; }
     } else if (r.result === "miss") {
       p.miss++;
       const m = r.margin;
-      if (m != null && Number.isFinite(m)) { p.settledMarginSum += Math.abs(m); p.settledCount++; p.missMarginSum += Math.abs(m); p.missCount++; }
+      if (m != null && Number.isFinite(m)) { p.missMarginSum += Math.abs(m); p.missCount++; }
     } else if (r.result === "push") {
       p.push++;
-      const m = r.margin;
-      if (m != null && Number.isFinite(m)) { p.settledMarginSum += Math.abs(m); p.settledCount++; }
     } else if (String(r.result).startsWith("live")) {
       p.live++;
     } else if (r.result === "unknown") {
@@ -137,7 +136,7 @@ export function personTotals(rows) {
     }
   }
   for (const p of map.values()) {
-    p.avgLine = p.settledCount > 0 ? p.settledMarginSum / p.settledCount : null;
+    p.avgLine = p.lineCount > 0 ? p.lineSum / p.lineCount : null;
     p.avgMiss = p.missCount > 0 ? p.missMarginSum / p.missCount : null;
   }
   return [...map.values()].sort((a, b) => b.hit - a.hit || a.miss - b.miss || a.name.localeCompare(b.name));

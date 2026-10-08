@@ -74,7 +74,7 @@ test("rows cover every leg, newest week first, kickoff order inside a week", () 
   assert.deepEqual(rows.map((r) => r.week), ["Week 3", "Week 3", "Week 2"]);
   assert.deepEqual(rows[1], {
     weekId: "w3", week: "Week 3", weekOf: "2026-10-01", weekStatus: "BUSTED",
-    by: "Roma", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", odds: "\u2014",
+    by: "Roma", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", line: -12.5, odds: "\u2014",
     oddsFull: "", result: "miss", margin: -3, outcome: "lost by 3",
   });
   assert.equal(rows[2].by, "");
@@ -98,8 +98,29 @@ test("filtering and per-person tallies", () => {
   assert.deepEqual(filterRows(rows, "Nobody"), []);
   const people = personTotals(rows);
   assert.deepEqual(people.map((p) => p.name), ["Roma", "Dalton"]);
-  assert.deepEqual(people[0], { name: "Roma", hit: 1, miss: 1, push: 0, live: 0, pending: 0, unknown: 0, total: 2 });
-  assert.deepEqual(people[1], { name: "Dalton", hit: 0, miss: 0, push: 1, live: 0, pending: 0, unknown: 0, total: 1 });
+  assert.equal(people[0].hit, 1);
+  assert.equal(people[0].miss, 1);
+  assert.equal(people[0].total, 2);
+  assert.equal(people[0].avgLine, -1);
+  assert.equal(people[0].avgMiss, 2);
+  assert.equal(people[1].push, 1);
+  assert.equal(people[1].total, 1);
+  assert.equal(people[1].avgLine, null);
+  assert.equal(people[1].avgMiss, null);
+});
+
+test("average line uses numeric bet lines even for open picks; average miss uses measured misses only", () => {
+  const rows = breakdownRows([week({ legs: [
+    leg({ by: "Roma", type: "spread", line: -7.5, team: "A" }, { result: "hit", margin: 3 }),
+    leg({ by: "Roma", type: "total_over", line: 47.5, team: "B" }, { result: "pending", margin: null }),
+    leg({ by: "Roma", type: "moneyline", team: "C" }, { result: "miss", margin: -4 }),
+    leg({ by: "Roma", type: "other", team: "D", result: "miss" }, { result: "miss", margin: null }),
+  ] })]);
+  const [person] = personTotals(rows);
+  assert.equal(person.avgLine, 20);
+  assert.equal(person.lineCount, 2);
+  assert.equal(person.avgMiss, 4);
+  assert.equal(person.missCount, 1);
 });
 
 test("money fields parse out of free text", () => {
