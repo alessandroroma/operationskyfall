@@ -165,7 +165,13 @@ export function personTotals(rows) {
     person.streak = person.streakType === type ? person.streak + 1 : 1;
     person.streakType = type;
   }
-  return [...map.values()].sort((a, b) => b.hit - a.hit || a.miss - b.miss || a.name.localeCompare(b.name));
+  return [...map.values()].sort((a, b) => {
+    const aSettled = a.hit + a.miss;
+    const bSettled = b.hit + b.miss;
+    const aRate = aSettled ? a.hit / aSettled : 0;
+    const bRate = bSettled ? b.hit / bSettled : 0;
+    return bRate - aRate || bSettled - aSettled || a.name.localeCompare(b.name);
+  });
 }
 
 export const ODDS_BANDS = [
