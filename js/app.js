@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, bettingWar, warByWeek, seasonMoney, fmtMoney, fmtNet }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, bettingWar, cumulativeWarByWeek, seasonMoney, fmtMoney, fmtNet }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -184,33 +184,36 @@ function bettingWarTableHtml(rows) {
 const WAR_COLORS = ["#58a6ff", "#ff7b72", "#3fb950", "#d29922", "#bc8cff", "#39c5cf", "#ffa657"];
 
 function warByWeekHtml(rows) {
-  const { people, weeks } = warByWeek(rows);
+  const { people, weeks } = cumulativeWarByWeek(rows);
   if (!people.length || !weeks.length) return "";
-  const left = 48, top = 25, plotHeight = 220, groupWidth = Math.max(130, people.length * 17 + 24);
+  const left = 48, top = 25, plotHeight = 220, groupWidth = 140;
   const width = left + weeks.length * groupWidth + 20, height = top + plotHeight + 42;
   const baseline = top + plotHeight / 2;
-  const deltas = weeks.flatMap((week) => week.values).filter((value) => value != null);
-  const bound = Math.max(1, Math.ceil(Math.max(0, ...deltas.map(Math.abs))));
+  const values = weeks.flatMap((week) => week.values);
+  const bound = Math.max(1, Math.ceil(Math.max(0, ...values.map(Math.abs))));
   const y = (value) => baseline - value * plotHeight / (2 * bound);
   const ticks = [-bound, -bound / 2, 0, bound / 2, bound].map((value) => {
     const yy = y(value);
     return `<line x1="${left}" y1="${yy}" x2="${width - 12}" y2="${yy}" class="war-grid${value === 0 ? " zero" : ""}"/><text x="${left - 8}" y="${yy + 4}" text-anchor="end" class="war-axis">${value > 0 ? "+" : ""}${Number(value.toFixed(1))}</text>`;
   }).join("");
-  const groups = weeks.map((week, i) => {
-    const inner = groupWidth - 24, slot = inner / people.length, barWidth = Math.min(14, slot - 3);
-    const bars = week.values.map((value, j) => {
-      if (value == null) return "";
-      const cx = left + i * groupWidth + 12 + (j + 0.5) * slot;
-      const color = WAR_COLORS[j % WAR_COLORS.length];
-      const label = `${week.label} · ${people[j]}: ${value > 0 ? "+" : ""}${value.toFixed(2)} delta EV`;
-      if (value === 0) return `<circle cx="${cx}" cy="${baseline}" r="3" fill="${color}" tabindex="0" aria-label="${esc(label)}"><title>${esc(label)}</title></circle>`;
-      const yy = y(value);
-      return `<rect x="${cx - barWidth / 2}" y="${Math.min(yy, baseline)}" width="${barWidth}" height="${Math.abs(yy - baseline)}" fill="${color}" rx="2" tabindex="0" aria-label="${esc(label)}"><title>${esc(label)}</title></rect>`;
+  const weekLabels = weeks.map((week, i) => `<text x="${left + (i + 0.5) * groupWidth}" y="${height - 13}" text-anchor="middle" class="war-axis week">${esc(week.label)}</text>`).join("");
+  const lines = people.map((name, j) => {
+    const color = WAR_COLORS[j % WAR_COLORS.length];
+    const points = weeks.map((week, i) => ({
+      x: left + (i + 0.5) * groupWidth,
+      y: y(week.values[j]),
+      value: week.values[j],
+      week: week.label,
+    }));
+    const path = points.map((point, i) => `${i ? "L" : "M"}${point.x} ${point.y}`).join(" ");
+    const markers = points.map((point) => {
+      const label = `${point.week} · ${name}: ${point.value > 0 ? "+" : ""}${point.value.toFixed(2)} cumulative delta EV`;
+      return `<circle cx="${point.x}" cy="${point.y}" r="4" fill="${color}" stroke="#0d1117" stroke-width="1.5" tabindex="0" aria-label="${esc(label)}"><title>${esc(label)}</title></circle>`;
     }).join("");
-    return `${bars}<text x="${left + (i + 0.5) * groupWidth}" y="${height - 13}" text-anchor="middle" class="war-axis week">${esc(week.label)}</text>`;
+    return `<path d="${path}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${markers}`;
   }).join("");
   const legend = people.map((name, i) => `<span><i style="background:${WAR_COLORS[i % WAR_COLORS.length]}"></i>${esc(name)}</span>`).join("");
-  return `<h3 class="bd">WAR by week</h3><div class="war-chart-wrap"><svg class="war-chart" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Delta EV by week for each person; bars above zero are positive, bars below zero are negative">${ticks}${groups}</svg></div><div class="war-legend">${legend}</div><p class="muted">Each bar is that person's weekly Delta EV, using the same calculation as Betting War. Hover or focus a bar for its value; no bar means no recorded bets that week.</p>`;
+  return `<h3 class="bd">WAR by week</h3><div class="war-chart-wrap"><svg class="war-chart" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="group" aria-label="Cumulative Delta EV through each week for each person">${ticks}${weekLabels}${lines}</svg></div><div class="war-legend">${legend}</div><p class="muted">Each point sums that person's Delta EV through that week, using the Betting War calculation. Weeks without a bet carry the prior total forward. Hover or focus a point for its value.</p>`;
 }
 
 function moneyTableHtml(season) {

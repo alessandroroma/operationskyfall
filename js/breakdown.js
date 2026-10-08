@@ -230,6 +230,18 @@ export function warByWeek(rows) {
   };
 }
 
+export function cumulativeWarByWeek(rows) {
+  const { people, weeks } = warByWeek(rows);
+  const running = people.map(() => 0);
+  return {
+    people,
+    weeks: weeks.map((week) => ({
+      id: week.id, label: week.label, weekOf: week.weekOf,
+      values: week.values.map((delta, i) => (running[i] += delta ?? 0)),
+    })),
+  };
+}
+
 // First $ amount in a free-text money field ("$4,333.35 (incl. ...)" -> 4333.35).
 export function money(value) {
   const m = /(\$)\s*([\d,]+(?:\.\d+)?)/.exec(String(value ?? ""));

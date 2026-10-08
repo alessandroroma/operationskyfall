@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  bettingWar, breakdownRows, contributors, decimalOdds, filterRows, fmtMoney, fmtNet, money, oddsText,
+  bettingWar, breakdownRows, contributors, cumulativeWarByWeek, decimalOdds, filterRows, fmtMoney, fmtNet, money, oddsText,
   ODDS_BANDS, oddsBandIndex, outcomeText, personTotals, pickText, resultsByOdds,
   seasonMoney, spreadText, typeLabel, warByWeek, weekMoney,
 } from "../js/breakdown.js";
@@ -195,6 +195,7 @@ test("WAR by week is chronological and sums to each person's all-weeks delta", (
   const rows = breakdownRows([
     week({ week: { id: "w3", label: "Week 3", weekOf: "2026-10-01" }, legs: [
       leg({ by: "Dalton", odds: -200, team: "A", type: "moneyline" }, { result: "hit" }),
+      leg({ by: "Jacob", odds: 100, team: "E", type: "moneyline" }, { result: "miss" }),
     ] }),
     week({ week: { id: "w1", label: "Week 1", weekOf: "2026-09-17" }, legs: [
       leg({ by: "Roma", odds: -100, team: "B", type: "moneyline" }, { result: "hit" }),
@@ -214,6 +215,17 @@ test("WAR by week is chronological and sums to each person's all-weeks delta", (
     const index = chart.people.indexOf(person.name);
     const weeklySum = chart.weeks.reduce((sum, w) => sum + (w.values[index] ?? 0), 0);
     assert.ok(Math.abs(weeklySum - person.delta) < 1e-12);
+  }
+  const cumulative = cumulativeWarByWeek(rows);
+  assert.deepEqual(cumulative.weeks.map((w) => w.label), ["Week 1", "Week 2", "Week 3"]);
+  assert.deepEqual(cumulative.weeks.map((w) => w.values[roma]), [1.5, 0, 0]);
+  assert.ok(Math.abs(cumulative.weeks[2].values[dalton] + 2 / 3) < 1e-12);
+  assert.deepEqual(cumulative.weeks.slice(0, 2).map((w) => w.values[dalton]), [-1.5, -1.5]);
+  const jacob = cumulative.people.indexOf("Jacob");
+  assert.deepEqual(cumulative.weeks.map((w) => w.values[jacob]), [0, 0, -1.5]);
+  for (const person of bettingWar(rows)) {
+    const index = cumulative.people.indexOf(person.name);
+    assert.ok(Math.abs(cumulative.weeks.at(-1).values[index] - person.delta) < 1e-12);
   }
 });
 
