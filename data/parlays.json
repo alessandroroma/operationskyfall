@@ -6,6 +6,8 @@
       "weekOf": "2026-10-01",
       "stake": "$7",
       "payout": "$4,449.57",
+      "returned": "$0.00",
+      "note": "Busted: Amon-Ra St. Brown did not score (SGP leg).",
       "legs": [
         {
           "id": "l1",
@@ -27,7 +29,8 @@
           "opponent": "Carolina Panthers",
           "type": "other",
           "date": "2026-10-04",
-          "note": "Amon-Ra St. Brown anytime TD scorer (SGP leg)"
+          "result": "miss",
+          "note": "Amon-Ra St. Brown anytime TD scorer (SGP leg) \u2013 did not score"
         },
         {
           "id": "l3",
