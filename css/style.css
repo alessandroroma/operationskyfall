@@ -4,10 +4,10 @@
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-.top { padding: 20px 16px 8px; max-width: 760px; margin: 0 auto; }
+.top { padding: 20px 16px 8px; max-width: 1200px; margin: 0 auto; }
 h1 { margin: 0; font-size: 1.6rem; letter-spacing: .02em; }
 .sub, .muted { color: var(--muted); font-size: .85rem; margin: 2px 0 0; }
-main, footer { max-width: 760px; margin: 0 auto; padding: 8px 16px; }
+main, footer { max-width: 1200px; margin: 0 auto; padding: 8px 16px; }
 footer { display: flex; flex-direction: column; gap: 2px; padding-bottom: 32px; }
 code { background: #1f2630; padding: 1px 4px; border-radius: 4px; }
 .parlay { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin: 12px 0; }
@@ -66,7 +66,7 @@ a.gc:hover { text-decoration: underline; }
 
 
 /* Breakdown tab */
-.tabs { display: flex; gap: 6px; max-width: 760px; margin: 0 auto; padding: 6px 16px 0; }
+.tabs { display: flex; gap: 6px; max-width: 1200px; margin: 0 auto; padding: 6px 16px 0; }
 .tab { appearance: none; background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 999px; padding: 4px 14px; font: inherit; font-size: .85rem; cursor: pointer; }
 .tab.on { color: var(--text); border-color: var(--blue); background: #16202c; }
 .tab:hover { color: var(--text); }
