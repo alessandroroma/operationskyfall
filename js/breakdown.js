@@ -182,6 +182,28 @@ export function resultsByOdds(rows) {
   return people;
 }
 
+export function decimalOdds(value) {
+  const odds = num(value);
+  if (odds == null || Math.abs(odds) < 100) return null;
+  return odds > 0 ? 1 + odds / 100 : 1 + 100 / Math.abs(odds);
+}
+
+export function bettingWar(rows) {
+  const people = personTotals(rows).map((p) => ({
+    name: p.name, expected: 0, earned: 0, delta: 0,
+  }));
+  const byName = new Map(people.map((p) => [p.name, p]));
+  for (const row of rows) {
+    const person = byName.get(row.by);
+    const decimal = decimalOdds(row.oddsValue);
+    if (!person || decimal == null) continue;
+    person.expected += 1 / decimal;
+    if (row.result === "hit") person.earned += decimal;
+  }
+  for (const person of people) person.delta = person.earned - person.expected;
+  return people;
+}
+
 // First $ amount in a free-text money field ("$4,333.35 (incl. ...)" -> 4333.35).
 export function money(value) {
   const m = /(\$)\s*([\d,]+(?:\.\d+)?)/.exec(String(value ?? ""));

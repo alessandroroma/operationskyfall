@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  breakdownRows, contributors, filterRows, fmtMoney, fmtNet, money, oddsText,
+  bettingWar, breakdownRows, contributors, decimalOdds, filterRows, fmtMoney, fmtNet, money, oddsText,
   ODDS_BANDS, oddsBandIndex, outcomeText, personTotals, pickText, resultsByOdds,
   seasonMoney, spreadText, typeLabel, weekMoney,
 } from "../js/breakdown.js";
@@ -162,6 +162,33 @@ test("results by odds count each person's settled W-L record, including SGP leg 
     { wins: 1, losses: 0 },
   ]);
   assert.deepEqual(records.find((p) => p.name === "Dalton").records[6], { wins: 0, losses: 1 });
+});
+
+test("Betting War converts American odds and totals expected, earned, and delta by person", () => {
+  assert.equal(decimalOdds(-200), 1.5);
+  assert.equal(decimalOdds(150), 2.5);
+  assert.equal(decimalOdds(100), 2);
+  assert.equal(decimalOdds(0), null);
+  assert.equal(decimalOdds(undefined), null);
+  const rows = breakdownRows([week({
+    week: { groups: { sgp: { label: "SGP", odds: 100 } } },
+    legs: [
+      leg({ by: "Roma", odds: -200, team: "A", type: "moneyline" }, { result: "hit" }),
+      leg({ by: "Roma", odds: 150, team: "B", type: "moneyline" }, { result: "miss" }),
+      leg({ by: "Roma", odds: -100, team: "C", type: "moneyline" }, { result: "pending" }),
+      leg({ by: "Roma", odds: 200, team: "D", type: "moneyline" }, { result: "push" }),
+      leg({ by: "Roma", group: "sgp", team: "E", type: "other" }, { result: "hit" }),
+      leg({ by: "Roma", group: "sgp", odds: -150, team: "F", type: "other" }, { result: "hit" }),
+      leg({ by: "Roma", team: "G", type: "other" }, { result: "miss" }),
+      leg({ by: "Dalton", odds: 100, team: "H", type: "moneyline" }, { result: "miss" }),
+    ],
+  })]);
+  const result = bettingWar(rows);
+  const roma = result.find((p) => p.name === "Roma");
+  assert.ok(Math.abs(roma.expected - 3) < 1e-12);
+  assert.ok(Math.abs(roma.earned - 31 / 6) < 1e-12);
+  assert.ok(Math.abs(roma.delta - 13 / 6) < 1e-12);
+  assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: 0, delta: -0.5 });
 });
 
 test("money fields parse out of free text", () => {

@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, seasonMoney, fmtMoney, fmtNet }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, bettingWar, seasonMoney, fmtMoney, fmtNet }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -171,6 +171,16 @@ function oddsResultsTableHtml(rows) {
   </table></div><p class="muted">Records are wins-losses for settled legs only. Pushes and open legs are excluded; SGP legs without their own odds use the shared SGP price. Boundary odds count once: -200 in the first band, -150 in the second, -120 in the third, +100 in the fourth, +125 in the fifth, and +200 in the last.</p>`;
 }
 
+function bettingWarTableHtml(rows) {
+  const people = bettingWar(rows);
+  if (!people.length) return "";
+  const body = people.map((person) => `<tr><td class="wk">${esc(person.name)}</td><td class="num">${person.expected.toFixed(2)}</td><td class="num">${person.earned.toFixed(2)}</td><td class="num ${person.delta > 0 ? "won" : person.delta < 0 ? "lost" : ""}">${person.delta > 0 ? "+" : ""}${person.delta.toFixed(2)}</td></tr>`).join("");
+  return `<h3 class="bd">Betting War</h3><div class="table-wrap"><table class="bd">
+    <thead><tr><th>Who</th><th class="num">Expected Value</th><th class="num">Earned Value</th><th class="num">Delta EV</th></tr></thead>
+    <tbody>${body}</tbody>
+  </table></div><p class="muted">Expected Value sums 1 ÷ decimal odds for every priced leg. Earned Value sums decimal odds for wins; losses, pushes and open legs add zero. Delta EV = Earned Value − Expected Value. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
+}
+
 function moneyTableHtml(season) {
   const rows = season.weeks.map((w) => `<tr><td class="wk">${esc(w.label)}</td><td class="num">${esc(fmtMoney(w.stake))}</td><td class="num">${esc(fmtMoney(w.returned))}</td><td class="num ${w.net > 0 ? "won" : w.net < 0 ? "lost" : ""}">${esc(fmtNet(w.net))}</td></tr>`).join("");
   return `<h3 class="bd">Per week</h3><div class="table-wrap"><table class="bd">
@@ -196,6 +206,7 @@ function breakdownHtml() {
     ${rows}
     ${personTableHtml(all)}
     ${oddsResultsTableHtml(all)}
+    ${bettingWarTableHtml(all)}
     ${moneyTableHtml(seasonMoney(evaluated))}`;
 }
 
