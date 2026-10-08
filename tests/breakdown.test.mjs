@@ -204,12 +204,15 @@ test("WAR by week is chronological and sums to each person's all-weeks delta", (
     week({ week: { id: "w2", label: "Week 2", weekOf: "2026-09-24" }, legs: [
       leg({ by: "Roma", odds: 100, team: "D", type: "moneyline" }, { result: "miss" }),
     ] }),
+    week({ week: { id: "w2-5", label: "Week 2.5", weekOf: "2026-09-26" }, legs: [
+      leg({ odds: -110, team: "F", type: "moneyline" }, { result: "miss" }),
+    ] }),
   ]);
   const chart = warByWeek(rows);
-  assert.deepEqual(chart.weeks.map((w) => w.label), ["Week 1", "Week 2", "Week 3"]);
+  assert.deepEqual(chart.weeks.map((w) => w.label), ["Week 1", "Week 2", "Week 2.5", "Week 3"]);
   const roma = chart.people.indexOf("Roma"), dalton = chart.people.indexOf("Dalton");
-  assert.deepEqual(chart.weeks.map((w) => w.values[roma]), [1.5, -1.5, null]);
-  assert.ok(Math.abs(chart.weeks[2].values[dalton] - 5 / 6) < 1e-12);
+  assert.deepEqual(chart.weeks.map((w) => w.values[roma]), [1.5, -1.5, null, null]);
+  assert.ok(Math.abs(chart.weeks[3].values[dalton] - 5 / 6) < 1e-12);
   assert.deepEqual(chart.weeks.slice(0, 2).map((w) => w.values[dalton]), [-1.5, null]);
   for (const person of bettingWar(rows)) {
     const index = chart.people.indexOf(person.name);

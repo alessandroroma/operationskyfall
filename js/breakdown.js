@@ -235,7 +235,8 @@ export function cumulativeWarByWeek(rows) {
   const running = people.map(() => 0);
   return {
     people,
-    weeks: weeks.map((week) => ({
+    // Weeks with no attributed legs (such as Week 2.5) have no person's WAR to plot.
+    weeks: weeks.filter((week) => week.values.some((value) => value !== null)).map((week) => ({
       id: week.id, label: week.label, weekOf: week.weekOf,
       values: week.values.map((delta, i) => (running[i] += delta ?? 0)),
     })),
