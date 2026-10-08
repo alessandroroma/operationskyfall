@@ -268,9 +268,9 @@ function breakdownHtml(everyLegOpen = false) {
     </details>
     ${personTableHtml(all)}
     ${oddsResultsTableHtml(all)}
-    ${leagueTableHtml(all)}
     ${bettingWarTableHtml(all)}
     ${warByWeekHtml(all)}
+    ${leagueTableHtml(all)}
     ${marginTablesHtml(all)}
     ${moneyTableHtml(seasonMoney(evaluated))}`;
 }
