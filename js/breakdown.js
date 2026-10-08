@@ -145,6 +145,43 @@ export function personTotals(rows) {
   return [...map.values()].sort((a, b) => b.hit - a.hit || a.miss - b.miss || a.name.localeCompare(b.name));
 }
 
+export const ODDS_BANDS = [
+  "-200 or worse", "-150 to -200", "-120 to -150", "+100 to -120",
+  "+100 to +125", "+125 to +200", "+200 or better",
+];
+
+// American prices have no values between -100 and +100. Shared endpoints go
+// into one band only: -200 first, -150 second, -120 third, +100 fourth,
+// +125 fifth, and +200 last.
+export function oddsBandIndex(value) {
+  const odds = num(value);
+  if (odds == null || Math.abs(odds) < 100) return null;
+  if (odds <= -200) return 0;
+  if (odds <= -150) return 1;
+  if (odds <= -120) return 2;
+  if (odds <= 100) return 3;
+  if (odds <= 125) return 4;
+  if (odds < 200) return 5;
+  return 6;
+}
+
+export function resultsByOdds(rows) {
+  const people = personTotals(rows).map((p) => ({
+    name: p.name,
+    records: ODDS_BANDS.map(() => ({ wins: 0, losses: 0 })),
+  }));
+  const byName = new Map(people.map((p) => [p.name, p]));
+  for (const row of rows) {
+    if (row.result !== "hit" && row.result !== "miss") continue;
+    const band = oddsBandIndex(row.oddsValue);
+    const person = byName.get(row.by);
+    if (band == null || !person) continue;
+    if (row.result === "hit") person.records[band].wins++;
+    else person.records[band].losses++;
+  }
+  return people;
+}
+
 // First $ amount in a free-text money field ("$4,333.35 (incl. ...)" -> 4333.35).
 export function money(value) {
   const m = /(\$)\s*([\d,]+(?:\.\d+)?)/.exec(String(value ?? ""));

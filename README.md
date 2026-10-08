@@ -46,9 +46,9 @@ Week · who picked it · pick · bet type · spread · odds · result · won/los
 
 `Won/lost by` is the graded margin in points versus your number (`won by 10.5`, `lost by 1.5`, `on the number (push)`; live legs read `up 4 (live)`). Props and `other` legs have no margin and show `—`. The odds cell shows the leg price, or the shared same-game price (hover for the group name). Rows are newest week first, kickoff order inside a week; the filter chips narrow the table to one person.
 
-Below the leg table the tab shows **By person (all weeks)** (legs, hits, misses, pushes, open legs, hit rate), **Per week** money (staked, returned, net) and a season line.
+Below the leg table the tab shows **By person (all weeks)** (legs, hits, misses, pushes, open legs, hit rate, average odds and average miss), **Results by odds** (each person's W-L record across seven American-odds bands; settled legs only, with SGP legs using their own price or the shared price when none is listed), **Per week** money (staked, returned, net) and a season line.
 
-Row building is pure and lives in `js/breakdown.js` (`breakdownRows`, `personTotals`, `weekMoney`, `seasonMoney`), tested in `tests/breakdown.test.mjs`.
+Row building is pure and lives in `js/breakdown.js` (`breakdownRows`, `personTotals`, `resultsByOdds`, `weekMoney`, `seasonMoney`), tested in `tests/breakdown.test.mjs`.
 
 ## Publish
 

@@ -2,7 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   breakdownRows, contributors, filterRows, fmtMoney, fmtNet, money, oddsText,
-  outcomeText, personTotals, pickText, seasonMoney, spreadText, typeLabel, weekMoney,
+  ODDS_BANDS, oddsBandIndex, outcomeText, personTotals, pickText, resultsByOdds,
+  seasonMoney, spreadText, typeLabel, weekMoney,
 } from "../js/breakdown.js";
 
 const ev = (overrides) => ({
@@ -126,6 +127,41 @@ test("average line uses American odds, including open picks and shared SGP price
   assert.equal(person.lineCount, 4);
   assert.equal(person.avgMiss, 4);
   assert.equal(person.missCount, 1);
+});
+
+test("odds bands assign boundary prices exactly once", () => {
+  assert.equal(ODDS_BANDS.length, 7);
+  assert.deepEqual(
+    [-305, -200, -192, -150, -128, -120, -110, 100, 112, 125, 135, 200, 260].map(oddsBandIndex),
+    [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 6, 6],
+  );
+  assert.equal(oddsBandIndex(null), null);
+  assert.equal(oddsBandIndex(0), null);
+  assert.equal(oddsBandIndex(99), null);
+});
+
+test("results by odds count each person's settled W-L record, including SGP leg prices", () => {
+  const entries = [
+    ["Roma", -200, "hit"], ["Roma", -150, "miss"], ["Roma", -120, "hit"],
+    ["Roma", 100, "miss"], ["Roma", 125, "hit"], ["Roma", 185, "miss"],
+    ["Roma", 200, "hit"], ["Roma", -110, "push"], ["Roma", -105, "pending"],
+    ["Dalton", 260, "miss"],
+  ];
+  const legs = entries.map(([by, odds, result], i) => leg(
+    { id: `l${i}`, by, odds, team: `Team ${i}`, type: "moneyline" },
+    { result, margin: null },
+  ));
+  legs.push(leg({ id: "sgp1", by: "Roma", group: "sgp", team: "SGP A", type: "other" }, { result: "miss", margin: null }));
+  legs.push(leg({ id: "sgp2", by: "Roma", group: "sgp", odds: -110, team: "SGP B", type: "other" }, { result: "hit", margin: null }));
+  legs.push(leg({ id: "unpriced", by: "Roma", team: "Unpriced", type: "other" }, { result: "miss", margin: null }));
+  const rows = breakdownRows([week({ week: { groups: { sgp: { odds: 135 } } }, legs })]);
+  const records = resultsByOdds(rows);
+  assert.deepEqual(records.find((p) => p.name === "Roma").records, [
+    { wins: 1, losses: 0 }, { wins: 0, losses: 1 }, { wins: 1, losses: 0 },
+    { wins: 1, losses: 1 }, { wins: 1, losses: 0 }, { wins: 0, losses: 2 },
+    { wins: 1, losses: 0 },
+  ]);
+  assert.deepEqual(records.find((p) => p.name === "Dalton").records[6], { wins: 0, losses: 1 });
 });
 
 test("money fields parse out of free text", () => {

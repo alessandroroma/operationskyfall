@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, seasonMoney, fmtMoney, fmtNet }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, seasonMoney, fmtMoney, fmtNet }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -160,6 +160,17 @@ function personTableHtml(rows) {
   </table></div><p class="muted">Avg line: mean American odds for each pick with a listed price, including open picks; same-game legs use their own price when listed, otherwise the shared group price. Avg miss: mean points short on misses with a measured margin; manual props without one are excluded.</p>`;
 }
 
+function oddsResultsTableHtml(rows) {
+  const people = resultsByOdds(rows);
+  if (!people.length) return "";
+  const headers = ODDS_BANDS.map((label) => `<th class="num">${esc(label)}</th>`).join("");
+  const body = people.map((person) => `<tr><td class="wk">${esc(person.name)}</td>${person.records.map((record) => `<td class="num">${record.wins}-${record.losses}</td>`).join("")}</tr>`).join("");
+  return `<h3 class="bd">Results by odds</h3><div class="table-wrap"><table class="bd">
+    <thead><tr><th>Who</th>${headers}</tr></thead>
+    <tbody>${body}</tbody>
+  </table></div><p class="muted">Records are wins-losses for settled legs only. Pushes and open legs are excluded; SGP legs without their own odds use the shared SGP price. Boundary odds count once: -200 in the first band, -150 in the second, -120 in the third, +100 in the fourth, +125 in the fifth, and +200 in the last.</p>`;
+}
+
 function moneyTableHtml(season) {
   const rows = season.weeks.map((w) => `<tr><td class="wk">${esc(w.label)}</td><td class="num">${esc(fmtMoney(w.stake))}</td><td class="num">${esc(fmtMoney(w.returned))}</td><td class="num ${w.net > 0 ? "won" : w.net < 0 ? "lost" : ""}">${esc(fmtNet(w.net))}</td></tr>`).join("");
   return `<h3 class="bd">Per week</h3><div class="table-wrap"><table class="bd">
@@ -184,6 +195,7 @@ function breakdownHtml() {
     <h3 class="bd">Every leg${breakdownWho === "all" ? "" : ` · ${esc(breakdownWho)}`} (${shown.length})</h3>
     ${rows}
     ${personTableHtml(all)}
+    ${oddsResultsTableHtml(all)}
     ${moneyTableHtml(seasonMoney(evaluated))}`;
 }
 
