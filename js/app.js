@@ -172,11 +172,11 @@ function oddsResultsTableHtml(rows) {
 }
 
 function bettingWarTableHtml(rows) {
-  const people = bettingWar(rows);
+  const people = bettingWar(rows).sort((a, b) => b.delta - a.delta || a.name.localeCompare(b.name));
   if (!people.length) return "";
   const body = people.map((person) => `<tr><td class="wk">${esc(person.name)}</td><td class="num">${person.expected.toFixed(2)}</td><td class="num">${person.earned.toFixed(2)}</td><td class="num ${person.delta > 0 ? "won" : person.delta < 0 ? "lost" : ""}">${person.delta > 0 ? "+" : ""}${person.delta.toFixed(2)}</td></tr>`).join("");
   return `<h3 class="bd">Betting War</h3><div class="table-wrap"><table class="bd">
-    <thead><tr><th>Who</th><th class="num">Expected Value</th><th class="num">Earned Value</th><th class="num">Delta EV</th></tr></thead>
+    <thead><tr><th>Who</th><th class="num">Expected Value</th><th class="num">Earned Value</th><th class="num" aria-sort="descending">Delta EV</th></tr></thead>
     <tbody>${body}</tbody>
   </table></div><p class="muted">Expected Value sums 1 ÷ decimal odds for every priced leg. Earned Value adds decimal odds − 1 for wins; losses, pushes, and open legs add zero. Delta EV = Earned Value − Expected Value. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
 }
