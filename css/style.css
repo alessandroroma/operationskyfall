@@ -103,5 +103,8 @@ table.bd td.lost, table.bd td.miss { color: var(--red); }
 .war-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 0; color: var(--muted); font-size: .78rem; }
 .war-legend span { display: inline-flex; align-items: center; gap: 5px; }
 .war-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+.margin-rankings { margin-top: 18px; }
+.margin-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.margin-tabs .tab:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 td.pick-cell { white-space: normal; min-width: 160px; }
 .tiny { display: block; font-size: .72rem; color: var(--muted); font-weight: 400; }

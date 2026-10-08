@@ -117,6 +117,12 @@ function contributorsHtml(ev) {
 // ---- Breakdown tab: one table across every week ------------------------------
 
 let breakdownWho = "all";
+const MARGIN_TABS = [
+  ["bestWins", "Best Wins"],
+  ["worstLosses", "Worst Losses"],
+  ["worstBeats", "Worst Beats"],
+];
+let marginTab = "bestWins";
 
 function pill(result) {
   return `<span class="pill ${esc(result)}">${esc(RESULT_LABEL[result] ?? result)}</span>`;
@@ -217,15 +223,14 @@ function warByWeekHtml(rows) {
 }
 
 function marginTablesHtml(rows) {
-  const { bestWins, worstLosses, worstBeats } = marginLeaders(rows);
-  return [
-    ["Best Wins", bestWins],
-    ["Worst Losses", worstLosses],
-    ["Worst Beats", worstBeats],
-  ].map(([title, ranked]) => {
+  const rankings = marginLeaders(rows);
+  const tabs = MARGIN_TABS.map(([id, title]) => `<button type="button" id="margin-tab-${id}" class="tab${marginTab === id ? " on" : ""}" role="tab" aria-controls="margin-panel-${id}" aria-selected="${marginTab === id}" tabindex="${marginTab === id ? 0 : -1}" data-margin-tab="${id}">${title}</button>`).join("");
+  const panels = MARGIN_TABS.map(([id, title]) => {
+    const ranked = rankings[id];
     const body = ranked.map((row) => `<tr><td class="wk">${esc(row.week)}</td><td>${esc(row.by || "Unassigned")}</td><td>${esc(row.bet)} (${esc(row.odds)})</td><td class="num ${row.margin > 0 ? "won" : "lost"}">${row.margin > 0 ? "+" : ""}${Number(row.margin.toFixed(1))}</td></tr>`).join("");
-    return `<h3 class="bd">${title}</h3><div class="table-wrap"><table class="bd"><thead><tr><th>Week</th><th>Who</th><th>Bet</th><th class="num">Margin (pts)</th></tr></thead><tbody>${body || '<tr><td colspan="4">No graded bets with a point margin yet.</td></tr>'}</tbody></table></div>`;
+    return `<div id="margin-panel-${id}" role="tabpanel" aria-labelledby="margin-tab-${id}"${marginTab === id ? "" : " hidden"}><div class="table-wrap"><table class="bd"><thead><tr><th>Week</th><th>Who</th><th>Bet</th><th class="num">Margin (pts)</th></tr></thead><tbody>${body || '<tr><td colspan="4">No graded bets with a point margin yet.</td></tr>'}</tbody></table></div></div>`;
   }).join("");
+  return `<section class="margin-rankings" aria-label="Bet margin rankings"><div class="margin-tabs" role="tablist" aria-label="Bet margin rankings">${tabs}</div>${panels}</section>`;
 }
 
 function moneyTableHtml(season) {
@@ -266,6 +271,22 @@ function renderBreakdown(resetEveryLeg = false) {
   if (el) el.innerHTML = breakdownHtml(!resetEveryLeg && $("every-leg-details")?.open === true);
 }
 
+function selectMarginTab(id, focus = false) {
+  if (!MARGIN_TABS.some(([tabId]) => tabId === id)) return;
+  marginTab = id;
+  for (const [tabId] of MARGIN_TABS) {
+    const tab = $(`margin-tab-${tabId}`);
+    const panel = $(`margin-panel-${tabId}`);
+    if (!tab || !panel) continue;
+    const selected = tabId === id;
+    tab.classList.toggle("on", selected);
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    panel.hidden = !selected;
+    if (selected && focus) tab.focus();
+  }
+}
+
 function showTab(name) {
   const target = name === "breakdown" ? "breakdown" : "parlays";
   document.querySelectorAll("#tabs .tab").forEach((b) => {
@@ -285,10 +306,26 @@ function setupTabs() {
     if (btn) showTab(btn.dataset.tab);
   });
   $("breakdown").addEventListener("click", (e) => {
+    const marginButton = e.target.closest("[data-margin-tab]");
+    if (marginButton) {
+      selectMarginTab(marginButton.dataset.marginTab);
+      return;
+    }
     const chip = e.target.closest("[data-by]");
     if (!chip) return;
     breakdownWho = chip.dataset.by;
     renderBreakdown();
+  });
+  $("breakdown").addEventListener("keydown", (e) => {
+    const tab = e.target.closest("[data-margin-tab]");
+    if (!tab) return;
+    const index = MARGIN_TABS.findIndex(([id]) => id === tab.dataset.marginTab);
+    const next = e.key === "ArrowRight" ? (index + 1) % MARGIN_TABS.length
+      : e.key === "ArrowLeft" ? (index + MARGIN_TABS.length - 1) % MARGIN_TABS.length
+      : e.key === "Home" ? 0 : e.key === "End" ? MARGIN_TABS.length - 1 : -1;
+    if (next < 0) return;
+    e.preventDefault();
+    selectMarginTab(MARGIN_TABS[next][0], true);
   });
   showTab(location.hash === "#breakdown" ? "breakdown" : "parlays");
 }
