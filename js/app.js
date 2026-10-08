@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, bettingWar, seasonMoney, fmtMoney, fmtNet }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, bettingWar, warByWeek, seasonMoney, fmtMoney, fmtNet }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -181,6 +181,38 @@ function bettingWarTableHtml(rows) {
   </table></div><p class="muted">Expected Value sums 1 ÷ decimal odds for every priced leg. Earned Value adds decimal odds for wins and subtracts 1 for losses; pushes and open legs add zero. Delta EV = Earned Value − Expected Value. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
 }
 
+const WAR_COLORS = ["#58a6ff", "#ff7b72", "#3fb950", "#d29922", "#bc8cff", "#39c5cf", "#ffa657"];
+
+function warByWeekHtml(rows) {
+  const { people, weeks } = warByWeek(rows);
+  if (!people.length || !weeks.length) return "";
+  const left = 48, top = 25, plotHeight = 220, groupWidth = Math.max(130, people.length * 17 + 24);
+  const width = left + weeks.length * groupWidth + 20, height = top + plotHeight + 42;
+  const baseline = top + plotHeight / 2;
+  const deltas = weeks.flatMap((week) => week.values).filter((value) => value != null);
+  const bound = Math.max(1, Math.ceil(Math.max(0, ...deltas.map(Math.abs))));
+  const y = (value) => baseline - value * plotHeight / (2 * bound);
+  const ticks = [-bound, -bound / 2, 0, bound / 2, bound].map((value) => {
+    const yy = y(value);
+    return `<line x1="${left}" y1="${yy}" x2="${width - 12}" y2="${yy}" class="war-grid${value === 0 ? " zero" : ""}"/><text x="${left - 8}" y="${yy + 4}" text-anchor="end" class="war-axis">${value > 0 ? "+" : ""}${Number(value.toFixed(1))}</text>`;
+  }).join("");
+  const groups = weeks.map((week, i) => {
+    const inner = groupWidth - 24, slot = inner / people.length, barWidth = Math.min(14, slot - 3);
+    const bars = week.values.map((value, j) => {
+      if (value == null) return "";
+      const cx = left + i * groupWidth + 12 + (j + 0.5) * slot;
+      const color = WAR_COLORS[j % WAR_COLORS.length];
+      const label = `${week.label} · ${people[j]}: ${value > 0 ? "+" : ""}${value.toFixed(2)} delta EV`;
+      if (value === 0) return `<circle cx="${cx}" cy="${baseline}" r="3" fill="${color}" tabindex="0" aria-label="${esc(label)}"><title>${esc(label)}</title></circle>`;
+      const yy = y(value);
+      return `<rect x="${cx - barWidth / 2}" y="${Math.min(yy, baseline)}" width="${barWidth}" height="${Math.abs(yy - baseline)}" fill="${color}" rx="2" tabindex="0" aria-label="${esc(label)}"><title>${esc(label)}</title></rect>`;
+    }).join("");
+    return `${bars}<text x="${left + (i + 0.5) * groupWidth}" y="${height - 13}" text-anchor="middle" class="war-axis week">${esc(week.label)}</text>`;
+  }).join("");
+  const legend = people.map((name, i) => `<span><i style="background:${WAR_COLORS[i % WAR_COLORS.length]}"></i>${esc(name)}</span>`).join("");
+  return `<h3 class="bd">WAR by week</h3><div class="war-chart-wrap"><svg class="war-chart" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Delta EV by week for each person; bars above zero are positive, bars below zero are negative">${ticks}${groups}</svg></div><div class="war-legend">${legend}</div><p class="muted">Each bar is that person's weekly Delta EV, using the same calculation as Betting War. Hover or focus a bar for its value; no bar means no recorded bets that week.</p>`;
+}
+
 function moneyTableHtml(season) {
   const rows = season.weeks.map((w) => `<tr><td class="wk">${esc(w.label)}</td><td class="num">${esc(fmtMoney(w.stake))}</td><td class="num">${esc(fmtMoney(w.returned))}</td><td class="num ${w.net > 0 ? "won" : w.net < 0 ? "lost" : ""}">${esc(fmtNet(w.net))}</td></tr>`).join("");
   return `<h3 class="bd">Per week</h3><div class="table-wrap"><table class="bd">
@@ -207,6 +239,7 @@ function breakdownHtml() {
     ${personTableHtml(all)}
     ${oddsResultsTableHtml(all)}
     ${bettingWarTableHtml(all)}
+    ${warByWeekHtml(all)}
     ${moneyTableHtml(seasonMoney(evaluated))}`;
 }
 

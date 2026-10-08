@@ -205,6 +205,31 @@ export function bettingWar(rows) {
   return people;
 }
 
+// Weekly deltas use the same per-leg math as the all-weeks Betting War table.
+// null means that person had no recorded leg in that week (distinct from 0).
+export function warByWeek(rows) {
+  const people = personTotals(rows).map((p) => p.name);
+  const weeks = new Map();
+  for (const row of rows) {
+    if (!weeks.has(row.weekId)) weeks.set(row.weekId, {
+      id: row.weekId, label: row.week, weekOf: row.weekOf, rows: [],
+    });
+    weeks.get(row.weekId).rows.push(row);
+  }
+  return {
+    people,
+    weeks: [...weeks.values()]
+      .sort((a, b) => String(a.weekOf).localeCompare(String(b.weekOf)) || String(a.id).localeCompare(String(b.id)))
+      .map((week) => {
+        const deltas = new Map(bettingWar(week.rows).map((p) => [p.name, p.delta]));
+        return {
+          id: week.id, label: week.label, weekOf: week.weekOf,
+          values: people.map((name) => deltas.get(name) ?? null),
+        };
+      }),
+  };
+}
+
 // First $ amount in a free-text money field ("$4,333.35 (incl. ...)" -> 4333.35).
 export function money(value) {
   const m = /(\$)\s*([\d,]+(?:\.\d+)?)/.exec(String(value ?? ""));

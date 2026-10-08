@@ -90,5 +90,14 @@ table.bd td.num, table.bd th.num { text-align: right; font-variant-numeric: tabu
 table.bd td.wk { font-weight: 700; }
 table.bd td.won, table.bd td.hit { color: var(--green); }
 table.bd td.lost, table.bd td.miss { color: var(--red); }
+.war-chart-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--card); }
+.war-chart { display: block; max-width: none; }
+.war-grid { stroke: var(--border); stroke-width: 1; }
+.war-grid.zero { stroke: var(--muted); stroke-width: 1.5; }
+.war-axis { fill: var(--muted); font: 11px system-ui, sans-serif; }
+.war-axis.week { fill: var(--text); font-weight: 600; }
+.war-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 0; color: var(--muted); font-size: .78rem; }
+.war-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.war-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
 td.pick-cell { white-space: normal; min-width: 160px; }
 .tiny { display: block; font-size: .72rem; color: var(--muted); font-weight: 400; }

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {
   bettingWar, breakdownRows, contributors, decimalOdds, filterRows, fmtMoney, fmtNet, money, oddsText,
   ODDS_BANDS, oddsBandIndex, outcomeText, personTotals, pickText, resultsByOdds,
-  seasonMoney, spreadText, typeLabel, weekMoney,
+  seasonMoney, spreadText, typeLabel, warByWeek, weekMoney,
 } from "../js/breakdown.js";
 
 const ev = (overrides) => ({
@@ -189,6 +189,32 @@ test("Betting War converts American odds and totals expected, earned, and delta 
   assert.ok(Math.abs(roma.earned - 25 / 6) < 1e-12);
   assert.ok(Math.abs(roma.delta - 7 / 6) < 1e-12);
   assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: -1, delta: -1.5 });
+});
+
+test("WAR by week is chronological and sums to each person's all-weeks delta", () => {
+  const rows = breakdownRows([
+    week({ week: { id: "w3", label: "Week 3", weekOf: "2026-10-01" }, legs: [
+      leg({ by: "Dalton", odds: -200, team: "A", type: "moneyline" }, { result: "hit" }),
+    ] }),
+    week({ week: { id: "w1", label: "Week 1", weekOf: "2026-09-17" }, legs: [
+      leg({ by: "Roma", odds: -100, team: "B", type: "moneyline" }, { result: "hit" }),
+      leg({ by: "Dalton", odds: 100, team: "C", type: "moneyline" }, { result: "miss" }),
+    ] }),
+    week({ week: { id: "w2", label: "Week 2", weekOf: "2026-09-24" }, legs: [
+      leg({ by: "Roma", odds: 100, team: "D", type: "moneyline" }, { result: "miss" }),
+    ] }),
+  ]);
+  const chart = warByWeek(rows);
+  assert.deepEqual(chart.weeks.map((w) => w.label), ["Week 1", "Week 2", "Week 3"]);
+  const roma = chart.people.indexOf("Roma"), dalton = chart.people.indexOf("Dalton");
+  assert.deepEqual(chart.weeks.map((w) => w.values[roma]), [1.5, -1.5, null]);
+  assert.ok(Math.abs(chart.weeks[2].values[dalton] - 5 / 6) < 1e-12);
+  assert.deepEqual(chart.weeks.slice(0, 2).map((w) => w.values[dalton]), [-1.5, null]);
+  for (const person of bettingWar(rows)) {
+    const index = chart.people.indexOf(person.name);
+    const weeklySum = chart.weeks.reduce((sum, w) => sum + (w.values[index] ?? 0), 0);
+    assert.ok(Math.abs(weeklySum - person.delta) < 1e-12);
+  }
 });
 
 test("money fields parse out of free text", () => {
