@@ -164,7 +164,7 @@ function oddsResultsTableHtml(rows) {
   const people = resultsByOdds(rows);
   if (!people.length) return "";
   const headers = ODDS_BANDS.map((label) => `<th class="num">${esc(label)}</th>`).join("");
-  const body = people.map((person) => `<tr><td class="wk">${esc(person.name)}</td>${person.records.map((record) => `<td class="num">${record.wins}-${record.losses}</td>`).join("")}</tr>`).join("");
+  const body = people.map((person) => `<tr><td class="wk">${esc(person.name)}</td>${person.records.map((record) => `<td class="num">${record.wins || record.losses ? `${record.wins}-${record.losses}` : ""}</td>`).join("")}</tr>`).join("");
   return `<h3 class="bd">Results by odds</h3><div class="table-wrap"><table class="bd">
     <thead><tr><th>Who</th>${headers}</tr></thead>
     <tbody>${body}</tbody>
