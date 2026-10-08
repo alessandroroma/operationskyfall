@@ -1,7 +1,7 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }] =
-  await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`)]);
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, seasonMoney, fmtMoney, fmtNet }] =
+  await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -114,6 +114,107 @@ function contributorsHtml(ev) {
   return `<div class="contrib">${rows.map(chip).join("")}</div>`;
 }
 
+// ---- Breakdown tab: one table across every week ------------------------------
+
+let breakdownWho = "all";
+
+function pill(result) {
+  return `<span class="pill ${esc(result)}">${esc(RESULT_LABEL[result] ?? result)}</span>`;
+}
+
+function breakdownRowHtml(r) {
+  return `<tr class="${esc(r.result)}">
+    <td class="wk">${esc(r.week)}</td>
+    <td>${r.by ? esc(r.by) : "—"}</td>
+    <td class="pick-cell">${esc(r.pick)}${r.note ? `<span class="tiny">${esc(r.note)}</span>` : ""}</td>
+    <td>${esc(r.type)}</td>
+    <td class="num">${esc(r.spread)}</td>
+    <td class="num"${r.oddsFull ? ` title="${esc(r.oddsFull)}"` : ""}>${esc(r.odds)}</td>
+    <td>${pill(r.result)}</td>
+    <td class="num ${esc(r.result)}">${esc(r.outcome)}</td>
+  </tr>`;
+}
+
+function legTableHtml(rows) {
+  return `<div class="table-wrap"><table class="bd">
+    <thead><tr><th>Week</th><th>Who</th><th>Pick</th><th>Bet type</th><th class="num">Spread</th><th class="num">Odds</th><th>Result</th><th class="num">Won/lost by</th></tr></thead>
+    <tbody>${rows.map(breakdownRowHtml).join("")}</tbody>
+  </table></div>`;
+}
+
+function personTableHtml(rows) {
+  const totals = personTotals(rows);
+  if (!totals.length) return "";
+  const body = totals.map((p) => {
+    const settled = p.hit + p.miss;
+    const pct = settled ? `${Math.round((p.hit / settled) * 100)}%` : "—";
+    return `<tr><td class="wk">${esc(p.name)}</td><td class="num">${p.total}</td><td class="num hit">${p.hit}</td><td class="num miss">${p.miss}</td><td class="num">${p.push}</td><td class="num">${p.live + p.pending + p.unknown}</td><td class="num">${pct}</td></tr>`;
+  }).join("");
+  return `<h3 class="bd">By person (all weeks)</h3><div class="table-wrap"><table class="bd">
+    <thead><tr><th>Who</th><th class="num">Legs</th><th class="num">Hit</th><th class="num">Miss</th><th class="num">Push</th><th class="num">Open</th><th class="num">Hit rate</th></tr></thead>
+    <tbody>${body}</tbody>
+  </table></div>`;
+}
+
+function moneyTableHtml(season) {
+  const rows = season.weeks.map((w) => `<tr><td class="wk">${esc(w.label)}</td><td class="num">${esc(fmtMoney(w.stake))}</td><td class="num">${esc(fmtMoney(w.returned))}</td><td class="num ${w.net > 0 ? "won" : w.net < 0 ? "lost" : ""}">${esc(fmtNet(w.net))}</td></tr>`).join("");
+  return `<h3 class="bd">Per week</h3><div class="table-wrap"><table class="bd">
+    <thead><tr><th>Week</th><th class="num">Staked</th><th class="num">Returned</th><th class="num">Net</th></tr></thead>
+    <tbody>${rows}<tr><td class="wk">Season</td><td class="num">${esc(fmtMoney(season.stake))}</td><td class="num">${esc(fmtMoney(season.returned))}</td><td class="num ${season.net > 0 ? "won" : season.net < 0 ? "lost" : ""}">${esc(fmtNet(season.net))}</td></tr></tbody>
+  </table></div>`;
+}
+
+function breakdownHtml() {
+  const all = breakdownRows(evaluated);
+  if (!all.length) return `<p class="muted">No legs recorded yet. Add a week to <code>data/parlays.json</code>.</p>`;
+  const people = peopleIn(all);
+  const chips = ["all", ...people]
+    .map((who) => `<button class="chip${breakdownWho === who ? " on" : ""}" data-by="${esc(who)}">${esc(who === "all" ? "All" : who)}</button>`)
+    .join("");
+  const shown = filterRows(all, breakdownWho);
+  const rows = shown.length ? legTableHtml(shown) : `<p class="muted">No legs for ${esc(breakdownWho)}.</p>`;
+  return `<div class="bd-head">
+      <div class="bd-filters" role="group" aria-label="Filter by who picked it">${chips}</div>
+    </div>
+    <div class="money-line">Season: staked <b>${esc(fmtMoney(seasonMoney(evaluated).stake))}</b> · returned <b>${esc(fmtMoney(seasonMoney(evaluated).returned))}</b> · net <b class="${seasonMoney(evaluated).net > 0 ? "up" : seasonMoney(evaluated).net < 0 ? "down" : ""}">${esc(fmtNet(seasonMoney(evaluated).net))}</b></div>
+    <h3 class="bd">Every leg${breakdownWho === "all" ? "" : ` · ${esc(breakdownWho)}`} (${shown.length})</h3>
+    ${rows}
+    ${personTableHtml(all)}
+    ${moneyTableHtml(seasonMoney(evaluated))}`;
+}
+
+function renderBreakdown() {
+  const el = $("breakdown");
+  if (el) el.innerHTML = breakdownHtml();
+}
+
+function showTab(name) {
+  const target = name === "breakdown" ? "breakdown" : "parlays";
+  document.querySelectorAll("#tabs .tab").forEach((b) => {
+    const on = b.dataset.tab === target;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-selected", String(on));
+  });
+  $("view-parlays").hidden = target !== "parlays";
+  $("view-breakdown").hidden = target !== "breakdown";
+  renderBreakdown();
+  tick();
+}
+
+function setupTabs() {
+  $("tabs").addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-tab]");
+    if (btn) showTab(btn.dataset.tab);
+  });
+  $("breakdown").addEventListener("click", (e) => {
+    const chip = e.target.closest("[data-by]");
+    if (!chip) return;
+    breakdownWho = chip.dataset.by;
+    renderBreakdown();
+  });
+  showTab(location.hash === "#breakdown" ? "breakdown" : "parlays");
+}
+
 function parlayHtml(ev) {
   const w = ev.week;
   const money = [w.stake && `Stake ${esc(w.stake)}`, w.payout && `To win ${esc(w.payout)}`, w.boost && esc(w.boost), w.returned && `Returned ${esc(w.returned)}`].filter(Boolean).join(" · ");
@@ -139,6 +240,7 @@ function render() {
   $("record").innerHTML = `<p class="record">Season record: <b>${rec.won}</b> won · <b>${rec.lost}</b> busted${rec.open ? ` · <b>${rec.open}</b> open` : ""}</p>`;
   $("history-wrap").hidden = past.length === 0;
   $("history").innerHTML = past.map(historyHtml).join("");
+  renderBreakdown();
   tick();
 }
 
@@ -182,6 +284,7 @@ async function main() {
     return;
   }
   setInterval(tick, 1000);
+  setupTabs();
   await refresh();
 }
 

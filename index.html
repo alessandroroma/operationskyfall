@@ -11,13 +11,22 @@
     <h1>Operation Skyfall</h1>
     <p class="sub">Weekly parlay tracker · NFL + college football</p>
   </header>
+  <nav class="tabs" id="tabs" role="tablist">
+    <button class="tab on" data-tab="parlays" role="tab" aria-selected="true">Parlays</button>
+    <button class="tab" data-tab="breakdown" role="tab" aria-selected="false">Breakdown</button>
+  </nav>
   <main>
-    <section id="current"><p class="muted">Loading…</p></section>
-    <section id="record"></section>
-    <details id="history-wrap" class="history" hidden>
-      <summary>History</summary>
-      <div id="history"></div>
-    </details>
+    <section id="view-parlays">
+      <section id="current"><p class="muted">Loading…</p></section>
+      <section id="record"></section>
+      <details id="history-wrap" class="history" hidden>
+        <summary>History</summary>
+        <div id="history"></div>
+      </details>
+    </section>
+    <section id="view-breakdown" hidden>
+      <div id="breakdown"><p class="muted">Loading…</p></div>
+    </section>
   </main>
   <footer>
     <span id="updated" class="muted"></span>

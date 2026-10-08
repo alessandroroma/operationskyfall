@@ -38,6 +38,18 @@ Leg fields:
 
 Rules: one parlay per week, newest `weekOf` shows on top and the rest go under History. A single missed leg busts the parlay; pushes are dropped. Spreads are graded against **your** line (bet365's), not ESPN's. A week can also carry `"result": "WON" | "BUSTED" | "VOID"` (with `"legs": []`) to record a past parlay whose legs weren't saved; it counts toward the season record. Set `"example": true` on a week to mark it as demo data (excluded from the season record).
 
+## Breakdown tab
+
+The site has two tabs: **Parlays** (current week + history) and **Breakdown** — a single table with one row per leg across every week ever entered:
+
+Week · who picked it · pick · bet type · spread · odds · result · won/lost by
+
+`Won/lost by` is the graded margin in points versus your number (`won by 10.5`, `lost by 1.5`, `on the number (push)`; live legs read `up 4 (live)`). Props and `other` legs have no margin and show `—`. The odds cell shows the leg price, or the shared same-game price (hover for the group name). Rows are newest week first, kickoff order inside a week; the filter chips narrow the table to one person.
+
+Below the leg table the tab shows **By person (all weeks)** (legs, hits, misses, pushes, open legs, hit rate), **Per week** money (staked, returned, net) and a season line.
+
+Row building is pure and lives in `js/breakdown.js` (`breakdownRows`, `personTotals`, `weekMoney`, `seasonMoney`), tested in `tests/breakdown.test.mjs`.
+
 ## Publish
 
 Settings -> Pages -> Source: **Deploy from a branch** -> `main` / `(root)`.
