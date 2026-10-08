@@ -198,8 +198,7 @@ export function bettingWar(rows) {
     const decimal = decimalOdds(row.oddsValue);
     if (!person || decimal == null) continue;
     person.expected += 1 / decimal;
-    if (row.result === "hit") person.earned += decimal;
-    else if (row.result === "miss") person.earned -= 1;
+    if (row.result === "hit") person.earned += decimal - 1;
   }
   for (const person of people) person.delta = person.earned - person.expected;
   return people;
