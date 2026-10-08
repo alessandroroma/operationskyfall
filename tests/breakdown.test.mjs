@@ -220,12 +220,13 @@ test("WAR by week is chronological and sums to each person's all-weeks delta", (
     assert.ok(Math.abs(weeklySum - person.delta) < 1e-12);
   }
   const cumulative = cumulativeWarByWeek(rows);
-  assert.deepEqual(cumulative.weeks.map((w) => w.label), ["Week 1", "Week 2", "Week 3"]);
-  assert.deepEqual(cumulative.weeks.map((w) => w.values[roma]), [1.5, 0, 0]);
-  assert.ok(Math.abs(cumulative.weeks[2].values[dalton] + 2 / 3) < 1e-12);
-  assert.deepEqual(cumulative.weeks.slice(0, 2).map((w) => w.values[dalton]), [-1.5, -1.5]);
+  assert.deepEqual(cumulative.weeks.map((w) => w.label), ["Week 0", "Week 1", "Week 2", "Week 3"]);
+  assert.ok(cumulative.weeks[0].values.every((value) => value === 0));
+  assert.deepEqual(cumulative.weeks.map((w) => w.values[roma]), [0, 1.5, 0, 0]);
+  assert.ok(Math.abs(cumulative.weeks[3].values[dalton] + 2 / 3) < 1e-12);
+  assert.deepEqual(cumulative.weeks.slice(0, 3).map((w) => w.values[dalton]), [0, -1.5, -1.5]);
   const jacob = cumulative.people.indexOf("Jacob");
-  assert.deepEqual(cumulative.weeks.map((w) => w.values[jacob]), [0, 0, -1.5]);
+  assert.deepEqual(cumulative.weeks.map((w) => w.values[jacob]), [0, 0, 0, -1.5]);
   for (const person of bettingWar(rows)) {
     const index = cumulative.people.indexOf(person.name);
     assert.ok(Math.abs(cumulative.weeks.at(-1).values[index] - person.delta) < 1e-12);
