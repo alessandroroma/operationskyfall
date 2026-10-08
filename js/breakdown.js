@@ -213,15 +213,21 @@ export function decimalOdds(value) {
 
 export function bettingWar(rows) {
   const people = personTotals(rows).map((p) => ({
-    name: p.name, expected: 0, earned: 0, delta: 0,
+    name: p.name, expected: 0, earned: 0, delta: 0, netUnits: 0,
   }));
   const byName = new Map(people.map((p) => [p.name, p]));
   for (const row of rows) {
     const person = byName.get(row.by);
+    if (!person) continue;
+    // A loss costs one unit even when its price was never recorded.
+    if (row.result === "miss") person.netUnits -= 1;
     const decimal = decimalOdds(row.oddsValue);
-    if (!person || decimal == null) continue;
+    if (decimal == null) continue;
     person.expected += 1 / decimal;
-    if (row.result === "hit") person.earned += decimal - 1;
+    if (row.result === "hit") {
+      person.earned += decimal - 1;
+      person.netUnits += decimal;
+    }
   }
   for (const person of people) person.delta = person.earned - person.expected;
   return people;

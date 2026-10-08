@@ -176,11 +176,11 @@ function oddsResultsTableHtml(rows) {
 function bettingWarTableHtml(rows) {
   const people = bettingWar(rows).sort((a, b) => b.delta - a.delta || a.name.localeCompare(b.name));
   if (!people.length) return "";
-  const body = people.map((person) => `<tr><td class="wk">${esc(person.name)}</td><td class="num">${person.expected.toFixed(2)}</td><td class="num">${person.earned.toFixed(2)}</td><td class="num ${person.delta > 0 ? "won" : person.delta < 0 ? "lost" : ""}">${person.delta > 0 ? "+" : ""}${person.delta.toFixed(2)}</td></tr>`).join("");
+  const body = people.map((person) => `<tr><td class="wk">${esc(person.name)}</td><td class="num">${person.expected.toFixed(2)}</td><td class="num">${person.earned.toFixed(2)}</td><td class="num ${person.delta > 0 ? "won" : person.delta < 0 ? "lost" : ""}">${person.delta > 0 ? "+" : ""}${person.delta.toFixed(2)}</td><td class="num ${person.netUnits > 0 ? "won" : person.netUnits < 0 ? "lost" : ""}">${person.netUnits > 0 ? "+" : ""}${person.netUnits.toFixed(2)}</td></tr>`).join("");
   return `<h3 class="bd">Betting War</h3><div class="table-wrap"><table class="bd">
-    <thead><tr><th>Who</th><th class="num">Expected Value</th><th class="num">Earned Value</th><th class="num" aria-sort="descending">Delta EV</th></tr></thead>
+    <thead><tr><th>Who</th><th class="num">Expected Value</th><th class="num">Earned Value</th><th class="num" aria-sort="descending">Delta EV</th><th class="num">Net Units</th></tr></thead>
     <tbody>${body}</tbody>
-  </table></div><p class="muted">Expected Value sums 1 ÷ decimal odds for every priced leg. Earned Value adds decimal odds − 1 for wins; losses, pushes, and open legs add zero. Delta EV = Earned Value − Expected Value. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
+  </table></div><p class="muted">Expected Value sums 1 ÷ decimal odds for every priced leg. Earned Value adds decimal odds − 1 for wins; losses, pushes, and open legs add zero. Delta EV = Earned Value − Expected Value. Net Units adds full decimal odds for wins and subtracts 1 for losses; pushes and open legs add zero. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
 }
 
 const WAR_COLORS = ["#58a6ff", "#ff7b72", "#3fb950", "#d29922", "#bc8cff", "#39c5cf", "#ffa657"];
