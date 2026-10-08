@@ -232,7 +232,7 @@ test("Betting War converts American odds and totals expected, earned, and delta 
   assert.ok(Math.abs(roma.expected - 3) < 1e-12);
   assert.ok(Math.abs(roma.earned - 13 / 6) < 1e-12);
   assert.ok(Math.abs(roma.delta + 5 / 6) < 1e-12);
-  assert.ok(Math.abs(roma.netUnits - 19 / 6) < 1e-12); // includes the unpriced loss
+  assert.ok(Math.abs(roma.netUnits - 1 / 6) < 1e-12); // net profit units; includes the unpriced loss
   assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: 0, delta: -0.5, netUnits: -1 });
 });
 

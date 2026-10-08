@@ -226,7 +226,7 @@ export function bettingWar(rows) {
     person.expected += 1 / decimal;
     if (row.result === "hit") {
       person.earned += decimal - 1;
-      person.netUnits += decimal;
+      person.netUnits += decimal - 1;
     }
   }
   for (const person of people) person.delta = person.earned - person.expected;
