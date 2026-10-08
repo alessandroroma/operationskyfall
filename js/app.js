@@ -152,7 +152,7 @@ function personTableHtml(rows) {
   const body = totals.map((p) => {
     const settled = p.hit + p.miss;
     const pct = settled ? `${Math.round((p.hit / settled) * 100)}%` : "—";
-    return `<tr><td class="wk">${esc(p.name)}</td><td class="num">${p.total}</td><td class="num hit">${p.hit}</td><td class="num miss">${p.miss}</td><td class="num">${p.push}</td><td class="num">${p.live + p.pending + p.unknown}</td><td class="num">${pct}</td><td class="num">${fmt(p.avgLine)}</td><td class="num">${fmt(p.avgMiss)}</td></tr>`;
+    return `<tr><td class="wk">${esc(p.name)}</td><td class="num">${p.total}</td><td class="num hit">${p.hit}</td><td class="num miss">${p.miss}</td><td class="num">${p.push}</td><td class="num">${p.live + p.pending + p.unknown}</td><td class="num">${pct}</td><td class="num">${p.avgLine > 0 ? "+" : ""}${fmt(p.avgLine)}</td><td class="num">${fmt(p.avgMiss)}</td></tr>`;
   }).join("");
   return `<h3 class="bd">By person (all weeks)</h3><div class="table-wrap"><table class="bd">
     <thead><tr><th>Who</th><th class="num">Legs</th><th class="num">Hit</th><th class="num">Miss</th><th class="num">Push</th><th class="num">Open</th><th class="num">Hit rate</th><th class="num">Avg line</th><th class="num">Avg miss</th></tr></thead>
