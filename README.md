@@ -49,6 +49,7 @@ Week · who picked it · pick · bet type · spread · odds · result · won/los
 Below the leg table the tab shows **By person (all weeks)** (legs, hits, misses, pushes, open legs, hit rate, average odds and average miss), **Results by odds** (each person's W-L record across seven American-odds bands; settled legs only), **Betting War** (Expected Value = sum of `1 / decimal odds` for every priced leg; Earned Value adds `decimal odds - 1` for wins and zero for losses; Delta EV = earned minus expected), **WAR by week** (a line chart of each person's cumulative Delta EV through each week, with the same formula), **Per week** money (staked, returned, net) and a season line. For all odds-based totals, SGP legs use their own price or the shared price when none is listed.
 
 Row building is pure and lives in `js/breakdown.js` (`breakdownRows`, `personTotals`, `resultsByOdds`, `bettingWar`, `warByWeek`, `cumulativeWarByWeek`, `weekMoney`, `seasonMoney`), tested in `tests/breakdown.test.mjs`.
+Below WAR by week, **Best Wins**, **Worst Losses**, and **Worst Beats** list the five largest winning margins, largest losing margins, and closest losses respectively. Only settled legs with a numeric point margin are ranked; manual props without a margin are excluded.
 
 ## Publish
 

@@ -84,6 +84,7 @@ export function breakdownRows(evaluated) {
         weekOf: ev.week.weekOf,
         weekStatus: ev.status,
         by: l.leg.by ?? "",
+        bet: describeLeg(l.leg),
         pick: pickText(l.leg),
         note: l.leg.note ?? "",
         type: typeLabel(l.leg),
@@ -105,6 +106,17 @@ export function breakdownRows(evaluated) {
 export function filterRows(rows, who) {
   if (!who || who === "all") return rows;
   return rows.filter((r) => r.by === who);
+}
+
+// Only settled, numeric point margins can be ranked; manual prop results have no margin.
+export function marginLeaders(rows) {
+  const wins = rows.filter((row) => row.result === "hit" && Number.isFinite(row.margin) && row.margin > 0);
+  const losses = rows.filter((row) => row.result === "miss" && Number.isFinite(row.margin) && row.margin < 0);
+  return {
+    bestWins: [...wins].sort((a, b) => b.margin - a.margin).slice(0, 5),
+    worstLosses: [...losses].sort((a, b) => a.margin - b.margin).slice(0, 5),
+    worstBeats: [...losses].sort((a, b) => b.margin - a.margin).slice(0, 5),
+  };
 }
 
 // First-appearance list of contributors, for the filter chips.

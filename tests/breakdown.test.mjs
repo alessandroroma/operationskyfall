@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  bettingWar, breakdownRows, contributors, cumulativeWarByWeek, decimalOdds, filterRows, fmtMoney, fmtNet, money, oddsText,
+  bettingWar, breakdownRows, contributors, cumulativeWarByWeek, decimalOdds, filterRows, fmtMoney, fmtNet, marginLeaders, money, oddsText,
   ODDS_BANDS, oddsBandIndex, outcomeText, personTotals, pickText, resultsByOdds,
   seasonMoney, spreadText, typeLabel, warByWeek, weekMoney,
 } from "../js/breakdown.js";
@@ -76,11 +76,25 @@ test("rows cover every leg, newest week first, kickoff order inside a week", () 
   assert.deepEqual(rows.map((r) => r.week), ["Week 3", "Week 3", "Week 2"]);
   assert.deepEqual(rows[1], {
     weekId: "w3", week: "Week 3", weekOf: "2026-10-01", weekStatus: "BUSTED",
-    by: "Roma", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", line: -12.5, odds: "\u2014", oddsValue: null,
+    by: "Roma", bet: "Texas Tech -12.5", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", line: -12.5, odds: "\u2014", oddsValue: null,
     oddsFull: "", result: "miss", margin: -3, outcome: "lost by 3",
   });
   assert.equal(rows[2].by, "");
   assert.equal(rows[0].outcome, "won by 7");
+});
+
+test("margin tables rank five graded wins, blowouts, and closest losses", () => {
+  const rows = [
+    ...[2, 8, 3, 5, 10, 7, 1].map((margin) => ({ result: "hit", margin })),
+    ...[-1, -9, -3, -7, -2, -5, -4].map((margin) => ({ result: "miss", margin })),
+    { result: "miss", margin: null },
+    { result: "hit", margin: null },
+    { result: "live_on_track", margin: 20 },
+  ];
+  const ranked = marginLeaders(rows);
+  assert.deepEqual(ranked.bestWins.map((row) => row.margin), [10, 8, 7, 5, 3]);
+  assert.deepEqual(ranked.worstLosses.map((row) => row.margin), [-9, -7, -5, -4, -3]);
+  assert.deepEqual(ranked.worstBeats.map((row) => row.margin), [-1, -2, -3, -4, -5]);
 });
 
 test("filtering and per-person tallies", () => {

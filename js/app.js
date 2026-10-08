@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, bettingWar, cumulativeWarByWeek, seasonMoney, fmtMoney, fmtNet }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -216,6 +216,18 @@ function warByWeekHtml(rows) {
   return `<h3 class="bd">WAR by week</h3><div class="war-chart-wrap"><svg class="war-chart" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="group" aria-label="Cumulative Delta EV through each week for each person">${ticks}${weekLabels}${lines}</svg></div><div class="war-legend">${legend}</div><p class="muted">Each point sums that person's Delta EV through that week, using the Betting War calculation. Weeks without a bet carry the prior total forward. Hover or focus a point for its value.</p>`;
 }
 
+function marginTablesHtml(rows) {
+  const { bestWins, worstLosses, worstBeats } = marginLeaders(rows);
+  return [
+    ["Best Wins", bestWins],
+    ["Worst Losses", worstLosses],
+    ["Worst Beats", worstBeats],
+  ].map(([title, ranked]) => {
+    const body = ranked.map((row) => `<tr><td class="wk">${esc(row.week)}</td><td>${esc(row.by || "Unassigned")}</td><td>${esc(row.bet)}</td><td class="num ${row.margin > 0 ? "won" : "lost"}">${row.margin > 0 ? "+" : ""}${Number(row.margin.toFixed(1))}</td></tr>`).join("");
+    return `<h3 class="bd">${title}</h3><div class="table-wrap"><table class="bd"><thead><tr><th>Week</th><th>Who</th><th>Bet</th><th class="num">Margin (pts)</th></tr></thead><tbody>${body || '<tr><td colspan="4">No graded bets with a point margin yet.</td></tr>'}</tbody></table></div>`;
+  }).join("");
+}
+
 function moneyTableHtml(season) {
   const rows = season.weeks.map((w) => `<tr><td class="wk">${esc(w.label)}</td><td class="num">${esc(fmtMoney(w.stake))}</td><td class="num">${esc(fmtMoney(w.returned))}</td><td class="num ${w.net > 0 ? "won" : w.net < 0 ? "lost" : ""}">${esc(fmtNet(w.net))}</td></tr>`).join("");
   return `<h3 class="bd">Per week</h3><div class="table-wrap"><table class="bd">
@@ -245,6 +257,7 @@ function breakdownHtml(everyLegOpen = false) {
     ${oddsResultsTableHtml(all)}
     ${bettingWarTableHtml(all)}
     ${warByWeekHtml(all)}
+    ${marginTablesHtml(all)}
     ${moneyTableHtml(seasonMoney(evaluated))}`;
 }
 
