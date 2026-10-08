@@ -80,6 +80,10 @@ button.chip.on { color: var(--text); border-color: var(--blue); background: #162
 .money-line .up { color: var(--green); }
 .money-line .down { color: var(--red); }
 h3.bd { margin: 18px 0 6px; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.every-leg { margin-top: 18px; }
+.every-leg > summary { width: fit-content; cursor: pointer; border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; color: var(--text); background: var(--card); font-size: .8rem; font-weight: 600; }
+.every-leg > summary:hover, .every-leg > summary:focus-visible { border-color: var(--blue); }
+.every-leg > .table-wrap, .every-leg > .muted { margin-top: 8px; }
 .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--card); }
 table.bd { border-collapse: collapse; width: 100%; font-size: .82rem; }
 table.bd th, table.bd td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }

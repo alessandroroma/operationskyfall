@@ -224,7 +224,7 @@ function moneyTableHtml(season) {
   </table></div>`;
 }
 
-function breakdownHtml() {
+function breakdownHtml(everyLegOpen = false) {
   const all = breakdownRows(evaluated);
   if (!all.length) return `<p class="muted">No legs recorded yet. Add a week to <code>data/parlays.json</code>.</p>`;
   const people = peopleIn(all);
@@ -237,8 +237,10 @@ function breakdownHtml() {
       <div class="bd-filters" role="group" aria-label="Filter by who picked it">${chips}</div>
     </div>
     <div class="money-line">Season: staked <b>${esc(fmtMoney(seasonMoney(evaluated).stake))}</b> · returned <b>${esc(fmtMoney(seasonMoney(evaluated).returned))}</b> · net <b class="${seasonMoney(evaluated).net > 0 ? "up" : seasonMoney(evaluated).net < 0 ? "down" : ""}">${esc(fmtNet(seasonMoney(evaluated).net))}</b></div>
-    <h3 class="bd">Every leg${breakdownWho === "all" ? "" : ` · ${esc(breakdownWho)}`} (${shown.length})</h3>
-    ${rows}
+    <details id="every-leg-details" class="every-leg"${everyLegOpen ? " open" : ""}>
+      <summary>Every leg${breakdownWho === "all" ? "" : ` · ${esc(breakdownWho)}`} (${shown.length})</summary>
+      ${rows}
+    </details>
     ${personTableHtml(all)}
     ${oddsResultsTableHtml(all)}
     ${bettingWarTableHtml(all)}
@@ -246,9 +248,9 @@ function breakdownHtml() {
     ${moneyTableHtml(seasonMoney(evaluated))}`;
 }
 
-function renderBreakdown() {
+function renderBreakdown(resetEveryLeg = false) {
   const el = $("breakdown");
-  if (el) el.innerHTML = breakdownHtml();
+  if (el) el.innerHTML = breakdownHtml(!resetEveryLeg && $("every-leg-details")?.open === true);
 }
 
 function showTab(name) {
@@ -260,7 +262,7 @@ function showTab(name) {
   });
   $("view-parlays").hidden = target !== "parlays";
   $("view-breakdown").hidden = target !== "breakdown";
-  renderBreakdown();
+  renderBreakdown(target === "breakdown");
   tick();
 }
 
