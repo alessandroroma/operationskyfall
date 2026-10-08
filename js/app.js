@@ -178,7 +178,7 @@ function bettingWarTableHtml(rows) {
   return `<h3 class="bd">Betting War</h3><div class="table-wrap"><table class="bd">
     <thead><tr><th>Who</th><th class="num">Expected Value</th><th class="num">Earned Value</th><th class="num">Delta EV</th></tr></thead>
     <tbody>${body}</tbody>
-  </table></div><p class="muted">Expected Value sums 1 ÷ decimal odds for every priced leg. Earned Value sums decimal odds for wins; losses, pushes and open legs add zero. Delta EV = Earned Value − Expected Value. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
+  </table></div><p class="muted">Expected Value sums 1 ÷ decimal odds for every priced leg. Earned Value adds decimal odds for wins and subtracts 1 for losses; pushes and open legs add zero. Delta EV = Earned Value − Expected Value. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
 }
 
 function moneyTableHtml(season) {

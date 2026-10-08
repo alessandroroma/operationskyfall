@@ -186,9 +186,9 @@ test("Betting War converts American odds and totals expected, earned, and delta 
   const result = bettingWar(rows);
   const roma = result.find((p) => p.name === "Roma");
   assert.ok(Math.abs(roma.expected - 3) < 1e-12);
-  assert.ok(Math.abs(roma.earned - 31 / 6) < 1e-12);
-  assert.ok(Math.abs(roma.delta - 13 / 6) < 1e-12);
-  assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: 0, delta: -0.5 });
+  assert.ok(Math.abs(roma.earned - 25 / 6) < 1e-12);
+  assert.ok(Math.abs(roma.delta - 7 / 6) < 1e-12);
+  assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: -1, delta: -1.5 });
 });
 
 test("money fields parse out of free text", () => {
