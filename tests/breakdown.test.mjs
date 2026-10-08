@@ -74,7 +74,7 @@ test("rows cover every leg, newest week first, kickoff order inside a week", () 
   assert.deepEqual(rows.map((r) => r.week), ["Week 3", "Week 3", "Week 2"]);
   assert.deepEqual(rows[1], {
     weekId: "w3", week: "Week 3", weekOf: "2026-10-01", weekStatus: "BUSTED",
-    by: "Roma", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", line: -12.5, odds: "\u2014",
+    by: "Roma", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", line: -12.5, odds: "\u2014", oddsValue: null,
     oddsFull: "", result: "miss", margin: -3, outcome: "lost by 3",
   });
   assert.equal(rows[2].by, "");
@@ -86,7 +86,7 @@ test("filtering and per-person tallies", () => {
     week({
       legs: [
         leg({ by: "Roma", type: "moneyline", team: "A", date: "2026-10-01" }, { result: "hit", margin: 1 }),
-        leg({ by: "Roma", type: "spread", line: -1, team: "B", date: "2026-10-02" }, { result: "miss", margin: -2 }),
+        leg({ by: "Roma", type: "spread", line: -1, odds: -110, team: "B", date: "2026-10-02" }, { result: "miss", margin: -2 }),
         leg({ by: "Dalton", type: "moneyline", team: "C", date: "2026-10-03" }, { result: "push", margin: 0 }),
         leg({ type: "moneyline", team: "D", date: "2026-10-04" }, { result: "pending", margin: null }),
       ],
@@ -101,7 +101,7 @@ test("filtering and per-person tallies", () => {
   assert.equal(people[0].hit, 1);
   assert.equal(people[0].miss, 1);
   assert.equal(people[0].total, 2);
-  assert.equal(people[0].avgLine, -1);
+  assert.equal(people[0].avgLine, -110);
   assert.equal(people[0].avgMiss, 2);
   assert.equal(people[1].push, 1);
   assert.equal(people[1].total, 1);
@@ -109,16 +109,19 @@ test("filtering and per-person tallies", () => {
   assert.equal(people[1].avgMiss, null);
 });
 
-test("average line uses numeric bet lines even for open picks; average miss uses measured misses only", () => {
-  const rows = breakdownRows([week({ legs: [
-    leg({ by: "Roma", type: "spread", line: -7.5, team: "A" }, { result: "hit", margin: 3 }),
-    leg({ by: "Roma", type: "total_over", line: 47.5, team: "B" }, { result: "pending", margin: null }),
-    leg({ by: "Roma", type: "moneyline", team: "C" }, { result: "miss", margin: -4 }),
-    leg({ by: "Roma", type: "other", team: "D", result: "miss" }, { result: "miss", margin: null }),
-  ] })]);
+test("average line uses American odds, including open picks and shared SGP prices", () => {
+  const rows = breakdownRows([week({
+    week: { groups: { sgp: { label: "SGP", odds: 130 } } },
+    legs: [
+      leg({ by: "Roma", type: "spread", line: -7.5, odds: -200, team: "A" }, { result: "hit", margin: 3 }),
+      leg({ by: "Roma", type: "total_over", line: 47.5, odds: -110, team: "B" }, { result: "pending", margin: null }),
+      leg({ by: "Roma", type: "moneyline", group: "sgp", team: "C" }, { result: "miss", margin: -4 }),
+      leg({ by: "Roma", type: "other", team: "D", result: "miss" }, { result: "miss", margin: null }),
+    ],
+  })]);
   const [person] = personTotals(rows);
-  assert.equal(person.avgLine, 20);
-  assert.equal(person.lineCount, 2);
+  assert.equal(person.avgLine, -60);
+  assert.equal(person.lineCount, 3);
   assert.equal(person.avgMiss, 4);
   assert.equal(person.missCount, 1);
 });

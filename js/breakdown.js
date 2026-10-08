@@ -88,6 +88,7 @@ export function breakdownRows(evaluated) {
         spread: spreadText(l.leg),
         line: num(l.leg.line),
         odds: oddsText(l.leg, ev.week),
+        oddsValue: num(l.leg.group ? ev.week.groups?.[l.leg.group]?.odds : l.leg.odds),
         oddsFull: legOdds(l.leg, ev.week),
         result,
         margin,
@@ -118,7 +119,7 @@ export function personTotals(rows) {
     if (!map.has(r.by)) map.set(r.by, { name: r.by, hit: 0, miss: 0, push: 0, live: 0, pending: 0, unknown: 0, total: 0, lineSum: 0, lineCount: 0, missMarginSum: 0, missCount: 0 });
     const p = map.get(r.by);
     p.total++;
-    if (r.line != null && Number.isFinite(r.line)) { p.lineSum += r.line; p.lineCount++; }
+    if (r.oddsValue != null && r.oddsValue !== 0 && Number.isFinite(r.oddsValue)) { p.lineSum += r.oddsValue; p.lineCount++; }
     if (r.result === "hit") {
       p.hit++;
     } else if (r.result === "miss") {
