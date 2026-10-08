@@ -48,6 +48,7 @@ test("type, spread and pick columns read like a bet slip", () => {
 test("odds column shows the leg price or the shared same-game price", () => {
   assert.equal(oddsText({ odds: -115 }, {}), "-115");
   assert.equal(oddsText({ group: "sgp" }, { groups: { sgp: { label: "Same-game parlay", odds: 135 } } }), "+135");
+  assert.equal(oddsText({ group: "sgp", odds: -110 }, { groups: { sgp: { label: "Same-game parlay", odds: 135 } } }), "-110");
   assert.equal(oddsText({ odds: 0 }, {}), "\u2014");
   assert.equal(oddsText({}, {}), "\u2014");
 });
@@ -116,12 +117,13 @@ test("average line uses American odds, including open picks and shared SGP price
       leg({ by: "Roma", type: "spread", line: -7.5, odds: -200, team: "A" }, { result: "hit", margin: 3 }),
       leg({ by: "Roma", type: "total_over", line: 47.5, odds: -110, team: "B" }, { result: "pending", margin: null }),
       leg({ by: "Roma", type: "moneyline", group: "sgp", team: "C" }, { result: "miss", margin: -4 }),
+      leg({ by: "Roma", type: "spread", group: "sgp", odds: -110, team: "E" }, { result: "hit", margin: 2 }),
       leg({ by: "Roma", type: "other", team: "D", result: "miss" }, { result: "miss", margin: null }),
     ],
   })]);
   const [person] = personTotals(rows);
-  assert.equal(person.avgLine, -60);
-  assert.equal(person.lineCount, 3);
+  assert.equal(person.avgLine, -72.5);
+  assert.equal(person.lineCount, 4);
   assert.equal(person.avgMiss, 4);
   assert.equal(person.missCount, 1);
 });

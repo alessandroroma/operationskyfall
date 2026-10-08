@@ -139,10 +139,12 @@ export function formatOdds(n) {
 
 // Odds label for a leg: its own price, or the shared price of its same-game-parlay group.
 export function legOdds(leg, week) {
+  const ownOdds = formatOdds(leg.odds);
+  if (ownOdds) return ownOdds;
   if (leg.group) {
     const g = week?.groups?.[leg.group];
     const o = formatOdds(g?.odds);
     return o ? `${g.label ?? "Group"} ${o}` : "";
   }
-  return formatOdds(leg.odds);
+  return "";
 }

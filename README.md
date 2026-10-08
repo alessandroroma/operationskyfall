@@ -32,7 +32,7 @@ Leg fields:
 | `date` | game date `YYYY-MM-DD` (US Eastern, as ESPN lists it; the day before/after is also searched) |
 | `by` | who contributed the pick (`Roma`, `Dalton`, ...); shown as a tag on the card and tallied per person for the week |
 | `odds` | American odds for the leg (`-115`, `100`), shown on the card |
-| `group` | name of a same-game-parlay group; its price lives on the week as `"groups": { "sgp": { "label": "Same-game parlay", "odds": 260 } }` and legs in the group carry no `odds` of their own |
+| `group` | name of a same-game-parlay group; its shared price lives on the week as `"groups": { "sgp": { "label": "Same-game parlay", "odds": 260 } }`. A leg's own `odds`, when provided, takes precedence for that leg |
 | `note` | optional text shown on the card |
 | `result` (on a leg) | optional manual override: `hit`, `miss` or `push` (use for `other` legs like props) |
 

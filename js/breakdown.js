@@ -54,8 +54,10 @@ export function pickText(leg) {
 
 // Short price for a leg: its own odds, or the shared price of its same-game group.
 export function oddsText(leg, week) {
+  const ownOdds = formatOdds(leg.odds);
+  if (ownOdds) return ownOdds;
   if (leg.group) return formatOdds(week?.groups?.[leg.group]?.odds) || "\u2014";
-  return formatOdds(leg.odds) || "\u2014";
+  return "\u2014";
 }
 
 // "how much it won or lost by" \u2014 points versus the number, for the graded leg.
@@ -88,7 +90,7 @@ export function breakdownRows(evaluated) {
         spread: spreadText(l.leg),
         line: num(l.leg.line),
         odds: oddsText(l.leg, ev.week),
-        oddsValue: num(l.leg.group ? ev.week.groups?.[l.leg.group]?.odds : l.leg.odds),
+        oddsValue: num(formatOdds(l.leg.odds) ? l.leg.odds : ev.week.groups?.[l.leg.group]?.odds),
         oddsFull: legOdds(l.leg, ev.week),
         result,
         margin,

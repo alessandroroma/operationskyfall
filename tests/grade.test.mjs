@@ -168,6 +168,7 @@ test("odds formatting and same-game-parlay group price", () => {
   assert.equal(formatOdds(undefined), "");
   assert.equal(legOdds({ odds: -110 }, {}), "-110");
   assert.equal(legOdds({ group: "sgp" }, { groups: { sgp: { label: "Same-game parlay", odds: 260 } } }), "Same-game parlay +260");
+  assert.equal(legOdds({ group: "sgp", odds: -110 }, { groups: { sgp: { label: "Same-game parlay", odds: 260 } } }), "-110");
   assert.equal(legOdds({ group: "nope" }, {}), "");
   assert.equal(legOdds({}, {}), "");
 });
