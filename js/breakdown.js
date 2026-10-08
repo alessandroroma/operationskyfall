@@ -84,6 +84,7 @@ export function breakdownRows(evaluated) {
         weekOf: ev.week.weekOf,
         weekStatus: ev.status,
         by: l.leg.by ?? "",
+        league: l.leg.league ?? "",
         bet: describeLeg(l.leg),
         pick: pickText(l.leg),
         note: l.leg.note ?? "",
@@ -172,6 +173,29 @@ export function personTotals(rows) {
     const bRate = bSettled ? b.hit / bSettled : 0;
     return bRate - aRate || bSettled - aSettled || a.name.localeCompare(b.name);
   });
+}
+
+// Per-person win-loss records split by league (NFL vs college football).
+// Only settled, attributed legs count; the combined row totals every person.
+export function leagueRecords(rows) {
+  const people = personTotals(rows).map((p) => ({
+    name: p.name,
+    nfl: { wins: 0, losses: 0 },
+    cfb: { wins: 0, losses: 0 },
+  }));
+  const byName = new Map(people.map((p) => [p.name, p]));
+  const total = { name: "All", nfl: { wins: 0, losses: 0 }, cfb: { wins: 0, losses: 0 } };
+  for (const row of rows) {
+    if (row.result !== "hit" && row.result !== "miss") continue;
+    const person = byName.get(row.by);
+    if (!person) continue;
+    const bucket = row.league === "nfl" ? "nfl" : row.league === "college-football" ? "cfb" : null;
+    if (!bucket) continue;
+    const won = row.result === "hit";
+    if (won) { person[bucket].wins++; total[bucket].wins++; }
+    else { person[bucket].losses++; total[bucket].losses++; }
+  }
+  return { people, total };
 }
 
 export const ODDS_BANDS = [

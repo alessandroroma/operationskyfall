@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -173,6 +173,18 @@ function oddsResultsTableHtml(rows) {
   </table></div><p class="muted">Records are wins-losses for settled legs only. Pushes and open legs are excluded; SGP legs without their own odds use the shared SGP price. Boundary odds count once: -200 in the first band, -150 in the second, -120 in the third, +100 in the fourth, +125 in the fifth, and +200 in the last.</p>`;
 }
 
+function leagueTableHtml(rows) {
+  const { people, total } = leagueRecords(rows);
+  if (!people.length) return "";
+  const fmt = (record) => `${record.wins}-${record.losses}`;
+  const body = people.map((person) => `<tr><td class="wk">${esc(person.name)}</td><td class="num">${fmt(person.nfl)}</td><td class="num">${fmt(person.cfb)}</td></tr>`).join("");
+  const foot = `<tr><td class="wk">All</td><td class="num">${fmt(total.nfl)}</td><td class="num">${fmt(total.cfb)}</td></tr>`;
+  return `<h3 class="bd">Win-loss by league</h3><div class="table-wrap"><table class="bd">
+    <thead><tr><th>Who</th><th class="num">NFL</th><th class="num">CFB</th></tr></thead>
+    <tbody>${body}${foot}</tbody>
+  </table></div><p class="muted">Records cover settled legs only, split by league. Pushes, open legs, and legs with no attributed bettor (Week 2.5) are excluded. The All row combines everyone.</p>`;
+}
+
 function bettingWarTableHtml(rows) {
   const people = bettingWar(rows).sort((a, b) => b.delta - a.delta || a.name.localeCompare(b.name));
   if (!people.length) return "";
@@ -256,6 +268,7 @@ function breakdownHtml(everyLegOpen = false) {
     </details>
     ${personTableHtml(all)}
     ${oddsResultsTableHtml(all)}
+    ${leagueTableHtml(all)}
     ${bettingWarTableHtml(all)}
     ${warByWeekHtml(all)}
     ${marginTablesHtml(all)}

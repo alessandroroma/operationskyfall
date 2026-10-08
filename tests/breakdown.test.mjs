@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   bettingWar, breakdownRows, contributors, cumulativeWarByWeek, decimalOdds, filterRows, fmtMoney, fmtNet, marginLeaders, money, oddsText,
-  ODDS_BANDS, oddsBandIndex, outcomeText, personTotals, pickText, resultsByOdds,
+  leagueRecords, ODDS_BANDS, oddsBandIndex, outcomeText, personTotals, pickText, resultsByOdds,
   seasonMoney, spreadText, typeLabel, warByWeek, weekMoney,
 } from "../js/breakdown.js";
 
@@ -76,7 +76,7 @@ test("rows cover every leg, newest week first, kickoff order inside a week", () 
   assert.deepEqual(rows.map((r) => r.week), ["Week 3", "Week 3", "Week 2"]);
   assert.deepEqual(rows[1], {
     weekId: "w3", week: "Week 3", weekOf: "2026-10-01", weekStatus: "BUSTED",
-    by: "Roma", bet: "Texas Tech -12.5", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", line: -12.5, odds: "\u2014", oddsValue: null,
+    by: "Roma", league: "", bet: "Texas Tech -12.5", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", line: -12.5, odds: "\u2014", oddsValue: null,
     oddsFull: "", result: "miss", margin: -3, outcome: "lost by 3",
   });
   assert.equal(rows[2].by, "");
@@ -276,6 +276,28 @@ test("WAR by week is chronological and sums to each person's all-weeks delta", (
     const index = cumulative.people.indexOf(person.name);
     assert.ok(Math.abs(cumulative.weeks.at(-1).values[index] - person.delta) < 1e-12);
   }
+});
+
+test("win-loss by league splits records and totals every attributed person", () => {
+  const rows = breakdownRows([week({ legs: [
+    leg({ by: "Roma", league: "nfl", type: "moneyline", team: "A", date: "2026-10-01" }, { result: "hit" }),
+    leg({ by: "Roma", league: "college-football", type: "moneyline", team: "B", date: "2026-10-02" }, { result: "miss" }),
+    leg({ by: "Dalton", league: "nfl", type: "moneyline", team: "C", date: "2026-10-03" }, { result: "miss" }),
+    leg({ by: "Dalton", league: "college-football", type: "moneyline", team: "D", date: "2026-10-04" }, { result: "hit" }),
+    leg({ by: "Dalton", league: "nfl", type: "moneyline", team: "E", date: "2026-10-05" }, { result: "push" }),
+    leg({ by: "Dalton", league: "college-football", type: "moneyline", team: "G", date: "2026-10-07" }, { result: "pending" }),
+    leg({ league: "nfl", type: "moneyline", team: "F", date: "2026-10-06" }, { result: "hit" }),
+  ] })]);
+  const { people, total } = leagueRecords(rows);
+  assert.deepEqual(people.find((p) => p.name === "Roma"), { name: "Roma", nfl: { wins: 1, losses: 0 }, cfb: { wins: 0, losses: 1 } });
+  assert.deepEqual(people.find((p) => p.name === "Dalton"), { name: "Dalton", nfl: { wins: 0, losses: 1 }, cfb: { wins: 1, losses: 0 } });
+  // The unattributed NFL hit and Dalton's push/pending legs are excluded.
+  assert.deepEqual(total, { name: "All", nfl: { wins: 1, losses: 1 }, cfb: { wins: 1, losses: 1 } });
+  const sum = (key, side) => people.reduce((t, p) => t + p[key][side], 0);
+  assert.equal(sum("nfl", "wins"), total.nfl.wins);
+  assert.equal(sum("nfl", "losses"), total.nfl.losses);
+  assert.equal(sum("cfb", "wins"), total.cfb.wins);
+  assert.equal(sum("cfb", "losses"), total.cfb.losses);
 });
 
 test("money fields parse out of free text", () => {
