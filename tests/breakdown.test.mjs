@@ -122,10 +122,37 @@ test("filtering and per-person tallies", () => {
   assert.equal(people[0].total, 2);
   assert.equal(people[0].avgLine, -110);
   assert.equal(people[0].avgMiss, 2);
+  assert.equal(people[0].streakType, "L");
+  assert.equal(people[0].streak, 1);
   assert.equal(people[1].push, 1);
   assert.equal(people[1].total, 1);
   assert.equal(people[1].avgLine, null);
   assert.equal(people[1].avgMiss, null);
+  assert.equal(people[1].streak, 0);
+});
+
+test("current streak follows week and kickoff order, skipping pushes and open legs", () => {
+  const rows = breakdownRows([
+    week({ week: { id: "w3", weekOf: "2026-10-01" }, legs: [
+      leg({ by: "Roma", type: "moneyline", team: "D", date: "2026-10-03" }, { result: "hit" }),
+      leg({ by: "Roma", type: "moneyline", team: "E", date: "2026-10-04" }, { result: "push" }),
+      leg({ by: "Roma", type: "moneyline", team: "F", date: "2026-10-05" }, { result: "hit" }),
+      leg({ by: "Roma", type: "moneyline", team: "G", date: "2026-10-06" }, { result: "pending" }),
+      leg({ by: "Dalton", type: "moneyline", team: "H", date: "2026-10-04" }, { result: "miss" }),
+      leg({ by: "Paul", type: "moneyline", team: "I", date: "2026-10-04" }, { result: "pending" }),
+    ] }),
+    week({ week: { id: "w1", weekOf: "2026-09-17" }, legs: [
+      leg({ by: "Roma", type: "moneyline", team: "A", date: "2026-09-19" }, { result: "hit" }),
+      leg({ by: "Dalton", type: "moneyline", team: "B", date: "2026-09-19" }, { result: "miss" }),
+    ] }),
+    week({ week: { id: "w2", weekOf: "2026-09-24" }, legs: [
+      leg({ by: "Roma", type: "moneyline", team: "C", date: "2026-09-26" }, { result: "miss" }),
+    ] }),
+  ]);
+  const people = new Map(personTotals(rows).map((person) => [person.name, person]));
+  assert.deepEqual([people.get("Roma").streakType, people.get("Roma").streak], ["W", 2]);
+  assert.deepEqual([people.get("Dalton").streakType, people.get("Dalton").streak], ["L", 2]);
+  assert.deepEqual([people.get("Paul").streakType, people.get("Paul").streak], [null, 0]);
 });
 
 test("average line uses American odds, including open picks and shared SGP prices", () => {

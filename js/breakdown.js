@@ -131,7 +131,7 @@ export function personTotals(rows) {
   const map = new Map();
   for (const r of rows) {
     if (!r.by) continue;
-    if (!map.has(r.by)) map.set(r.by, { name: r.by, hit: 0, miss: 0, push: 0, live: 0, pending: 0, unknown: 0, total: 0, lineSum: 0, lineCount: 0, missMarginSum: 0, missCount: 0 });
+    if (!map.has(r.by)) map.set(r.by, { name: r.by, hit: 0, miss: 0, push: 0, live: 0, pending: 0, unknown: 0, total: 0, lineSum: 0, lineCount: 0, missMarginSum: 0, missCount: 0, streakType: null, streak: 0 });
     const p = map.get(r.by);
     p.total++;
     if (r.oddsValue != null && r.oddsValue !== 0 && Number.isFinite(r.oddsValue)) { p.lineSum += r.oddsValue; p.lineCount++; }
@@ -154,6 +154,16 @@ export function personTotals(rows) {
   for (const p of map.values()) {
     p.avgLine = p.lineCount > 0 ? p.lineSum / p.lineCount : null;
     p.avgMiss = p.missCount > 0 ? p.missMarginSum / p.missCount : null;
+  }
+  // breakdownRows is kickoff-ordered within each week; put weeks oldest first.
+  // Pushes and open legs do not change the last run of settled results.
+  for (const row of [...rows].sort((a, b) => String(a.weekOf).localeCompare(String(b.weekOf)))) {
+    if (row.result !== "hit" && row.result !== "miss") continue;
+    const person = map.get(row.by);
+    if (!person) continue;
+    const type = row.result === "hit" ? "W" : "L";
+    person.streak = person.streakType === type ? person.streak + 1 : 1;
+    person.streakType = type;
   }
   return [...map.values()].sort((a, b) => b.hit - a.hit || a.miss - b.miss || a.name.localeCompare(b.name));
 }
