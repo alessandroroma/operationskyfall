@@ -223,7 +223,7 @@ function marginTablesHtml(rows) {
     ["Worst Losses", worstLosses],
     ["Worst Beats", worstBeats],
   ].map(([title, ranked]) => {
-    const body = ranked.map((row) => `<tr><td class="wk">${esc(row.week)}</td><td>${esc(row.by || "Unassigned")}</td><td>${esc(row.bet)}</td><td class="num ${row.margin > 0 ? "won" : "lost"}">${row.margin > 0 ? "+" : ""}${Number(row.margin.toFixed(1))}</td></tr>`).join("");
+    const body = ranked.map((row) => `<tr><td class="wk">${esc(row.week)}</td><td>${esc(row.by || "Unassigned")}</td><td>${esc(row.bet)} (${esc(row.odds)})</td><td class="num ${row.margin > 0 ? "won" : "lost"}">${row.margin > 0 ? "+" : ""}${Number(row.margin.toFixed(1))}</td></tr>`).join("");
     return `<h3 class="bd">${title}</h3><div class="table-wrap"><table class="bd"><thead><tr><th>Week</th><th>Who</th><th>Bet</th><th class="num">Margin (pts)</th></tr></thead><tbody>${body || '<tr><td colspan="4">No graded bets with a point margin yet.</td></tr>'}</tbody></table></div>`;
   }).join("");
 }
