@@ -90,6 +90,9 @@ test("margin tables rank five graded wins, blowouts, and closest losses", () => 
     { result: "miss", margin: null },
     { result: "hit", margin: null },
     { result: "live_on_track", margin: 20 },
+    { weekId: "2026-w2-5", result: "hit", margin: 100 },
+    { weekId: "2026-w2-5", result: "miss", margin: -100 },
+    { weekId: "2026-w2-5", result: "miss", margin: -0.1 },
   ];
   const ranked = marginLeaders(rows);
   assert.deepEqual(ranked.bestWins.map((row) => row.margin), [10, 8, 7, 5, 3]);

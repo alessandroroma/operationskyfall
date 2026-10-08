@@ -108,10 +108,11 @@ export function filterRows(rows, who) {
   return rows.filter((r) => r.by === who);
 }
 
-// Only settled, numeric point margins can be ranked; manual prop results have no margin.
+// Week 2.5 is excluded from these rankings; manual props have no numeric margin.
 export function marginLeaders(rows) {
-  const wins = rows.filter((row) => row.result === "hit" && Number.isFinite(row.margin) && row.margin > 0);
-  const losses = rows.filter((row) => row.result === "miss" && Number.isFinite(row.margin) && row.margin < 0);
+  const eligible = rows.filter((row) => row.weekId !== "2026-w2-5");
+  const wins = eligible.filter((row) => row.result === "hit" && Number.isFinite(row.margin) && row.margin > 0);
+  const losses = eligible.filter((row) => row.result === "miss" && Number.isFinite(row.margin) && row.margin < 0);
   return {
     bestWins: [...wins].sort((a, b) => b.margin - a.margin).slice(0, 5),
     worstLosses: [...losses].sort((a, b) => a.margin - b.margin).slice(0, 5),
