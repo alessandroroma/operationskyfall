@@ -139,6 +139,17 @@
           "type": "spread",
           "line": -1.5,
           "date": "2026-10-11"
+        },
+        {
+          "id": "l13",
+          "odds": -112,
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Portland State",
+          "opponent": "Utah Tech",
+          "type": "spread",
+          "line": -4.5,
+          "date": "2026-10-10"
         }
       ]
     },
