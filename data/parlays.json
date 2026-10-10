@@ -86,7 +86,7 @@
         },
         {
           "id": "l8",
-          "group": "sgp",
+          "odds": -116,
           "league": "college-football",
           "by": "Paul",
           "team": "Indiana",
@@ -97,7 +97,7 @@
         },
         {
           "id": "l9",
-          "group": "sgp",
+          "odds": -107,
           "league": "college-football",
           "by": "Vuke",
           "team": "Nebraska",
@@ -138,13 +138,7 @@
           "line": -1.5,
           "date": "2026-10-11"
         }
-      ],
-      "groups": {
-        "sgp": {
-          "label": "Same-game parlay",
-          "odds": 230
-        }
-      }
+      ]
     },
     {
       "id": "2026-w3",
