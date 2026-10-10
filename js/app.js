@@ -256,7 +256,7 @@ function breakdownHtml(everyLegOpen = false) {
   const chips = ["all", ...people]
     .map((who) => `<button class="chip${breakdownWho === who ? " on" : ""}" data-by="${esc(who)}">${esc(who === "all" ? "All" : who)}</button>`)
     .join("");
-  const shown = filterRows(all, breakdownWho);
+  const shown = filterRows(all, breakdownWho).filter((r) => !r.excludeFromStats);
   const rows = shown.length ? legTableHtml(shown) : `<p class="muted">No legs for ${esc(breakdownWho)}.</p>`;
   return `<div class="bd-head">
       <div class="bd-filters" role="group" aria-label="Filter by who picked it">${chips}</div>
