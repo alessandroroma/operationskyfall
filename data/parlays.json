@@ -16,7 +16,8 @@
           "opponent": "Maryland",
           "type": "other",
           "date": "2026-10-10",
-          "note": "Jeremiah Smith longest reception over 42.5 yards"
+          "note": "Jeremiah Smith longest reception over 42.5 yards",
+          "result": "miss"
         },
         {
           "id": "l2",
@@ -159,6 +160,7 @@
           "type": "other",
           "date": "2026-10-10",
           "note": "Jeremiah Smith longest reception over 42.5 yards",
+          "result": "miss",
           "excludeFromStats": true
         },
         {
