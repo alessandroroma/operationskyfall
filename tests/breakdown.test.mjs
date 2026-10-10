@@ -77,7 +77,7 @@ test("rows cover every leg, newest week first, kickoff order inside a week", () 
   assert.deepEqual(rows[1], {
     weekId: "w3", week: "Week 3", weekOf: "2026-10-01", weekStatus: "BUSTED",
     by: "Roma", league: "", bet: "Texas Tech -12.5", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", line: -12.5, odds: "\u2014", oddsValue: null,
-    oddsFull: "", result: "miss", margin: -3, outcome: "lost by 3",
+    oddsFull: "", result: "miss", margin: -3, outcome: "lost by 3", excludeFromStats: false,
   });
   assert.equal(rows[2].by, "");
   assert.equal(rows[0].outcome, "won by 7");
@@ -298,6 +298,39 @@ test("win-loss by league splits records and totals every attributed person", () 
   assert.equal(sum("nfl", "losses"), total.nfl.losses);
   assert.equal(sum("cfb", "wins"), total.cfb.wins);
   assert.equal(sum("cfb", "losses"), total.cfb.losses);
+});
+
+test("legs flagged excludeFromStats (a duplicated slip's repeat picks) don't double-count", () => {
+  const rows = breakdownRows([
+    week({ week: { id: "w4", label: "Week 4", weekOf: "2026-10-09" }, legs: [
+      leg({ by: "Dalton", league: "college-football", odds: -111, team: "Penn State", date: "2026-10-10" }, { result: "hit", margin: 4 }),
+    ] }),
+    week({ week: { id: "w4-5", label: "Week 4.5", weekOf: "2026-10-09" }, legs: [
+      leg({ by: "Dalton", league: "college-football", odds: -111, team: "Penn State", excludeFromStats: true, date: "2026-10-10" }, { result: "hit", margin: 4 }),
+      leg({ by: "Mark", league: "college-football", odds: -112, team: "Portland State", date: "2026-10-10" }, { result: "hit", margin: 2 }),
+    ] }),
+  ]);
+  assert.equal(rows.length, 3);
+
+  const people = new Map(personTotals(rows).map((p) => [p.name, p]));
+  assert.equal(people.get("Dalton").hit, 1);
+  assert.equal(people.get("Dalton").total, 1);
+  assert.equal(people.get("Mark").hit, 1);
+
+  const { total } = leagueRecords(rows);
+  assert.equal(total.cfb.wins, 2); // Dalton once, Mark once - not Dalton's duplicate
+
+  const oddsPeople = resultsByOdds(rows);
+  const dalton = oddsPeople.find((p) => p.name === "Dalton");
+  const band = oddsBandIndex(-111);
+  assert.equal(dalton.records[band].wins, 1);
+
+  const war = bettingWar(rows);
+  assert.ok(Math.abs(war.find((p) => p.name === "Dalton").netUnits - 100 / 111) < 1e-9);
+
+  const ranked = marginLeaders(rows);
+  // Dalton's original win (margin 4) counts once; the Week 4.5 duplicate is excluded.
+  assert.deepEqual(ranked.bestWins.map((r) => r.margin), [4, 2]);
 });
 
 test("money fields parse out of free text", () => {

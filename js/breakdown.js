@@ -97,6 +97,7 @@ export function breakdownRows(evaluated) {
         result,
         margin,
         outcome: outcomeText(result, margin),
+        excludeFromStats: !!l.leg.excludeFromStats,
       });
     }
   }
@@ -110,8 +111,9 @@ export function filterRows(rows, who) {
 }
 
 // Week 2.5 is excluded from these rankings; manual props have no numeric margin.
+// Rows flagged excludeFromStats are a duplicated slip's repeat of an already-counted leg.
 export function marginLeaders(rows) {
-  const eligible = rows.filter((row) => row.weekId !== "2026-w2-5");
+  const eligible = rows.filter((row) => row.weekId !== "2026-w2-5" && !row.excludeFromStats);
   const wins = eligible.filter((row) => row.result === "hit" && Number.isFinite(row.margin) && row.margin > 0);
   const losses = eligible.filter((row) => row.result === "miss" && Number.isFinite(row.margin) && row.margin < 0);
   return {
@@ -131,7 +133,7 @@ export function contributors(rows) {
 export function personTotals(rows) {
   const map = new Map();
   for (const r of rows) {
-    if (!r.by) continue;
+    if (!r.by || r.excludeFromStats) continue;
     if (!map.has(r.by)) map.set(r.by, { name: r.by, hit: 0, miss: 0, push: 0, live: 0, pending: 0, unknown: 0, total: 0, lineSum: 0, lineCount: 0, missMarginSum: 0, missCount: 0, streakType: null, streak: 0 });
     const p = map.get(r.by);
     p.total++;
@@ -159,6 +161,7 @@ export function personTotals(rows) {
   // breakdownRows is kickoff-ordered within each week; put weeks oldest first.
   // Pushes and open legs do not change the last run of settled results.
   for (const row of [...rows].sort((a, b) => String(a.weekOf).localeCompare(String(b.weekOf)))) {
+    if (row.excludeFromStats) continue;
     if (row.result !== "hit" && row.result !== "miss") continue;
     const person = map.get(row.by);
     if (!person) continue;
@@ -186,6 +189,7 @@ export function leagueRecords(rows) {
   const byName = new Map(people.map((p) => [p.name, p]));
   const total = { name: "All", nfl: { wins: 0, losses: 0 }, cfb: { wins: 0, losses: 0 } };
   for (const row of rows) {
+    if (row.excludeFromStats) continue;
     if (row.result !== "hit" && row.result !== "miss") continue;
     const person = byName.get(row.by);
     if (!person) continue;
@@ -225,6 +229,7 @@ export function resultsByOdds(rows) {
   }));
   const byName = new Map(people.map((p) => [p.name, p]));
   for (const row of rows) {
+    if (row.excludeFromStats) continue;
     if (row.result !== "hit" && row.result !== "miss") continue;
     const band = oddsBandIndex(row.oddsValue);
     const person = byName.get(row.by);
@@ -247,6 +252,7 @@ export function bettingWar(rows) {
   }));
   const byName = new Map(people.map((p) => [p.name, p]));
   for (const row of rows) {
+    if (row.excludeFromStats) continue;
     const person = byName.get(row.by);
     if (!person) continue;
     // A loss costs one unit even when its price was never recorded.

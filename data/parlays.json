@@ -139,6 +139,148 @@
           "type": "spread",
           "line": -1.5,
           "date": "2026-10-11"
+        }
+      ]
+    },
+    {
+      "id": "2026-w4-5",
+      "label": "Week 4.5",
+      "weekOf": "2026-10-09",
+      "stake": "$7.00",
+      "payout": "$7,079.97",
+      "legs": [
+        {
+          "id": "l1",
+          "odds": -115,
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Ohio State",
+          "opponent": "Maryland",
+          "type": "other",
+          "date": "2026-10-10",
+          "note": "Jeremiah Smith longest reception over 42.5 yards",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l2",
+          "odds": 103,
+          "league": "college-football",
+          "by": "Luke",
+          "team": "Georgia",
+          "opponent": "Alabama",
+          "type": "moneyline",
+          "date": "2026-10-10",
+          "note": "Early payout offered on this leg",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l3",
+          "odds": -260,
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Northwestern",
+          "opponent": "Ball State",
+          "type": "other",
+          "date": "2026-10-10",
+          "note": "Aidan Chiles anytime TD scorer",
+          "result": "hit",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l4",
+          "odds": -109,
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Bowling Green",
+          "opponent": "Sacramento State",
+          "type": "spread",
+          "line": -8.5,
+          "date": "2026-10-10",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l5",
+          "odds": -111,
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Penn State",
+          "opponent": "USC",
+          "type": "spread",
+          "line": -1.5,
+          "date": "2026-10-10",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l6",
+          "odds": -112,
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Tennessee",
+          "opponent": "Arkansas",
+          "type": "spread",
+          "line": -13.5,
+          "date": "2026-10-10",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l8",
+          "odds": -116,
+          "league": "college-football",
+          "by": "Paul",
+          "team": "Indiana",
+          "opponent": "Nebraska",
+          "type": "total_under",
+          "line": 48.5,
+          "date": "2026-10-10",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l9",
+          "odds": -107,
+          "league": "college-football",
+          "by": "Vuke",
+          "team": "Nebraska",
+          "opponent": "Indiana",
+          "type": "spread",
+          "line": 7.5,
+          "date": "2026-10-10",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l10",
+          "odds": -109,
+          "league": "college-football",
+          "by": "Jacob",
+          "team": "Kentucky",
+          "opponent": "LSU",
+          "type": "spread",
+          "line": 8.5,
+          "date": "2026-10-10",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l11",
+          "odds": -160,
+          "by": "Mark",
+          "league": "college-football",
+          "team": "Wake Forest",
+          "opponent": "NC State",
+          "type": "moneyline",
+          "date": "2026-10-10",
+          "note": "Early payout offered on this leg",
+          "excludeFromStats": true
+        },
+        {
+          "id": "l12",
+          "odds": -110,
+          "league": "nfl",
+          "by": "Paul",
+          "team": "Chicago Bears",
+          "opponent": "Green Bay Packers",
+          "type": "spread",
+          "line": -1.5,
+          "date": "2026-10-11",
+          "excludeFromStats": true
         },
         {
           "id": "l13",
