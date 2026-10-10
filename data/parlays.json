@@ -38,7 +38,8 @@
           "opponent": "Ball State",
           "type": "other",
           "date": "2026-10-10",
-          "note": "Aidan Chiles anytime TD scorer"
+          "note": "Aidan Chiles anytime TD scorer",
+          "result": "hit"
         },
         {
           "id": "l4",
@@ -177,7 +178,7 @@
         },
         {
           "id": "l3",
-          "by": "Paul",
+          "by": "Roma",
           "odds": -125,
           "league": "nfl",
           "team": "Cleveland Browns",
