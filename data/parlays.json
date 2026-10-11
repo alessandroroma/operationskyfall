@@ -293,7 +293,8 @@
           "opponent": "Utah Tech",
           "type": "spread",
           "line": -4.5,
-          "date": "2026-10-10"
+          "date": "2026-10-10",
+          "result": "hit"
         }
       ]
     },
