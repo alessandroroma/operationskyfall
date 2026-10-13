@@ -1,4 +1,6 @@
-// Shadow Book accounting is deliberately separate from the group's slips and WAR.
+// Shadow Book money (stake/return below) stays separate from the group's season total,
+// since no wager is actually placed. Leg results still feed the Breakdown tab's WAR and
+// stats tables under MitsNemo's name (see app.js breakdownHtml), same as everyone else's picks.
 export function decimalOdds(american) {
   const odds = Number(american);
   if (!Number.isFinite(odds) || odds === 0) throw new Error(`Invalid American odds: ${american}`);

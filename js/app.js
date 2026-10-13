@@ -256,6 +256,10 @@ function moneyTableHtml(season) {
 function breakdownHtml(everyLegOpen = false) {
   const all = breakdownRows(evaluated);
   if (!all.length) return `<p class="muted">No legs recorded yet. Add a week to <code>data/parlays.json</code>.</p>`;
+  // Shadow Book picks count toward every stats table (WAR, records, margins) so MitsNemo's
+  // performance is comparable to the group's, but never toward the real money total or the
+  // raw every-leg list below, which stay scoped to the group's actual slips.
+  const statsRows = [...all, ...breakdownRows(shadowEvaluated)];
   const people = peopleIn(all);
   const chips = ["all", ...people]
     .map((who) => `<button class="chip${breakdownWho === who ? " on" : ""}" data-by="${esc(who)}">${esc(who === "all" ? "All" : who)}</button>`)
@@ -270,12 +274,12 @@ function breakdownHtml(everyLegOpen = false) {
       <summary>Every leg${breakdownWho === "all" ? "" : ` · ${esc(breakdownWho)}`} (${shown.length})</summary>
       ${rows}
     </details>
-    ${personTableHtml(all)}
-    ${oddsResultsTableHtml(all)}
-    ${bettingWarTableHtml(all)}
-    ${warByWeekHtml(all)}
-    ${leagueTableHtml(all)}
-    ${marginTablesHtml(all)}
+    ${personTableHtml(statsRows)}
+    ${oddsResultsTableHtml(statsRows)}
+    ${bettingWarTableHtml(statsRows)}
+    ${warByWeekHtml(statsRows)}
+    ${leagueTableHtml(statsRows)}
+    ${marginTablesHtml(statsRows)}
     ${moneyTableHtml(seasonMoney(evaluated))}`;
 }
 
@@ -370,7 +374,7 @@ function renderShadow() {
   }
   const record = seasonRecord(shadowEvaluated.map((ev) => ev.status));
   const money = shadowSeason(shadowEvaluated);
-  el.innerHTML = `<div class="shadow-intro"><h2>Shadow Book</h2><p>A separate, hypothetical NFL + CFB parlay each week. Picks and ESPN-listed DraftKings prices are recorded before kickoff; no wager is placed and none of this counts toward the group's Breakdown or WAR.</p>
+  el.innerHTML = `<div class="shadow-intro"><h2>Shadow Book</h2><p>A separate, hypothetical NFL + CFB parlay each week, picked by MitsNemo. Picks and ESPN-listed DraftKings prices are recorded before kickoff; no wager is placed, so the stake/return above isn't part of the group's season money. Each leg's result does count toward MitsNemo's record in the Breakdown tab's WAR and stats tables, same as everyone else's picks.</p>
     <p class="record">Record: <b>${record.won}</b> won · <b>${record.lost}</b> busted${record.open ? ` · <b>${record.open}</b> open` : ""} · Settled virtual net <b>${esc(fmtNet(money.net))}</b></p></div>
     ${shadowEvaluated.map(shadowWeekHtml).join("")}`;
 }

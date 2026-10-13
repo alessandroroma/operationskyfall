@@ -2,7 +2,7 @@
   "weeks": [
     {
       "id": "shadow-2026-10-17",
-      "label": "Oct 17\u201318 \u00b7 Shadow Book 1",
+      "label": "Oct 17–18 · Shadow Book 1",
       "weekOf": "2026-10-17",
       "capturedAt": "2026-10-13T16:50:54Z",
       "oddsSource": "DraftKings via ESPN",
@@ -17,6 +17,7 @@
           "odds": -180,
           "date": "2026-10-17",
           "eventId": "401858488",
+          "by": "MitsNemo",
           "reasoning": "Biggest move on this board: Ohio State opened near even (-108) and is now -180. Taking the moneyline instead of the -3.5 removes field-goal margin risk, and the price implies roughly a two-thirds win probability."
         },
         {
@@ -29,6 +30,7 @@
           "date": "2026-10-17",
           "eventId": "401856724",
           "line": 10.5,
+          "by": "MitsNemo",
           "reasoning": "Florida has drifted from +9.5 at the open to +10.5, so the double-digit cushion is still available at -108. Taking the hook past ten against a favorite the market has cooled on."
         },
         {
@@ -41,6 +43,7 @@
           "date": "2026-10-17",
           "eventId": "401856723",
           "line": 8.5,
+          "by": "MitsNemo",
           "reasoning": "The largest line move among these picks: Tennessee opened +1.5 and is now +8.5, nearly a touchdown better than the opener. The market sold the Volunteers hard, and the home side at +8.5 is the value edge of that move."
         },
         {
@@ -53,6 +56,7 @@
           "date": "2026-10-17",
           "eventId": "401858490",
           "line": -6.5,
+          "by": "MitsNemo",
           "reasoning": "Michigan -6.5 with the number untouched since open, though juice ticked -110 to -118. A straight lay of a home favorite at roughly 54% implied, with no line value to capture."
         },
         {
@@ -65,6 +69,7 @@
           "date": "2026-10-17",
           "eventId": "401858492",
           "line": -7.5,
+          "by": "MitsNemo",
           "reasoning": "Oregon opened -21.5 at home and is down to -7.5, a 14-point collapse in the number. Laying the shorter number is easier to cover, but the honest read is that the market lost faith in the Ducks; the appeal is the cheaper number, not a hot team."
         },
         {
@@ -77,6 +82,7 @@
           "date": "2026-10-17",
           "eventId": "401856809",
           "line": -10.0,
+          "by": "MitsNemo",
           "reasoning": "Notre Dame drifted from -11.5 to -10 on the road, handing back a point and a half versus the opener while laying double digits. The move went against the Irish, but the number is better than open."
         },
         {
@@ -89,6 +95,7 @@
           "date": "2026-10-18",
           "eventId": "401872999",
           "line": -3.0,
+          "by": "MitsNemo",
           "reasoning": "Bears -3 on the road with the line unmoved and juice nudging -115 to -120. Laying exactly a field goal keeps every key number above the margin except a one-point win."
         },
         {
@@ -101,6 +108,7 @@
           "date": "2026-10-18",
           "eventId": "401872997",
           "line": -4.5,
+          "by": "MitsNemo",
           "reasoning": "Ravens -4.5 after opening -6.5, capturing two points against the opener. A road favorite the market has softened on, priced at -112 with the 3 and 7 both in play."
         },
         {
@@ -113,6 +121,7 @@
           "date": "2026-10-18",
           "eventId": "401872998",
           "line": -1.5,
+          "by": "MitsNemo",
           "reasoning": "Largest move on the NFL side: Philadelphia opened -6.5 and sits at -1.5, five points of value for a home favorite under a field goal, and the cheapest price among the NFL legs at -105."
         },
         {
@@ -125,6 +134,7 @@
           "date": "2026-10-18",
           "eventId": "401873002",
           "line": -2.5,
+          "by": "MitsNemo",
           "reasoning": "Pittsburgh flipped from +1.5 at the open to -2.5 now, a four-point move that crossed zero. Backing the newly installed road favorite rather than chasing the opener's underdog price."
         },
         {
@@ -137,6 +147,7 @@
           "date": "2026-10-18",
           "eventId": "401873007",
           "line": -1.5,
+          "by": "MitsNemo",
           "reasoning": "Green Bay slipped from -3 to -1.5 at home, dropping off a key number and taking juice down to -105. Buying the favorite below a field goal is a cheaper entry than the opener offered."
         }
       ]

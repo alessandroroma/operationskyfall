@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { decimalOdds, shadowQuote, shadowSeason } from "../js/shadow.js";
+import { breakdownRows, personTotals } from "../js/breakdown.js";
 
 const book = JSON.parse(readFileSync(new URL("../data/shadow-book.json", import.meta.url)));
 
@@ -29,6 +30,24 @@ test("every shadow pick carries a reasoning excerpt", () => {
       assert.ok(leg.reasoning.trim().length >= 40, `${leg.id} reasoning is too short`);
     }
   }
+});
+
+test("every shadow pick is attributed to MitsNemo, so it merges into the group's WAR/stats tables", () => {
+  for (const week of book.weeks) {
+    for (const leg of week.legs) {
+      assert.equal(leg.by, "MitsNemo", `${leg.id} is missing a by attribution`);
+    }
+  }
+  const week = book.weeks.find((w) => w.id === "shadow-2026-10-17");
+  const rows = breakdownRows([{
+    week: { id: week.id, label: week.label, weekOf: week.weekOf },
+    legs: week.legs.map((leg) => ({ leg, grade: { result: "hit", margin: 1 } })),
+    status: "WON",
+    counts: {},
+  }]);
+  const [mitsnemo] = personTotals(rows);
+  assert.equal(mitsnemo.name, "MitsNemo");
+  assert.equal(mitsnemo.hit, week.legs.length);
 });
 
 test("shadow returns drop pushed legs and never credit a busted parlay", () => {
