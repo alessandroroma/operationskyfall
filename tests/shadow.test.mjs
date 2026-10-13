@@ -6,7 +6,8 @@ import { decimalOdds, shadowQuote, shadowSeason } from "../js/shadow.js";
 const book = JSON.parse(readFileSync(new URL("../data/shadow-book.json", import.meta.url)));
 
 test("first shadow slate is priced, distinct, and mixes both leagues", () => {
-  const week = book.weeks[0];
+  const week = book.weeks.find((w) => w.id === "shadow-2026-10-17");
+  assert.ok(week);
   assert.equal(week.legs.length, 11);
   assert.equal(new Set(week.legs.map((l) => l.eventId)).size, 11);
   assert.equal(new Set(week.legs.map((l) => l.league)).size, 2);
