@@ -1,0 +1,134 @@
+{
+  "weeks": [
+    {
+      "id": "shadow-2026-10-17",
+      "label": "Oct 17\u201318 \u00b7 Shadow Book 1",
+      "weekOf": "2026-10-17",
+      "capturedAt": "2026-10-13T16:50:54Z",
+      "oddsSource": "DraftKings via ESPN",
+      "stake": 7,
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "team": "Ohio State Buckeyes",
+          "opponent": "Indiana Hoosiers",
+          "type": "moneyline",
+          "odds": -180,
+          "date": "2026-10-17",
+          "eventId": "401858488"
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "team": "Florida Gators",
+          "opponent": "Texas Longhorns",
+          "type": "spread",
+          "odds": -108,
+          "date": "2026-10-17",
+          "eventId": "401856724",
+          "line": 10.5
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "team": "Tennessee Volunteers",
+          "opponent": "Alabama Crimson Tide",
+          "type": "spread",
+          "odds": -110,
+          "date": "2026-10-17",
+          "eventId": "401856723",
+          "line": 8.5
+        },
+        {
+          "id": "l4",
+          "league": "college-football",
+          "team": "Michigan Wolverines",
+          "opponent": "Penn State Nittany Lions",
+          "type": "spread",
+          "odds": -118,
+          "date": "2026-10-17",
+          "eventId": "401858490",
+          "line": -6.5
+        },
+        {
+          "id": "l5",
+          "league": "college-football",
+          "team": "Oregon Ducks",
+          "opponent": "Nebraska Cornhuskers",
+          "type": "spread",
+          "odds": -112,
+          "date": "2026-10-17",
+          "eventId": "401858492",
+          "line": -7.5
+        },
+        {
+          "id": "l6",
+          "league": "college-football",
+          "team": "Notre Dame Fighting Irish",
+          "opponent": "BYU Cougars",
+          "type": "spread",
+          "odds": -110,
+          "date": "2026-10-17",
+          "eventId": "401856809",
+          "line": -10.0
+        },
+        {
+          "id": "l7",
+          "league": "nfl",
+          "team": "Chicago Bears",
+          "opponent": "Atlanta Falcons",
+          "type": "spread",
+          "odds": -120,
+          "date": "2026-10-18",
+          "eventId": "401872999",
+          "line": -3.0
+        },
+        {
+          "id": "l8",
+          "league": "nfl",
+          "team": "Baltimore Ravens",
+          "opponent": "Cleveland Browns",
+          "type": "spread",
+          "odds": -112,
+          "date": "2026-10-18",
+          "eventId": "401872997",
+          "line": -4.5
+        },
+        {
+          "id": "l9",
+          "league": "nfl",
+          "team": "Philadelphia Eagles",
+          "opponent": "Carolina Panthers",
+          "type": "spread",
+          "odds": -105,
+          "date": "2026-10-18",
+          "eventId": "401872998",
+          "line": -1.5
+        },
+        {
+          "id": "l10",
+          "league": "nfl",
+          "team": "Pittsburgh Steelers",
+          "opponent": "Tampa Bay Buccaneers",
+          "type": "spread",
+          "odds": -110,
+          "date": "2026-10-18",
+          "eventId": "401873002",
+          "line": -2.5
+        },
+        {
+          "id": "l11",
+          "league": "nfl",
+          "team": "Green Bay Packers",
+          "opponent": "Dallas Cowboys",
+          "type": "spread",
+          "odds": -105,
+          "date": "2026-10-18",
+          "eventId": "401873007",
+          "line": -1.5
+        }
+      ]
+    }
+  ]
+}

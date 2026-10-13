@@ -108,3 +108,11 @@ table.bd td.lost, table.bd td.miss { color: var(--red); }
 .margin-tabs .tab:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 td.pick-cell { white-space: normal; min-width: 160px; }
 .tiny { display: block; font-size: .72rem; color: var(--muted); font-weight: 400; }
+
+/* Shadow Book is visually and statistically separate from the group slip. */
+.shadow-intro { margin: 14px 0; border-left: 3px solid var(--amber); padding: 4px 0 4px 14px; color: var(--muted); }
+.shadow-intro h2 { color: var(--text); margin: 0 0 4px; font-size: 1.1rem; }
+.shadow-intro p { margin: 4px 0; font-size: .85rem; }
+.shadow-card { border-color: #66522c; }
+.shadow-numbers { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 10px 0 4px; color: var(--muted); font-size: .85rem; }
+.shadow-numbers b { color: var(--text); font-variant-numeric: tabular-nums; }

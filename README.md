@@ -51,6 +51,12 @@ Below the leg table the tab shows **By person (all weeks)** (legs, hits, misses,
 Row building is pure and lives in `js/breakdown.js` (`breakdownRows`, `personTotals`, `resultsByOdds`, `bettingWar`, `warByWeek`, `cumulativeWarByWeek`, `weekMoney`, `seasonMoney`), tested in `tests/breakdown.test.mjs`.
 Below WAR by week, one tabbed ranking area switches between **Best Wins**, **Worst Losses**, and **Worst Beats**: the five largest winning margins, largest losing margins, and closest losses respectively. Each bet shows its American odds in parentheses. Week 2.5 is excluded from these rankings. Only settled legs with a numeric point margin are ranked; manual props without a margin are excluded.
 
+## Shadow Book tab
+
+`data/shadow-book.json` holds the agent's **hypothetical** weekly NFL + CFB parlays, separately from real group slips in `data/parlays.json`. The first slate is Oct 17–18, 2026: 11 distinct games, a virtual $7 stake, and a projected $6,749.69 return (×964.24). The odds are DraftKings prices exposed in ESPN's scoreboard feed, recorded at the `capturedAt` timestamp; they are **not** repriced when the market moves. Game results are graded with the same ESPN score logic as the group slips. The tab shows its own record and settled virtual net. Shadow legs never enter Breakdown, Betting WAR, or the group's season money.
+
+To add the next slate, fetch ESPN's single-date NFL/CFB scoreboards (CFB uses `groups=80&limit=400`), choose distinct unstarted games, record the exact `close` odds and spread `line` for the selected side plus `capturedAt` and `eventId`, and prepend a week in `data/shadow-book.json`. Check `shadowQuote`'s return against the real slips' approximate 700–1,300× stake target. Run `npm test` and confirm each team/opponent resolves on ESPN before publishing. These are simulated picks, not placed bets or claims of an edge.
+
 ## Publish
 
 Settings -> Pages -> Source: **Deploy from a branch** -> `main` / `(root)`.

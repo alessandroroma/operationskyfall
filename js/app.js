@@ -1,7 +1,7 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }] =
-  await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`)]);
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }, { shadowQuote, shadowSeason }] =
+  await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -13,6 +13,9 @@ const RESULT_LABEL = {
 
 let data = null;
 let evaluated = []; // [{week, legs:[{leg, game, grade, error}], status, counts}]
+let shadowData = null;
+let shadowEvaluated = [];
+let shadowError = null;
 let refreshTimer = null;
 const frozen = new Map(); // week id -> evaluation once every leg is final (no need to refetch)
 
@@ -297,7 +300,7 @@ function selectMarginTab(id, focus = false) {
 }
 
 function showTab(name) {
-  const target = name === "breakdown" ? "breakdown" : "parlays";
+  const target = ["parlays", "breakdown", "shadow"].includes(name) ? name : "parlays";
   document.querySelectorAll("#tabs .tab").forEach((b) => {
     const on = b.dataset.tab === target;
     b.classList.toggle("on", on);
@@ -305,7 +308,8 @@ function showTab(name) {
   });
   $("view-parlays").hidden = target !== "parlays";
   $("view-breakdown").hidden = target !== "breakdown";
-  renderBreakdown(target === "breakdown");
+  $("view-shadow").hidden = target !== "shadow";
+  if (target === "breakdown") renderBreakdown(true);
   tick();
 }
 
@@ -336,7 +340,38 @@ function setupTabs() {
     e.preventDefault();
     selectMarginTab(MARGIN_TABS[next][0], true);
   });
-  showTab(location.hash === "#breakdown" ? "breakdown" : "parlays");
+  showTab(location.hash === "#breakdown" ? "breakdown" : location.hash === "#shadow" ? "shadow" : "parlays");
+}
+
+function shadowWeekHtml(ev) {
+  const w = ev.week;
+  const quote = shadowQuote(w);
+  const settled = ev.status === "WON" ? shadowQuote(w, ev.legs.map((l) => l.grade.result)).return
+    : ev.status === "VOID" ? Number(w.stake) : ev.status === "BUSTED" ? 0 : null;
+  const captured = w.capturedAt ? new Date(w.capturedAt).toLocaleString([], { dateStyle: "medium", timeStyle: "short" }) : "unknown";
+  return `<article class="parlay shadow-card">
+    <div class="parlay-head"><div><h2>${esc(w.label)}</h2><p class="muted">${esc(w.oddsSource || "ESPN")} lines captured ${esc(captured)} · locked at selection</p></div><span class="pill ${ev.status}">${ev.status}</span></div>
+    <div class="shadow-numbers"><span>Virtual stake <b>${esc(fmtMoney(quote.stake))}</b></span><span>Combined odds <b>×${quote.multiplier.toFixed(1)}</b></span><span>${settled == null ? "Projected return" : "Actual return"} <b>${esc(fmtMoney(settled ?? quote.return))}</b></span></div>
+    ${statsHtml(ev)}
+    ${sectionsHtml(ev.legs, w)}
+  </article>`;
+}
+
+function renderShadow() {
+  const el = $("shadow");
+  if (shadowError) {
+    el.innerHTML = `<p class="error">Could not load Shadow Book: ${esc(shadowError.message)}</p>`;
+    return;
+  }
+  if (!shadowData?.weeks?.length) {
+    el.innerHTML = `<p class="muted">No Shadow Book parlay recorded yet.</p>`;
+    return;
+  }
+  const record = seasonRecord(shadowEvaluated.map((ev) => ev.status));
+  const money = shadowSeason(shadowEvaluated);
+  el.innerHTML = `<div class="shadow-intro"><h2>Shadow Book</h2><p>A separate, hypothetical NFL + CFB parlay each week. Picks and ESPN-listed DraftKings prices are recorded before kickoff; no wager is placed and none of this counts toward the group's Breakdown or WAR.</p>
+    <p class="record">Record: <b>${record.won}</b> won · <b>${record.lost}</b> busted${record.open ? ` · <b>${record.open}</b> open` : ""} · Settled virtual net <b>${esc(fmtNet(money.net))}</b></p></div>
+    ${shadowEvaluated.map(shadowWeekHtml).join("")}`;
 }
 
 function parlayHtml(ev) {
@@ -365,6 +400,7 @@ function render() {
   $("history-wrap").hidden = past.length === 0;
   $("history").innerHTML = past.map(historyHtml).join("");
   renderBreakdown();
+  renderShadow();
   tick();
 }
 
@@ -373,7 +409,7 @@ function tick() {
 }
 
 function anyLive() {
-  return evaluated.some((e) => e.counts.live > 0);
+  return [...evaluated, ...shadowEvaluated].some((e) => e.counts.live > 0);
 }
 
 async function refresh() {
@@ -388,6 +424,16 @@ async function refresh() {
         return ev;
       })
     );
+    if (shadowData?.weeks) {
+      shadowEvaluated = await Promise.all(shadowData.weeks.map(async (week) => {
+        const key = `shadow:${week.id}`;
+        if (frozen.has(key)) return frozen.get(key);
+        const ev = await evaluateWeek(week);
+        const c = ev.counts;
+        if (c.live === 0 && c.pending === 0 && c.unknown === 0) frozen.set(key, ev);
+        return ev;
+      }));
+    }
     render();
     $("updated").textContent = `Last updated ${new Date().toLocaleTimeString()}`;
   } catch (e) {
@@ -406,6 +452,14 @@ async function main() {
   } catch (e) {
     $("current").innerHTML = `<p class="error">Could not load data/parlays.json: ${esc(e.message)}</p>`;
     return;
+  }
+  try {
+    const res = await fetch("data/shadow-book.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`shadow-book.json ${res.status}`);
+    shadowData = await res.json();
+    shadowData.weeks.sort((a, b) => b.weekOf.localeCompare(a.weekOf));
+  } catch (e) {
+    shadowError = e;
   }
   setInterval(tick, 1000);
   setupTabs();
