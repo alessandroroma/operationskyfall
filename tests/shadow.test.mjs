@@ -22,6 +22,15 @@ test("first shadow slate is priced, distinct, and mixes both leagues", () => {
   }
 });
 
+test("every shadow pick carries a reasoning excerpt", () => {
+  for (const week of book.weeks) {
+    for (const leg of week.legs) {
+      assert.equal(typeof leg.reasoning, "string", `${leg.id} is missing reasoning`);
+      assert.ok(leg.reasoning.trim().length >= 40, `${leg.id} reasoning is too short`);
+    }
+  }
+});
+
 test("shadow returns drop pushed legs and never credit a busted parlay", () => {
   const week = { stake: 7, legs: [{ odds: -110 }, { odds: 150 }] };
   assert.equal(decimalOdds(-110), 1 + 100 / 110);

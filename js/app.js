@@ -79,6 +79,7 @@ function legHtml({ leg, game, grade, error }, week) {
     ${link ? `</a>` : `</div>`}
     <div class="meta"><span>${status}${link ? ` · <a class="gc" href="${esc(link)}" target="_blank" rel="noopener noreferrer">Gamecast ↗</a>` : ""}</span>${watch ? `<span class="watch">📺 ${esc(watch)}</span>` : ""}</div>
     ${leg.note ? `<div class="meta"><span>${esc(leg.note)}</span></div>` : ""}
+    ${leg.reasoning ? `<div class="reason"><span class="rk">Why</span>${esc(leg.reasoning)}</div>` : ""}
   </div>`;
 }
 
