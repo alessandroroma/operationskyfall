@@ -25,3 +25,8 @@ export function shadowSeason(evaluated) {
     : ev.status === "VOID" ? Number(ev.week.stake) : 0), 0);
   return { staked, returned, net: returned - staked };
 }
+
+// A slip uploaded by someone else can opt out of the group's Breakdown/WAR stats.
+export function statsEligible(evaluated) {
+  return evaluated.filter((ev) => !ev.week?.excludeFromStats);
+}

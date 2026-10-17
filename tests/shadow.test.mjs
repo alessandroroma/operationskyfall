@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { decimalOdds, shadowQuote, shadowSeason } from "../js/shadow.js";
+import { decimalOdds, shadowQuote, shadowSeason, statsEligible } from "../js/shadow.js";
 import { breakdownRows, personTotals } from "../js/breakdown.js";
 
 const book = JSON.parse(readFileSync(new URL("../data/shadow-book.json", import.meta.url)));
@@ -23,8 +23,9 @@ test("first shadow slate is priced, distinct, and mixes both leagues", () => {
   }
 });
 
-test("every shadow pick carries a reasoning excerpt", () => {
+test("every agent-picked shadow leg carries a reasoning excerpt", () => {
   for (const week of book.weeks) {
+    if (week.author) continue; // an uploaded slip keeps the uploader's own rationale
     for (const leg of week.legs) {
       assert.equal(typeof leg.reasoning, "string", `${leg.id} is missing reasoning`);
       assert.ok(leg.reasoning.trim().length >= 40, `${leg.id} reasoning is too short`);
@@ -32,8 +33,12 @@ test("every shadow pick carries a reasoning excerpt", () => {
   }
 });
 
-test("every shadow pick is attributed to MitsNemo, so it merges into the group's WAR/stats tables", () => {
+test("every agent-picked shadow leg is attributed to MitsNemo, so it merges into the group's WAR/stats tables", () => {
   for (const week of book.weeks) {
+    if (week.author) {
+      assert.ok(week.legs.every((leg) => leg.by === undefined), "an uploaded slip must never be attributed to MitsNemo");
+      continue;
+    }
     for (const leg of week.legs) {
       assert.equal(leg.by, "MitsNemo", `${leg.id} is missing a by attribution`);
     }
@@ -62,4 +67,20 @@ test("shadow returns drop pushed legs and never credit a busted parlay", () => {
   ]);
   assert.equal(earned.staked, 14);
   assert.equal(earned.returned, 7 * (1 + 100 / 110));
+});
+
+test("an uploaded slip renders in the Shadow Book but never feeds other pages", () => {
+  const uploaded = book.weeks.find((w) => w.id === "shadow-2026-10-17-4455");
+  assert.ok(uploaded);
+  assert.equal(uploaded.label, "Week 7 - 4455 Special");
+  assert.equal(uploaded.author, "Dalton");
+  assert.equal(uploaded.excludeFromStats, true);
+  assert.equal(uploaded.stake, 5);
+  assert.equal(uploaded.legs.length, 9);
+  assert.ok(!uploaded.legs.some((leg) => leg.reasoning));
+  assert.ok(Math.abs(shadowQuote(uploaded).return - 1538.08) < 0.02);
+  const evaluated = book.weeks.map((week) => ({ week, status: "ALIVE", legs: [] }));
+  const eligible = statsEligible(evaluated).map((ev) => ev.week.id);
+  assert.ok(eligible.includes("shadow-2026-10-17"));
+  assert.ok(!eligible.includes("shadow-2026-10-17-4455"));
 });

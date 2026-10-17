@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }, { shadowQuote, shadowSeason }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }, { shadowQuote, shadowSeason, statsEligible }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -259,7 +259,7 @@ function breakdownHtml(everyLegOpen = false) {
   // Shadow Book picks count toward every stats table (WAR, records, margins) so MitsNemo's
   // performance is comparable to the group's, but never toward the real money total or the
   // raw every-leg list below, which stay scoped to the group's actual slips.
-  const statsRows = [...all, ...breakdownRows(shadowEvaluated)];
+  const statsRows = [...all, ...breakdownRows(statsEligible(shadowEvaluated))];
   const people = peopleIn(all);
   const chips = ["all", ...people]
     .map((who) => `<button class="chip${breakdownWho === who ? " on" : ""}" data-by="${esc(who)}">${esc(who === "all" ? "All" : who)}</button>`)
@@ -355,7 +355,7 @@ function shadowWeekHtml(ev) {
     : ev.status === "VOID" ? Number(w.stake) : ev.status === "BUSTED" ? 0 : null;
   const captured = w.capturedAt ? new Date(w.capturedAt).toLocaleString([], { dateStyle: "medium", timeStyle: "short" }) : "unknown";
   return `<article class="parlay shadow-card">
-    <div class="parlay-head"><div><h2>${esc(w.label)}</h2><p class="muted">${esc(w.oddsSource || "ESPN")} lines captured ${esc(captured)} · locked at selection</p></div><span class="pill ${ev.status}">${ev.status}</span></div>
+    <div class="parlay-head"><div><h2>${esc(w.label)}</h2><p class="muted">${esc(w.oddsSource || "ESPN")} lines captured ${esc(captured)} · locked at selection${w.author ? ` · ${esc(w.author)}'s slip` : ""}${w.excludeFromStats ? " · not counted in Breakdown stats" : ""}</p></div><span class="pill ${ev.status}">${ev.status}</span></div>
     <div class="shadow-numbers"><span>Virtual stake <b>${esc(fmtMoney(quote.stake))}</b></span><span>Combined odds <b>×${quote.multiplier.toFixed(1)}</b></span><span>${settled == null ? "Projected return" : "Actual return"} <b>${esc(fmtMoney(settled ?? quote.return))}</b></span></div>
     ${statsHtml(ev)}
     ${sectionsHtml(ev.legs, w)}
@@ -374,7 +374,7 @@ function renderShadow() {
   }
   const record = seasonRecord(shadowEvaluated.map((ev) => ev.status));
   const money = shadowSeason(shadowEvaluated);
-  el.innerHTML = `<div class="shadow-intro"><h2>Shadow Book</h2><p>A separate, hypothetical NFL + CFB parlay each week, picked by MitsNemo. Picks and ESPN-listed DraftKings prices are recorded before kickoff; no wager is placed, so the stake/return above isn't part of the group's season money. Each leg's result does count toward MitsNemo's record in the Breakdown tab's WAR and stats tables, same as everyone else's picks.</p>
+  el.innerHTML = `<div class="shadow-intro"><h2>Shadow Book</h2><p>A separate, hypothetical NFL + CFB parlay each week, picked by MitsNemo, plus any slip a member uploads. Prices are locked when recorded and no wager is placed, so the stake and return here never touch the group's season money. Slates MitsNemo picks count toward MitsNemo's record in the Breakdown tab's WAR and stats tables, same as everyone else's picks. Uploaded slips are marked on their card and are excluded from every other page's stats.</p>
     <p class="record">Record: <b>${record.won}</b> won · <b>${record.lost}</b> busted${record.open ? ` · <b>${record.open}</b> open` : ""} · Settled virtual net <b>${esc(fmtNet(money.net))}</b></p></div>
     ${shadowEvaluated.map(shadowWeekHtml).join("")}`;
 }
