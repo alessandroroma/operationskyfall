@@ -6,7 +6,7 @@
       "weekOf": "2026-10-17",
       "stake": "$7.00",
       "payout": "$16,305.78",
-      "note": "Re-bet after Purdue lost and busted the original Week 5 ticket; the Purdue leg stays recorded under Week 5.",
+      "note": "Re-bet after Purdue lost and busted the original Week 5 ticket; the Purdue leg stays recorded under Week 5. The 10 reused picks plus the ND/BYU total are the same bets as Week 5 and are excluded from stats here to avoid double-counting; only the new ND spread and CJ Carr pass-yards legs count toward this week.",
       "groups": {
         "sgpndbyu": {
           "label": "Same-game parlay",
@@ -23,7 +23,8 @@
           "opponent": "UCLA",
           "type": "spread",
           "line": 1.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "excludeFromStats": true
         },
         {
           "id": "l2",
@@ -33,7 +34,8 @@
           "team": "Jacksonville Jaguars",
           "opponent": "Houston Texans",
           "type": "moneyline",
-          "date": "2026-10-18"
+          "date": "2026-10-18",
+          "excludeFromStats": true
         },
         {
           "id": "l3",
@@ -44,7 +46,8 @@
           "opponent": "Michigan State",
           "type": "spread",
           "line": -7.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "excludeFromStats": true
         },
         {
           "id": "l4",
@@ -55,7 +58,8 @@
           "opponent": "Indiana",
           "type": "total_under",
           "line": 49.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "excludeFromStats": true
         },
         {
           "id": "l5",
@@ -66,7 +70,8 @@
           "opponent": "Ball State",
           "type": "spread",
           "line": -6.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "excludeFromStats": true
         },
         {
           "id": "l6",
@@ -77,7 +82,8 @@
           "opponent": "Florida Atlantic",
           "type": "spread",
           "line": -2.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "excludeFromStats": true
         },
         {
           "id": "l7",
@@ -88,7 +94,8 @@
           "opponent": "Northern Arizona",
           "type": "spread",
           "line": 17.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "excludeFromStats": true
         },
         {
           "id": "l8",
@@ -99,7 +106,8 @@
           "opponent": "Miami",
           "type": "total_over",
           "line": 56.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "excludeFromStats": true
         },
         {
           "id": "l9",
@@ -110,7 +118,8 @@
           "opponent": "Missouri",
           "type": "spread",
           "line": -4.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "excludeFromStats": true
         },
         {
           "id": "l10",
@@ -120,7 +129,8 @@
           "team": "Oklahoma State",
           "opponent": "Houston",
           "type": "moneyline",
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "excludeFromStats": true
         },
         {
           "id": "l11",
@@ -145,7 +155,8 @@
           "type": "total_under",
           "line": 47.5,
           "date": "2026-10-17",
-          "note": "Under 47.5 (SGP leg)"
+          "note": "Under 47.5 (SGP leg)",
+          "excludeFromStats": true
         },
         {
           "id": "l13",
