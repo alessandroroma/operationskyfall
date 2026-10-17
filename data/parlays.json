@@ -1,6 +1,167 @@
 {
   "weeks": [
     {
+      "id": "2026-w5-5",
+      "label": "Week 5.5",
+      "weekOf": "2026-10-17",
+      "stake": "$7.00",
+      "payout": "$16,305.78",
+      "note": "Re-bet after Purdue lost and busted the original Week 5 ticket; the Purdue leg stays recorded under Week 5.",
+      "groups": {
+        "sgpndbyu": {
+          "label": "Same-game parlay",
+          "odds": 280
+        }
+      },
+      "legs": [
+        {
+          "id": "l1",
+          "odds": -111,
+          "league": "college-football",
+          "by": "Paul",
+          "team": "Wisconsin",
+          "opponent": "UCLA",
+          "type": "spread",
+          "line": 1.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l2",
+          "odds": -150,
+          "league": "nfl",
+          "by": "Paul",
+          "team": "Jacksonville Jaguars",
+          "opponent": "Houston Texans",
+          "type": "moneyline",
+          "date": "2026-10-18"
+        },
+        {
+          "id": "l3",
+          "odds": -105,
+          "league": "college-football",
+          "by": "Luke",
+          "team": "Northwestern",
+          "opponent": "Michigan State",
+          "type": "spread",
+          "line": -7.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l4",
+          "odds": -113,
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Ohio State",
+          "opponent": "Indiana",
+          "type": "total_under",
+          "line": 49.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l5",
+          "odds": -107,
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Bowling Green",
+          "opponent": "Ball State",
+          "type": "spread",
+          "line": -6.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l6",
+          "odds": -103,
+          "league": "college-football",
+          "by": "Jacob",
+          "team": "Army",
+          "opponent": "Florida Atlantic",
+          "type": "spread",
+          "line": -2.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l7",
+          "odds": -120,
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Portland State",
+          "opponent": "Northern Arizona",
+          "type": "spread",
+          "line": 17.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l8",
+          "odds": -110,
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Florida State",
+          "opponent": "Miami",
+          "type": "total_over",
+          "line": 56.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l9",
+          "odds": -103,
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Ole Miss",
+          "opponent": "Missouri",
+          "type": "spread",
+          "line": -4.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l10",
+          "odds": 163,
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Oklahoma State",
+          "opponent": "Houston",
+          "type": "moneyline",
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l11",
+          "group": "sgpndbyu",
+          "odds": -135,
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Notre Dame",
+          "opponent": "BYU",
+          "type": "spread",
+          "line": -9.5,
+          "date": "2026-10-17",
+          "note": "Notre Dame -9.5 (SGP leg)"
+        },
+        {
+          "id": "l12",
+          "group": "sgpndbyu",
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Notre Dame",
+          "opponent": "BYU",
+          "type": "total_under",
+          "line": 47.5,
+          "date": "2026-10-17",
+          "note": "Under 47.5 (SGP leg)"
+        },
+        {
+          "id": "l13",
+          "group": "sgpndbyu",
+          "odds": -1300,
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Notre Dame",
+          "opponent": "BYU",
+          "type": "other",
+          "date": "2026-10-17",
+          "note": "CJ Carr 150+ pass yards (SGP leg)"
+        }
+      ]
+    },
+    {
       "id": "2026-w5",
       "label": "Week 5",
       "weekOf": "2026-10-16",
