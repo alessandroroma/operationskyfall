@@ -72,7 +72,7 @@ test("shadow returns drop pushed legs and never credit a busted parlay", () => {
 test("an uploaded slip renders in the Shadow Book but never feeds other pages", () => {
   const uploaded = book.weeks.find((w) => w.id === "shadow-2026-10-17-4455");
   assert.ok(uploaded);
-  assert.equal(uploaded.label, "Week 7 - 4455 Special");
+  assert.equal(uploaded.label, "CFB Week 7 - 4455 Special");
   assert.equal(uploaded.author, "Dalton");
   assert.equal(uploaded.excludeFromStats, true);
   assert.equal(uploaded.stake, 5);
