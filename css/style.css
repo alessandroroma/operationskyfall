@@ -116,5 +116,8 @@ td.pick-cell { white-space: normal; min-width: 160px; }
 .shadow-card { border-color: #66522c; }
 .shadow-numbers { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 10px 0 4px; color: var(--muted); font-size: .85rem; }
 .shadow-numbers b { color: var(--text); font-variant-numeric: tabular-nums; }
+.legs-toggle { margin-top: 10px; }
+.legs-toggle > summary { width: fit-content; cursor: pointer; border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; color: var(--text); background: var(--card); font-size: .8rem; font-weight: 600; }
+.legs-toggle > summary:hover, .legs-toggle > summary:focus-visible { border-color: var(--blue); }
 .reason { margin-top: 8px; padding-left: 9px; border-left: 2px solid var(--amber); color: var(--muted); font-size: .8rem; }
 .reason .rk { display: inline-block; margin-right: 6px; color: var(--amber); font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }

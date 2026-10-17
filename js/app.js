@@ -348,17 +348,22 @@ function setupTabs() {
   showTab(location.hash === "#breakdown" ? "breakdown" : location.hash === "#shadow" ? "shadow" : "parlays");
 }
 
-function shadowWeekHtml(ev) {
+function shadowWeekHtml(ev, openWeekIds) {
   const w = ev.week;
   const quote = shadowQuote(w);
   const settled = ev.status === "WON" ? shadowQuote(w, ev.legs.map((l) => l.grade.result)).return
     : ev.status === "VOID" ? Number(w.stake) : ev.status === "BUSTED" ? 0 : null;
   const captured = w.capturedAt ? new Date(w.capturedAt).toLocaleString([], { dateStyle: "medium", timeStyle: "short" }) : "unknown";
+  // Default open on first render; a user's collapse/expand choice is preserved across refreshes via openWeekIds.
+  const open = openWeekIds?.has(w.id) ? openWeekIds.get(w.id) : true;
   return `<article class="parlay shadow-card">
     <div class="parlay-head"><div><h2>${esc(w.label)}</h2><p class="muted">${esc(w.oddsSource || "ESPN")} lines captured ${esc(captured)} · locked at selection${w.author ? ` · ${esc(w.author)}'s slip` : ""}${w.excludeFromStats ? " · not counted in Breakdown stats" : ""}</p></div><span class="pill ${ev.status}">${ev.status}</span></div>
     <div class="shadow-numbers"><span>Virtual stake <b>${esc(fmtMoney(quote.stake))}</b></span><span>Combined odds <b>×${quote.multiplier.toFixed(1)}</b></span><span>${settled == null ? "Projected return" : "Actual return"} <b>${esc(fmtMoney(settled ?? quote.return))}</b></span></div>
     ${statsHtml(ev)}
-    ${sectionsHtml(ev.legs, w)}
+    <details class="legs-toggle" data-week-id="${esc(w.id)}"${open ? " open" : ""}>
+      <summary>Bets (${ev.legs.length})</summary>
+      ${sectionsHtml(ev.legs, w)}
+    </details>
   </article>`;
 }
 
@@ -374,9 +379,12 @@ function renderShadow() {
   }
   const record = seasonRecord(shadowEvaluated.map((ev) => ev.status));
   const money = shadowSeason(shadowEvaluated);
+  const openWeekIds = new Map(
+    [...el.querySelectorAll("details.legs-toggle")].map((d) => [d.dataset.weekId, d.open])
+  );
   el.innerHTML = `<div class="shadow-intro"><h2>Shadow Book</h2><p>A separate, hypothetical NFL + CFB parlay each week, picked by MitsNemo, plus any slip a member uploads. Prices are locked when recorded and no wager is placed, so the stake and return here never touch the group's season money. Slates MitsNemo picks count toward MitsNemo's record in the Breakdown tab's WAR and stats tables, same as everyone else's picks. Uploaded slips are marked on their card and are excluded from every other page's stats.</p>
     <p class="record">Record: <b>${record.won}</b> won · <b>${record.lost}</b> busted${record.open ? ` · <b>${record.open}</b> open` : ""} · Settled virtual net <b>${esc(fmtNet(money.net))}</b></p></div>
-    ${shadowEvaluated.map(shadowWeekHtml).join("")}`;
+    ${shadowEvaluated.map((ev) => shadowWeekHtml(ev, openWeekIds)).join("")}`;
 }
 
 function parlayHtml(ev) {
