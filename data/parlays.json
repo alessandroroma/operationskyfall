@@ -1,6 +1,145 @@
 {
   "weeks": [
     {
+      "id": "2026-w5",
+      "label": "Week 5",
+      "weekOf": "2026-10-16",
+      "stake": "$7.00",
+      "payout": "$23,476.62 (incl. $8,823.16 parlay boost)",
+      "boost": "+40% parlay boost",
+      "legs": [
+        {
+          "id": "l1",
+          "odds": -107,
+          "league": "college-football",
+          "by": "Paul",
+          "team": "Wisconsin",
+          "opponent": "UCLA",
+          "type": "spread",
+          "line": 2.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l2",
+          "odds": -148,
+          "league": "nfl",
+          "by": "Paul",
+          "team": "Jacksonville Jaguars",
+          "opponent": "Houston Texans",
+          "type": "moneyline",
+          "date": "2026-10-18"
+        },
+        {
+          "id": "l3",
+          "odds": -105,
+          "league": "college-football",
+          "by": "Luke",
+          "team": "Northwestern",
+          "opponent": "Michigan State",
+          "type": "spread",
+          "line": -7.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l4",
+          "odds": -108,
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Notre Dame",
+          "opponent": "BYU",
+          "type": "total_under",
+          "line": 46.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l5",
+          "odds": -111,
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Ohio State",
+          "opponent": "Indiana",
+          "type": "total_under",
+          "line": 50.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l6",
+          "odds": -112,
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Bowling Green",
+          "opponent": "Ball State",
+          "type": "spread",
+          "line": -6.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l7",
+          "odds": -116,
+          "league": "college-football",
+          "by": "Jacob",
+          "team": "Army",
+          "opponent": "Florida Atlantic",
+          "type": "spread",
+          "line": -1.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l8",
+          "odds": -125,
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Portland State",
+          "opponent": "Northern Arizona",
+          "type": "spread",
+          "line": 17.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l9",
+          "odds": -111,
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Florida State",
+          "opponent": "Miami",
+          "type": "total_over",
+          "line": 56.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l10",
+          "odds": -109,
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Ole Miss",
+          "opponent": "Missouri",
+          "type": "spread",
+          "line": -5.5,
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l11",
+          "odds": 165,
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Oklahoma State",
+          "opponent": "Houston",
+          "type": "moneyline",
+          "date": "2026-10-17"
+        },
+        {
+          "id": "l12",
+          "odds": 122,
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Purdue",
+          "opponent": "Washington",
+          "type": "moneyline",
+          "date": "2026-10-17"
+        }
+      ]
+    },
+    {
       "id": "2026-w4",
       "label": "Week 4",
       "weekOf": "2026-10-09",
