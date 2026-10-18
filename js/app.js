@@ -201,10 +201,24 @@ function bettingWarTableHtml(rows) {
 
 const WAR_COLORS = ["#58a6ff", "#ff7b72", "#3fb950", "#d29922", "#bc8cff", "#39c5cf", "#ffa657"];
 
+// A re-bet ticket (Week 4.5, Week 5.5) merges into its parent week's point on the chart; its
+// duplicate legs are already skipped by bettingWar via excludeFromStats, so only its new legs
+// (e.g. Portland State, the ND spread/CJ Carr props) add to the parent week's Delta EV here.
+const WAR_WEEK_MERGE = {
+  "2026-w4-5": { id: "2026-w4", label: "Week 4", weekOf: "2026-10-09" },
+  "2026-w5-5": { id: "2026-w5", label: "Week 5", weekOf: "2026-10-16" },
+};
+function mergeDuplicateWeeks(rows) {
+  return rows.map((row) => {
+    const merge = WAR_WEEK_MERGE[row.weekId];
+    return merge ? { ...row, weekId: merge.id, week: merge.label, weekOf: merge.weekOf } : row;
+  });
+}
+
 function warByWeekHtml(rows) {
-  const { people, weeks } = cumulativeWarByWeek(rows);
+  const { people, weeks } = cumulativeWarByWeek(mergeDuplicateWeeks(rows));
   if (!people.length || !weeks.length) return "";
-  const left = 48, top = 25, plotHeight = 220, groupWidth = 140;
+  const left = 48, top = 25, plotHeight = 220, groupWidth = 100;
   const width = left + weeks.length * groupWidth + 20, height = top + plotHeight + 42;
   const baseline = top + plotHeight / 2;
   const values = weeks.flatMap((week) => week.values);
