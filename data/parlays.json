@@ -265,7 +265,8 @@
           "opponent": "Northern Arizona",
           "type": "spread",
           "line": 17.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "result": "hit"
         },
         {
           "id": "l9",
