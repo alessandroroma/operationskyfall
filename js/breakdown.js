@@ -248,13 +248,14 @@ export function decimalOdds(value) {
 
 export function bettingWar(rows) {
   const people = personTotals(rows).map((p) => ({
-    name: p.name, expected: 0, earned: 0, delta: 0, netUnits: 0,
+    name: p.name, expected: 0, earned: 0, delta: 0, netUnits: 0, bets: 0, ugpb: 0,
   }));
   const byName = new Map(people.map((p) => [p.name, p]));
   for (const row of rows) {
     if (row.excludeFromStats) continue;
     const person = byName.get(row.by);
     if (!person) continue;
+    person.bets++;
     // A loss costs one unit even when its price was never recorded.
     if (row.result === "miss") person.netUnits -= 1;
     const decimal = decimalOdds(row.oddsValue);
@@ -270,7 +271,11 @@ export function bettingWar(rows) {
       person.netUnits += earnedLeg;
     }
   }
-  for (const person of people) person.delta = person.earned - person.expected;
+  for (const person of people) {
+    person.delta = person.earned - person.expected;
+    // UGpB: units gained per bet - net units divided by how many bets that person placed.
+    person.ugpb = person.bets > 0 ? person.netUnits / person.bets : 0;
+  }
   return people;
 }
 

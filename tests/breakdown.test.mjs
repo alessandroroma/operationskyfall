@@ -235,7 +235,10 @@ test("Betting War converts American odds and totals expected, earned, and delta 
   assert.ok(Math.abs(roma.earned - 13 / 6) < 1e-12);
   assert.ok(Math.abs(roma.delta + 5 / 6) < 1e-12); // Earned Value - Expected Value
   assert.ok(Math.abs(roma.netUnits - 1 / 6) < 1e-12); // net profit units; includes the unpriced loss
-  assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: 0, delta: -0.5, netUnits: -1 });
+  assert.equal(roma.bets, 7); // every attributed leg counts, including the unpriced one
+  // UGpB: net units divided by bets placed.
+  assert.ok(Math.abs(roma.ugpb - (1 / 6) / 7) < 1e-12);
+  assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: 0, delta: -0.5, netUnits: -1, bets: 1, ugpb: -1 });
 });
 
 test("WAR by week is chronological and sums to each person's all-weeks delta", () => {
