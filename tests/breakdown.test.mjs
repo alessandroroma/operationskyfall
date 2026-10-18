@@ -231,12 +231,12 @@ test("Betting War converts American odds and totals expected, earned, and delta 
   const roma = result.find((p) => p.name === "Roma");
   // Expected: implied win probability × (decimal odds - 1), the implied winnings the odds promise.
   assert.ok(Math.abs(roma.expected - 3) < 1e-12);
-  // Earned: the actual result given the outcome - payout on a win, a lost unit on a loss.
-  assert.ok(Math.abs(roma.earned - 7 / 6) < 1e-12);
+  // Earned: gross winnings only - payout on a win, zero on a loss (netUnits tracks the net result).
+  assert.ok(Math.abs(roma.earned - 13 / 6) < 1e-12);
   // Delta only accrues on hits (earned leg - expected leg); misses, pushes, and open legs add zero.
   assert.ok(Math.abs(roma.delta - 14 / 15) < 1e-12);
   assert.ok(Math.abs(roma.netUnits - 1 / 6) < 1e-12); // net profit units; includes the unpriced loss
-  assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: -1, delta: 0, netUnits: -1 });
+  assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: 0, delta: 0, netUnits: -1 });
 });
 
 test("WAR by week is chronological and sums to each person's all-weeks delta", () => {

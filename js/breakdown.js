@@ -263,16 +263,14 @@ export function bettingWar(rows) {
     const impliedProbability = 1 / decimal;
     const expectedLeg = impliedProbability * (decimal - 1);
     person.expected += expectedLeg;
-    // Earned: the actual result given the outcome — payout on a win, a lost unit on a loss.
+    // Earned: gross winnings only — payout on a win, zero on a loss (netUnits tracks net result).
     if (row.result === "hit") {
       const earnedLeg = decimal - 1;
       person.earned += earnedLeg;
       person.netUnits += earnedLeg;
       // Delta only compares winnings to the implied expectation on a hit; a miss already costs
-      // exactly its unit (see netUnits/earned above), so it adds nothing further here.
+      // exactly its unit (see netUnits above), so it adds nothing further here.
       person.delta += earnedLeg - expectedLeg;
-    } else if (row.result === "miss") {
-      person.earned -= 1;
     }
   }
   return people;
