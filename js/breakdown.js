@@ -259,9 +259,7 @@ export function bettingWar(rows) {
     if (row.result === "miss") person.netUnits -= 1;
     const decimal = decimalOdds(row.oddsValue);
     if (decimal == null) continue;
-    // Expected value: implied win probability times (1 - decimal odds).
-    const impliedProbability = 1 / decimal;
-    person.expected += impliedProbability * (1 - decimal);
+    person.expected += 1 / decimal;
     if (row.result === "hit") {
       person.earned += decimal - 1;
       person.netUnits += decimal - 1;
