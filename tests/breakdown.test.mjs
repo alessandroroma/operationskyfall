@@ -233,9 +233,10 @@ test("Betting War converts American odds and totals expected, earned, and delta 
   assert.ok(Math.abs(roma.expected - 3) < 1e-12);
   // Earned: the actual result given the outcome - payout on a win, a lost unit on a loss.
   assert.ok(Math.abs(roma.earned - 7 / 6) < 1e-12);
-  assert.ok(Math.abs(roma.delta + 11 / 6) < 1e-12);
+  // Delta only accrues on hits (earned leg - expected leg); misses, pushes, and open legs add zero.
+  assert.ok(Math.abs(roma.delta - 14 / 15) < 1e-12);
   assert.ok(Math.abs(roma.netUnits - 1 / 6) < 1e-12); // net profit units; includes the unpriced loss
-  assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: -1, delta: -1.5, netUnits: -1 });
+  assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: -1, delta: 0, netUnits: -1 });
 });
 
 test("WAR by week is chronological and sums to each person's all-weeks delta", () => {
@@ -258,9 +259,9 @@ test("WAR by week is chronological and sums to each person's all-weeks delta", (
   const chart = warByWeek(rows);
   assert.deepEqual(chart.weeks.map((w) => w.label), ["Week 1", "Week 2", "Week 2.5", "Week 3"]);
   const roma = chart.people.indexOf("Roma"), dalton = chart.people.indexOf("Dalton");
-  assert.deepEqual(chart.weeks.map((w) => w.values[roma]), [0.5, -1.5, null, null]);
+  assert.deepEqual(chart.weeks.map((w) => w.values[roma]), [0.5, 0, null, null]);
   assert.ok(Math.abs(chart.weeks[3].values[dalton] - 1 / 6) < 1e-12);
-  assert.deepEqual(chart.weeks.slice(0, 2).map((w) => w.values[dalton]), [-1.5, null]);
+  assert.deepEqual(chart.weeks.slice(0, 2).map((w) => w.values[dalton]), [0, null]);
   for (const person of bettingWar(rows)) {
     const index = chart.people.indexOf(person.name);
     const weeklySum = chart.weeks.reduce((sum, w) => sum + (w.values[index] ?? 0), 0);
@@ -269,11 +270,11 @@ test("WAR by week is chronological and sums to each person's all-weeks delta", (
   const cumulative = cumulativeWarByWeek(rows);
   assert.deepEqual(cumulative.weeks.map((w) => w.label), ["Week 0", "Week 1", "Week 2", "Week 3"]);
   assert.ok(cumulative.weeks[0].values.every((value) => value === 0));
-  assert.deepEqual(cumulative.weeks.map((w) => w.values[roma]), [0, 0.5, -1, -1]);
-  assert.ok(Math.abs(cumulative.weeks[3].values[dalton] + 4 / 3) < 1e-12);
-  assert.deepEqual(cumulative.weeks.slice(0, 3).map((w) => w.values[dalton]), [0, -1.5, -1.5]);
+  assert.deepEqual(cumulative.weeks.map((w) => w.values[roma]), [0, 0.5, 0.5, 0.5]);
+  assert.ok(Math.abs(cumulative.weeks[3].values[dalton] - 1 / 6) < 1e-12);
+  assert.deepEqual(cumulative.weeks.slice(0, 3).map((w) => w.values[dalton]), [0, 0, 0]);
   const jacob = cumulative.people.indexOf("Jacob");
-  assert.deepEqual(cumulative.weeks.map((w) => w.values[jacob]), [0, 0, 0, -1.5]);
+  assert.deepEqual(cumulative.weeks.map((w) => w.values[jacob]), [0, 0, 0, 0]);
   for (const person of bettingWar(rows)) {
     const index = cumulative.people.indexOf(person.name);
     assert.ok(Math.abs(cumulative.weeks.at(-1).values[index] - person.delta) < 1e-12);
