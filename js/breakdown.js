@@ -268,11 +268,9 @@ export function bettingWar(rows) {
       const earnedLeg = decimal - 1;
       person.earned += earnedLeg;
       person.netUnits += earnedLeg;
-      // Delta only compares winnings to the implied expectation on a hit; a miss already costs
-      // exactly its unit (see netUnits above), so it adds nothing further here.
-      person.delta += earnedLeg - expectedLeg;
     }
   }
+  for (const person of people) person.delta = person.earned - person.expected;
   return people;
 }
 
