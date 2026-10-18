@@ -260,6 +260,9 @@ function breakdownHtml(everyLegOpen = false) {
   // performance is comparable to the group's, but never toward the real money total or the
   // raw every-leg list below, which stay scoped to the group's actual slips.
   const statsRows = [...all, ...breakdownRows(statsEligible(shadowEvaluated))];
+  // By Person, Results by Odds, and Betting War are scoped to MitsNemo only; League Records, Margin
+  // Rankings, and WAR by Week keep showing everyone.
+  const mitsNemoRows = statsRows.filter((r) => r.by === "MitsNemo");
   const people = peopleIn(all);
   const chips = ["all", ...people]
     .map((who) => `<button class="chip${breakdownWho === who ? " on" : ""}" data-by="${esc(who)}">${esc(who === "all" ? "All" : who)}</button>`)
@@ -274,9 +277,9 @@ function breakdownHtml(everyLegOpen = false) {
       <summary>Every leg${breakdownWho === "all" ? "" : ` · ${esc(breakdownWho)}`} (${shown.length})</summary>
       ${rows}
     </details>
-    ${personTableHtml(statsRows)}
-    ${oddsResultsTableHtml(statsRows)}
-    ${bettingWarTableHtml(statsRows)}
+    ${personTableHtml(mitsNemoRows)}
+    ${oddsResultsTableHtml(mitsNemoRows)}
+    ${bettingWarTableHtml(mitsNemoRows)}
     ${warByWeekHtml(statsRows)}
     ${leagueTableHtml(statsRows)}
     ${marginTablesHtml(statsRows)}
