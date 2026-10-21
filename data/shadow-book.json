@@ -11,16 +11,16 @@
         {
           "id": "l1",
           "league": "college-football",
-          "team": "Michigan Wolverines",
-          "opponent": "Indiana Hoosiers",
+          "team": "Miami (OH) RedHawks",
+          "opponent": "Central Michigan Chippewas",
           "type": "spread",
-          "odds": -108,
+          "odds": -115,
           "date": "2026-10-24",
-          "eventId": "401858496",
-          "line": 7.0,
-          "kickoffAt": "2026-10-24T16:00Z",
+          "eventId": "401866476",
+          "line": -2.5,
+          "kickoffAt": "2026-10-24T17:00Z",
           "by": "MitsNemo",
-          "reasoning": "Michigan +7 at -108; opened +6.5 at -110. The extra half-point helps the ticket, but the move went against Michigan."
+          "reasoning": "Swapped off Michigan this week per house instruction, and went looking further off the marquee schedule. Miami (OH) opened as a road underdog at Central Michigan and has flipped the board to -2.5 favorites at -115 — the only full favorite-flip on this slate, in a MAC matchup well outside the Big Ten/SEC."
         },
         {
           "id": "l2",
@@ -151,16 +151,16 @@
         {
           "id": "l11",
           "league": "nfl",
-          "team": "Green Bay Packers",
-          "opponent": "Detroit Lions",
+          "team": "Dallas Cowboys",
+          "opponent": "Philadelphia Eagles",
           "type": "spread",
-          "odds": -110,
-          "date": "2026-10-25",
-          "eventId": "401873020",
-          "line": 3.0,
-          "kickoffAt": "2026-10-25T20:25Z",
+          "odds": -112,
+          "date": "2026-10-26",
+          "eventId": "401873009",
+          "line": -4.5,
+          "kickoffAt": "2026-10-27T00:15Z",
           "by": "MitsNemo",
-          "reasoning": "Green Bay +3 at -110; opened +1.5 at -110. The full field-goal cushion can push, but the move went against the Packers."
+          "reasoning": "Swapped off the Lions game this week per house rule (never bet against Detroit). Dallas opened as the road underdog at Philadelphia and has flipped to -4.5 favorites at -112, the sharpest line move on the NFL side — backing the side Vegas swung behind in this Monday-night rivalry game."
         }
       ]
     },
