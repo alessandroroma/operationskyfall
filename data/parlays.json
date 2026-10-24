@@ -1138,6 +1138,148 @@
           "note": "Early payout offered on this leg"
         }
       ]
+    },
+    {
+      "id": "2026-w6",
+      "label": "Week 6",
+      "weekOf": "2026-10-24",
+      "stake": "$9.00",
+      "payout": "$16,277.23",
+      "note": "mhill's ticket - 11 selections (the Cincinnati/Texas Tech same-game parlay counts as one) with a 30% profit boost on the SGP. SGP price was not shown on the slip.",
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "by": "mhill",
+          "team": "Cincinnati",
+          "opponent": "Texas Tech",
+          "type": "total_over",
+          "line": 57.5,
+          "date": "2026-10-24",
+          "group": "sgp"
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "by": "mhill",
+          "team": "Texas Tech",
+          "opponent": "Cincinnati",
+          "type": "spread",
+          "line": -10.5,
+          "date": "2026-10-24",
+          "group": "sgp"
+        },
+        {
+          "id": "l3",
+          "odds": -119,
+          "league": "college-football",
+          "by": "mhill",
+          "team": "Utah",
+          "opponent": "Houston",
+          "type": "spread",
+          "line": -6.5,
+          "date": "2026-10-24"
+        },
+        {
+          "id": "l4",
+          "odds": -118,
+          "league": "college-football",
+          "by": "mhill",
+          "team": "Toledo",
+          "opponent": "Western Michigan",
+          "type": "spread",
+          "line": -2.5,
+          "date": "2026-10-24"
+        },
+        {
+          "id": "l5",
+          "odds": -112,
+          "league": "college-football",
+          "by": "mhill",
+          "team": "Oklahoma State",
+          "opponent": "Colorado",
+          "type": "spread",
+          "line": -13.5,
+          "date": "2026-10-24"
+        },
+        {
+          "id": "l6",
+          "odds": -102,
+          "league": "college-football",
+          "by": "mhill",
+          "team": "North Texas",
+          "opponent": "Navy",
+          "type": "spread",
+          "line": -3.5,
+          "date": "2026-10-24"
+        },
+        {
+          "id": "l7",
+          "odds": -119,
+          "league": "college-football",
+          "by": "mhill",
+          "team": "Clemson",
+          "opponent": "Virginia Tech",
+          "type": "spread",
+          "line": -2.5,
+          "date": "2026-10-24"
+        },
+        {
+          "id": "l8",
+          "odds": -111,
+          "league": "nfl",
+          "by": "mhill",
+          "team": "Detroit Lions",
+          "opponent": "Green Bay Packers",
+          "type": "spread",
+          "line": -3.5,
+          "date": "2026-10-25"
+        },
+        {
+          "id": "l9",
+          "odds": -116,
+          "league": "nfl",
+          "by": "mhill",
+          "team": "New York Giants",
+          "opponent": "Houston Texans",
+          "type": "spread",
+          "line": 10.5,
+          "date": "2026-10-25"
+        },
+        {
+          "id": "l10",
+          "odds": -110,
+          "league": "college-football",
+          "by": "mhill",
+          "team": "SMU",
+          "opponent": "California",
+          "type": "spread",
+          "line": -18.5,
+          "date": "2026-10-24"
+        },
+        {
+          "id": "l11",
+          "odds": -109,
+          "league": "college-football",
+          "by": "mhill",
+          "team": "Tennessee",
+          "opponent": "South Carolina",
+          "type": "total_over",
+          "line": 50.5,
+          "date": "2026-10-24"
+        },
+        {
+          "id": "l12",
+          "odds": 147,
+          "league": "college-football",
+          "by": "mhill",
+          "team": "Northern Illinois",
+          "opponent": "Hawai'i",
+          "type": "moneyline",
+          "date": "2026-10-24",
+          "note": "Early payout offered on this leg"
+        }
+      ]
     }
   ]
 }
