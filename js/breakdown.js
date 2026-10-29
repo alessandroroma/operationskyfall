@@ -258,6 +258,8 @@ export function bettingWar(rows) {
     person.bets++;
     // A loss costs one unit even when its price was never recorded.
     if (row.result === "miss") person.netUnits -= 1;
+    // Open/pending/live legs haven't settled yet, so they don't touch expected, earned, or delta.
+    if (row.result !== "hit" && row.result !== "miss" && row.result !== "push") continue;
     const decimal = decimalOdds(row.oddsValue);
     if (decimal == null) continue;
     // Expected: the implied winnings the odds promise (win probability × payout if won).

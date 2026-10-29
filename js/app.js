@@ -196,7 +196,7 @@ function bettingWarTableHtml(rows) {
   return `<h3 class="bd">Betting War</h3><div class="table-wrap"><table class="bd">
     <thead><tr><th>Who</th><th class="num">Expected Value</th><th class="num">Earned Value</th><th class="num" aria-sort="descending">Delta EV</th><th class="num">Net Units</th><th class="num">UGpB</th></tr></thead>
     <tbody>${body}</tbody>
-  </table></div><p class="muted">Expected Value sums (1 ÷ decimal odds) × (decimal odds − 1) for every priced leg — the implied winnings the odds promise. Earned Value is gross winnings only: decimal odds − 1 for wins, zero for losses, pushes, and open legs. Delta EV = Earned Value − Expected Value. Net Units is the net result instead: it adds decimal odds − 1 for wins and subtracts 1 for losses, even when the price wasn't recorded. UGpB (units gained per bet) = Net Units ÷ number of bets placed. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
+  </table></div><p class="muted">Expected Value sums (1 ÷ decimal odds) × (decimal odds − 1) for every settled, priced leg — the implied winnings the odds promise. Earned Value is gross winnings only: decimal odds − 1 for wins, zero for losses and pushes. Delta EV = Earned Value − Expected Value. Open/pending/live legs don't count toward Expected, Earned, or Delta EV until they settle. Net Units is the net result instead: it adds decimal odds − 1 for wins and subtracts 1 for losses, even when the price wasn't recorded. UGpB (units gained per bet) = Net Units ÷ number of bets placed. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
 }
 
 const WAR_COLORS = ["#58a6ff", "#ff7b72", "#3fb950", "#d29922", "#bc8cff", "#39c5cf", "#ffa657"];

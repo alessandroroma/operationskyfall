@@ -230,15 +230,34 @@ test("Betting War converts American odds and totals expected, earned, and delta 
   const result = bettingWar(rows);
   const roma = result.find((p) => p.name === "Roma");
   // Expected: implied win probability × (decimal odds - 1), the implied winnings the odds promise.
-  assert.ok(Math.abs(roma.expected - 3) < 1e-12);
+  // Only settled legs count - the pending leg (team C) contributes nothing.
+  assert.ok(Math.abs(roma.expected - 2.5) < 1e-12);
   // Earned: gross winnings only - payout on a win, zero on a loss (netUnits tracks the net result).
   assert.ok(Math.abs(roma.earned - 13 / 6) < 1e-12);
-  assert.ok(Math.abs(roma.delta + 5 / 6) < 1e-12); // Earned Value - Expected Value
+  assert.ok(Math.abs(roma.delta + 1 / 3) < 1e-12); // Earned Value - Expected Value
   assert.ok(Math.abs(roma.netUnits - 1 / 6) < 1e-12); // net profit units; includes the unpriced loss
   assert.equal(roma.bets, 7); // every attributed leg counts, including the unpriced one
   // UGpB: net units divided by bets placed.
   assert.ok(Math.abs(roma.ugpb - (1 / 6) / 7) < 1e-12);
   assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: 0, delta: -0.5, netUnits: -1, bets: 1, ugpb: -1 });
+});
+
+test("Betting War ignores open/pending/live legs for expected, earned, and delta", () => {
+  const rows = breakdownRows([week({
+    legs: [
+      leg({ by: "Roma", odds: -110, team: "A", type: "moneyline" }, { result: "pending" }),
+      leg({ by: "Roma", odds: -110, team: "B", type: "moneyline" }, { result: "live_on_track" }),
+      leg({ by: "Roma", odds: -110, team: "C", type: "moneyline" }, { result: "live_off_track" }),
+      leg({ by: "Roma", odds: -110, team: "D", type: "moneyline" }, { result: "live_push" }),
+      leg({ by: "Roma", odds: -110, team: "E", type: "other" }, { result: "unknown" }),
+    ],
+  })]);
+  const [roma] = bettingWar(rows);
+  assert.equal(roma.expected, 0);
+  assert.equal(roma.earned, 0);
+  assert.equal(roma.delta, 0);
+  assert.equal(roma.netUnits, 0); // open legs don't cost a unit either - only a settled miss does
+  assert.equal(roma.bets, 5); // bets placed still counts them, just not the EV columns
 });
 
 test("WAR by week is chronological and sums to each person's all-weeks delta", () => {
