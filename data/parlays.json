@@ -1304,7 +1304,8 @@
           "type": "total_over",
           "date": "2026-10-31",
           "group": "sgp",
-          "line": 36.5
+          "line": 36.5,
+          "odds": -109
         },
         {
           "id": "l2",
@@ -1315,7 +1316,8 @@
           "type": "spread",
           "date": "2026-10-31",
           "group": "sgp",
-          "line": 3.5
+          "line": 3.5,
+          "odds": -170
         },
         {
           "id": "l3",
