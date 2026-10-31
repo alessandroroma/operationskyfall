@@ -1280,6 +1280,165 @@
           "note": "Early payout offered on this leg"
         }
       ]
+    },
+    {
+      "id": "2026-w7",
+      "label": "Week 7",
+      "weekOf": "2026-10-31",
+      "stake": "$7.00",
+      "payout": "$22,097.18",
+      "groups": {
+        "sgp": {
+          "label": "Same Game Parlay",
+          "odds": 200
+        }
+      },
+      "note": "12 selections: the Wisconsin/Iowa same-game parlay (Over 36.5 + Wisconsin +3.5, priced +200) counts as one. Early payout on the Air Force moneyline.",
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "by": "Paul",
+          "team": "Iowa",
+          "opponent": "Wisconsin",
+          "type": "total_over",
+          "date": "2026-10-31",
+          "group": "sgp",
+          "line": 36.5
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Wisconsin",
+          "opponent": "Iowa",
+          "type": "spread",
+          "date": "2026-10-31",
+          "group": "sgp",
+          "line": 3.5
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Northwestern",
+          "opponent": "Oregon",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": 3.5,
+          "odds": -110
+        },
+        {
+          "id": "l4",
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Ohio State",
+          "opponent": "USC",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": -8.5,
+          "odds": 120
+        },
+        {
+          "id": "l5",
+          "league": "college-football",
+          "by": "Paul",
+          "team": "Notre Dame",
+          "opponent": "Navy",
+          "type": "total_over",
+          "date": "2026-10-31",
+          "line": 56.5,
+          "odds": -106
+        },
+        {
+          "id": "l6",
+          "league": "college-football",
+          "by": "Paul",
+          "team": "Georgia Tech",
+          "opponent": "Pittsburgh",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": 7.5,
+          "odds": -109
+        },
+        {
+          "id": "l7",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Oregon State",
+          "opponent": "Fresno State",
+          "type": "total_over",
+          "date": "2026-10-31",
+          "line": 58.5,
+          "odds": -107
+        },
+        {
+          "id": "l8",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Air Force",
+          "opponent": "UConn",
+          "type": "moneyline",
+          "date": "2026-10-31",
+          "odds": -109,
+          "note": "Early payout offered on this leg (slip listed it as Connecticut)"
+        },
+        {
+          "id": "l9",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Tulane",
+          "opponent": "Charlotte",
+          "type": "total_over",
+          "date": "2026-10-31",
+          "line": 45.5,
+          "odds": -115
+        },
+        {
+          "id": "l10",
+          "league": "college-football",
+          "by": "Luke",
+          "team": "South Carolina",
+          "opponent": "Oklahoma",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": 3.5,
+          "odds": -117
+        },
+        {
+          "id": "l11",
+          "league": "college-football",
+          "by": "Matt",
+          "team": "Colorado State",
+          "opponent": "Utah State",
+          "type": "total_over",
+          "date": "2026-10-31",
+          "line": 61.5,
+          "odds": -112
+        },
+        {
+          "id": "l12",
+          "league": "college-football",
+          "by": "Vuke",
+          "team": "Illinois",
+          "opponent": "Maryland",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": -2.5,
+          "odds": -115
+        },
+        {
+          "id": "l13",
+          "league": "college-football",
+          "by": "Vuke",
+          "team": "SMU",
+          "opponent": "Syracuse",
+          "type": "total_over",
+          "date": "2026-10-31",
+          "line": 58.5,
+          "odds": -106
+        }
+      ]
     }
   ]
 }
