@@ -2,7 +2,7 @@
   "weeks": [
     {
       "id": "shadow-2026-10-31",
-      "label": "Oct 31–Nov 1 · Shadow Book 3",
+      "label": "Oct 31\u2013Nov 1 \u00b7 Shadow Book 3",
       "weekOf": "2026-10-31",
       "capturedAt": "2026-10-28T16:02:03Z",
       "oddsSource": "DraftKings via ESPN",
@@ -166,7 +166,7 @@
     },
     {
       "id": "shadow-2026-10-24",
-      "label": "Oct 24–25 · Shadow Book 2",
+      "label": "Oct 24\u201325 \u00b7 Shadow Book 2",
       "weekOf": "2026-10-24",
       "capturedAt": "2026-10-21T16:01:07Z",
       "oddsSource": "DraftKings via ESPN",
@@ -184,7 +184,7 @@
           "line": -2.5,
           "kickoffAt": "2026-10-24T17:00Z",
           "by": "MitsNemo",
-          "reasoning": "Swapped off Michigan this week per house instruction, and went looking further off the marquee schedule. Miami (OH) opened as a road underdog at Central Michigan and has flipped the board to -2.5 favorites at -115 — the only full favorite-flip on this slate, in a MAC matchup well outside the Big Ten/SEC."
+          "reasoning": "Swapped off Michigan this week per house instruction, and went looking further off the marquee schedule. Miami (OH) opened as a road underdog at Central Michigan and has flipped the board to -2.5 favorites at -115 \u2014 the only full favorite-flip on this slate, in a MAC matchup well outside the Big Ten/SEC."
         },
         {
           "id": "l2",
@@ -324,13 +324,13 @@
           "line": -4.5,
           "kickoffAt": "2026-10-27T00:15Z",
           "by": "MitsNemo",
-          "reasoning": "Swapped off the Lions game this week per house rule (never bet against Detroit). Dallas opened as the road underdog at Philadelphia and has flipped to -4.5 favorites at -112, the sharpest line move on the NFL side — backing the side Vegas swung behind in this Monday-night rivalry game."
+          "reasoning": "Swapped off the Lions game this week per house rule (never bet against Detroit). Dallas opened as the road underdog at Philadelphia and has flipped to -4.5 favorites at -112, the sharpest line move on the NFL side \u2014 backing the side Vegas swung behind in this Monday-night rivalry game."
         }
       ]
     },
     {
       "id": "shadow-2026-10-17",
-      "label": "Oct 17–18 · Shadow Book 1",
+      "label": "Oct 17\u201318 \u00b7 Shadow Book 1",
       "weekOf": "2026-10-17",
       "capturedAt": "2026-10-13T16:50:54Z",
       "oddsSource": "DraftKings via ESPN",
@@ -578,6 +578,116 @@
           "odds": -112,
           "date": "2026-10-17",
           "line": 56.5
+        }
+      ]
+    },
+    {
+      "id": "shadow-irl-dalton-2026-10-31",
+      "label": "Dalton IRL Book",
+      "weekOf": "2026-10-31",
+      "capturedAt": "2026-11-01T00:12:44Z",
+      "oddsSource": "Caesars Sportsbook - Flamingo Las Vegas",
+      "author": "Dalton",
+      "excludeFromStats": true,
+      "stake": 10,
+      "payout": "$2,841.00",
+      "note": "Real Caesars ticket (ref 085005-2273-6343-6473), 9 legs at +28310, $10 to win $2,831 / max payout $2,841. Contains 1 two-leg SGP (+250) and 7 straights. Not tracked in the group stats.",
+      "groups": {
+        "sgp": {
+          "label": "Same Game Parlay",
+          "odds": 250
+        }
+      },
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "team": "Oregon State",
+          "opponent": "Fresno State",
+          "type": "spread",
+          "date": "2026-10-31",
+          "group": "sgp",
+          "line": -6
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "team": "Fresno State",
+          "opponent": "Oregon State",
+          "type": "total_over",
+          "date": "2026-10-31",
+          "group": "sgp",
+          "line": 57.5
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "team": "Missouri",
+          "opponent": "Arkansas",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": -10.5,
+          "odds": -107
+        },
+        {
+          "id": "l4",
+          "league": "college-football",
+          "team": "Boise State",
+          "opponent": "Texas State",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": -11,
+          "odds": -115
+        },
+        {
+          "id": "l5",
+          "league": "college-football",
+          "team": "UNLV",
+          "opponent": "Northern Illinois",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": -20.5,
+          "odds": -145
+        },
+        {
+          "id": "l6",
+          "league": "college-football",
+          "team": "Oklahoma State",
+          "opponent": "Iowa State",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": -9.5,
+          "odds": -128
+        },
+        {
+          "id": "l7",
+          "league": "college-football",
+          "team": "Georgia Tech",
+          "opponent": "Pittsburgh",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": 8.5,
+          "odds": -115
+        },
+        {
+          "id": "l8",
+          "league": "college-football",
+          "team": "Mississippi State",
+          "opponent": "Texas",
+          "type": "other",
+          "date": "2026-10-31",
+          "odds": 116,
+          "note": "Raleek Brown 80+ rushing yards"
+        },
+        {
+          "id": "l9",
+          "league": "college-football",
+          "team": "San Diego State",
+          "opponent": "Washington State",
+          "type": "spread",
+          "date": "2026-10-31",
+          "line": -2.5,
+          "odds": -118
         }
       ]
     }
