@@ -12,8 +12,16 @@ export function shadowQuote(week, results = null) {
   if (!Number.isFinite(stake) || stake <= 0) throw new Error("Shadow stake must be positive");
   if (!week.legs?.length) throw new Error("Shadow parlay has no legs");
   if (results && results.length !== week.legs.length) throw new Error("Shadow results do not match legs");
-  const multiplier = week.legs.reduce((product, leg, index) =>
-    product * (results?.[index] === "push" ? 1 : decimalOdds(leg.odds)), 1);
+  // A same-game-parlay group prices once for the whole group, not once per leg inside it.
+  const pricedGroups = new Set();
+  const multiplier = week.legs.reduce((product, leg, index) => {
+    if (leg.group) {
+      if (pricedGroups.has(leg.group)) return product;
+      pricedGroups.add(leg.group);
+    }
+    if (results?.[index] === "push") return product;
+    return product * decimalOdds(leg.odds ?? week.groups?.[leg.group]?.odds);
+  }, 1);
   return { stake, multiplier, return: stake * multiplier, profit: stake * (multiplier - 1) };
 }
 

@@ -84,3 +84,26 @@ test("an uploaded slip renders in the Shadow Book but never feeds other pages", 
   assert.ok(eligible.includes("shadow-2026-10-17"));
   assert.ok(!eligible.includes("shadow-2026-10-17-4455"));
 });
+
+test("a same-game-parlay group inside a shadow slip prices once, not once per leg", () => {
+  const week = {
+    stake: 10,
+    groups: { sgp: { label: "Same Game Parlay", odds: 250 } },
+    legs: [
+      { group: "sgp", team: "A" }, // no own odds: falls back to the group price
+      { group: "sgp", team: "B" }, // same group: must not be priced a second time
+      { odds: -107, team: "C" },
+    ],
+  };
+  const quote = shadowQuote(week);
+  const expected = (1 + 250 / 100) * (1 + 100 / 107);
+  assert.ok(Math.abs(quote.multiplier - expected) < 1e-9);
+  assert.ok(Math.abs(quote.return - 10 * expected) < 1e-9);
+});
+
+test("the Dalton IRL Caesars ticket's SGP group no longer throws and prices close to the real payout", () => {
+  const week = book.weeks.find((w) => w.id === "shadow-irl-dalton-2026-10-31");
+  assert.ok(week);
+  const quote = shadowQuote(week);
+  assert.ok(Math.abs(quote.return - 2842.41) < 0.5);
+});
