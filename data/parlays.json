@@ -5,8 +5,8 @@
       "label": "Week 8.5",
       "weekOf": "2026-11-07",
       "stake": "$7.00",
-      "payout": "$17,326.00",
-      "note": "Re-bet after Nebraska -4.5 lost (13-24 at Illinois) and busted the original Week 8 ticket; that leg stays recorded under Week 8. All 13 remaining picks are the same bets as Week 8, just re-placed after the miss, and are excluded from stats here to avoid double-counting. No new picks were added. Leg odds/lines carried over from Week 8 since no updated slip odds were given for the re-bet.",
+      "payout": "$20,041.15",
+      "note": "Re-bet after Nebraska -4.5 lost (13-24 at Illinois) and busted the original Week 8 ticket; that leg stays recorded under Week 8. All 13 remaining picks are the same bets as Week 8, just re-placed after the miss, and are excluded from stats here to avoid double-counting. No new picks were added. Leg odds/lines carried over from Week 8 since no updated slip odds were given for the re-bet. Cam Coleman (Texas WR) was ruled OUT ahead of kickoff, so his anytime-TD leg was pulled from this re-bet and the payout recomputed without it.",
       "legs": [
         {
           "id": "l1",
@@ -35,18 +35,6 @@
         {
           "id": "l3",
           "league": "college-football",
-          "by": "Roma",
-          "team": "Texas",
-          "opponent": "Missouri",
-          "type": "other",
-          "odds": 140,
-          "date": "2026-11-07",
-          "note": "Cam Coleman anytime TD scorer",
-          "excludeFromStats": true
-        },
-        {
-          "id": "l4",
-          "league": "college-football",
           "by": "Paul",
           "team": "West Virginia",
           "opponent": "Texas Tech",
@@ -57,7 +45,7 @@
           "excludeFromStats": true
         },
         {
-          "id": "l5",
+          "id": "l4",
           "league": "nfl",
           "by": "Paul",
           "team": "Cincinnati Bengals",
@@ -69,7 +57,7 @@
           "excludeFromStats": true
         },
         {
-          "id": "l6",
+          "id": "l5",
           "league": "college-football",
           "by": "Mark",
           "team": "Oregon",
@@ -81,7 +69,7 @@
           "excludeFromStats": true
         },
         {
-          "id": "l7",
+          "id": "l6",
           "league": "college-football",
           "by": "Dalton",
           "team": "North Texas",
@@ -93,7 +81,7 @@
           "excludeFromStats": true
         },
         {
-          "id": "l8",
+          "id": "l7",
           "league": "college-football",
           "by": "Dalton",
           "team": "Kentucky",
@@ -105,7 +93,7 @@
           "excludeFromStats": true
         },
         {
-          "id": "l9",
+          "id": "l8",
           "league": "college-football",
           "by": "Dalton",
           "team": "Texas State",
@@ -117,7 +105,7 @@
           "excludeFromStats": true
         },
         {
-          "id": "l10",
+          "id": "l9",
           "league": "college-football",
           "by": "Vuke",
           "team": "Clemson",
@@ -129,7 +117,7 @@
           "excludeFromStats": true
         },
         {
-          "id": "l11",
+          "id": "l10",
           "league": "college-football",
           "by": "Luke",
           "team": "Utah",
@@ -141,7 +129,7 @@
           "excludeFromStats": true
         },
         {
-          "id": "l12",
+          "id": "l11",
           "league": "college-football",
           "by": "Matt",
           "team": "Oklahoma State",
@@ -153,7 +141,7 @@
           "excludeFromStats": true
         },
         {
-          "id": "l13",
+          "id": "l12",
           "league": "nfl",
           "by": "Matt",
           "team": "New York Giants",
