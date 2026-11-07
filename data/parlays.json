@@ -159,8 +159,8 @@
       "label": "Week 8",
       "weekOf": "2026-11-07",
       "stake": "$7.00",
-      "payout": "$70,720.34",
-      "note": "Cam Coleman (Texas) was officially questionable for this game after leaving the Mississippi State game early; the anytime-TD leg carries that risk.",
+      "payout": "$38,771.20",
+      "note": "Cam Coleman (Texas) was officially questionable for this game after leaving the Mississippi State game early; the anytime-TD leg carries that risk. Cam Coleman (Texas WR) was officially ruled OUT ahead of kickoff and his anytime-TD leg was removed from the record entirely (not graded push), per Mittens' call; payout recomputed without it.",
       "legs": [
         {
           "id": "l1",
@@ -187,17 +187,6 @@
         {
           "id": "l3",
           "league": "college-football",
-          "by": "Roma",
-          "team": "Texas",
-          "opponent": "Missouri",
-          "type": "other",
-          "odds": 140,
-          "date": "2026-11-07",
-          "note": "Cam Coleman anytime TD scorer"
-        },
-        {
-          "id": "l4",
-          "league": "college-football",
           "by": "Paul",
           "team": "West Virginia",
           "opponent": "Texas Tech",
@@ -207,7 +196,7 @@
           "date": "2026-11-07"
         },
         {
-          "id": "l5",
+          "id": "l4",
           "league": "nfl",
           "by": "Paul",
           "team": "Cincinnati Bengals",
@@ -218,7 +207,7 @@
           "date": "2026-11-08"
         },
         {
-          "id": "l6",
+          "id": "l5",
           "league": "college-football",
           "by": "Mark",
           "team": "Oregon",
@@ -229,7 +218,7 @@
           "date": "2026-11-07"
         },
         {
-          "id": "l7",
+          "id": "l6",
           "league": "college-football",
           "by": "Dalton",
           "team": "North Texas",
@@ -240,7 +229,7 @@
           "date": "2026-11-07"
         },
         {
-          "id": "l8",
+          "id": "l7",
           "league": "college-football",
           "by": "Dalton",
           "team": "Kentucky",
@@ -251,7 +240,7 @@
           "date": "2026-11-07"
         },
         {
-          "id": "l9",
+          "id": "l8",
           "league": "college-football",
           "by": "Dalton",
           "team": "Texas State",
@@ -262,7 +251,7 @@
           "date": "2026-11-07"
         },
         {
-          "id": "l10",
+          "id": "l9",
           "league": "college-football",
           "by": "Vuke",
           "team": "Nebraska",
@@ -273,7 +262,7 @@
           "date": "2026-11-06"
         },
         {
-          "id": "l11",
+          "id": "l10",
           "league": "college-football",
           "by": "Vuke",
           "team": "Clemson",
@@ -284,7 +273,7 @@
           "date": "2026-11-07"
         },
         {
-          "id": "l12",
+          "id": "l11",
           "league": "college-football",
           "by": "Luke",
           "team": "Utah",
@@ -295,7 +284,7 @@
           "date": "2026-11-07"
         },
         {
-          "id": "l13",
+          "id": "l12",
           "league": "college-football",
           "by": "Matt",
           "team": "Oklahoma State",
@@ -306,7 +295,7 @@
           "date": "2026-11-07"
         },
         {
-          "id": "l14",
+          "id": "l13",
           "league": "nfl",
           "by": "Matt",
           "team": "New York Giants",
