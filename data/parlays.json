@@ -1,6 +1,159 @@
 {
   "weeks": [
     {
+      "id": "2026-w8",
+      "label": "Week 8",
+      "weekOf": "2026-11-07",
+      "stake": "$7.00",
+      "payout": "$34,498.58",
+      "note": "Cam Coleman (Texas) was officially questionable for this game after leaving the Mississippi State game early; the anytime-TD leg carries that risk.",
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Florida",
+          "opponent": "Oklahoma",
+          "type": "spread",
+          "line": -5.5,
+          "odds": -114,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Hawai'i",
+          "opponent": "UTEP",
+          "type": "total_under",
+          "line": 49.5,
+          "odds": -135,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Texas",
+          "opponent": "Missouri",
+          "type": "other",
+          "odds": 140,
+          "date": "2026-11-07",
+          "note": "Cam Coleman anytime TD scorer"
+        },
+        {
+          "id": "l4",
+          "league": "college-football",
+          "by": "Paul",
+          "team": "West Virginia",
+          "opponent": "Texas Tech",
+          "type": "spread",
+          "line": 16.5,
+          "odds": -111,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l5",
+          "league": "nfl",
+          "by": "Paul",
+          "team": "Cincinnati Bengals",
+          "opponent": "Atlanta Falcons",
+          "type": "spread",
+          "line": -3.5,
+          "odds": 105,
+          "date": "2026-11-08"
+        },
+        {
+          "id": "l6",
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Oregon",
+          "opponent": "Ohio State",
+          "type": "spread",
+          "line": 7.5,
+          "odds": -109,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l7",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "North Texas",
+          "opponent": "Rice",
+          "type": "team_total_over",
+          "line": 44.5,
+          "odds": 132,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l8",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Kentucky",
+          "opponent": "Tennessee",
+          "type": "total_under",
+          "line": 49.5,
+          "odds": -111,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l9",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Texas State",
+          "opponent": "Oregon State",
+          "type": "total_over",
+          "line": 70.5,
+          "odds": -110,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l10",
+          "league": "college-football",
+          "by": "Vuke",
+          "team": "Nebraska",
+          "opponent": "Illinois",
+          "type": "spread",
+          "line": -4.5,
+          "odds": -107,
+          "date": "2026-11-06"
+        },
+        {
+          "id": "l11",
+          "league": "college-football",
+          "by": "Vuke",
+          "team": "Clemson",
+          "opponent": "Syracuse",
+          "type": "total_over",
+          "line": 49.5,
+          "odds": -111,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l12",
+          "league": "college-football",
+          "by": "Luke",
+          "team": "Utah",
+          "opponent": "BYU",
+          "type": "spread",
+          "line": -4.5,
+          "odds": -107,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l13",
+          "league": "college-football",
+          "by": "Matt",
+          "team": "Oklahoma State",
+          "opponent": "Kansas State",
+          "type": "spread",
+          "line": -6.5,
+          "odds": -118,
+          "date": "2026-11-07"
+        }
+      ]
+    },
+    {
       "id": "2026-w5-5",
       "label": "Week 5.5",
       "weekOf": "2026-10-17",
