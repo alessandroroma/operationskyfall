@@ -5,7 +5,7 @@
       "label": "Week 8",
       "weekOf": "2026-11-07",
       "stake": "$7.00",
-      "payout": "$34,498.58",
+      "payout": "$70,720.34",
       "note": "Cam Coleman (Texas) was officially questionable for this game after leaving the Mississippi State game early; the anytime-TD leg carries that risk.",
       "legs": [
         {
@@ -150,6 +150,17 @@
           "line": -6.5,
           "odds": -118,
           "date": "2026-11-07"
+        },
+        {
+          "id": "l14",
+          "league": "nfl",
+          "by": "Matt",
+          "team": "New York Giants",
+          "opponent": "Philadelphia Eagles",
+          "type": "spread",
+          "line": -3.5,
+          "odds": 105,
+          "date": "2026-11-08"
         }
       ]
     },
