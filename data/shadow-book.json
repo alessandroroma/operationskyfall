@@ -1,6 +1,55 @@
 {
   "weeks": [
     {
+      "id": "shadow-2026-11-07-jacob",
+      "label": "Nov 7 - Jacob's Slip",
+      "weekOf": "2026-11-07",
+      "capturedAt": "2026-11-07T00:57:59Z",
+      "oddsSource": "Jacob (verbal request, no slip image); moneylines pulled from live ESPN/FanDuel odds on 2026-11-06",
+      "author": "Jacob",
+      "excludeFromStats": true,
+      "stake": 7,
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "team": "Air Force",
+          "opponent": "Army",
+          "type": "other",
+          "odds": -300,
+          "date": "2026-11-07",
+          "note": "Any passing touchdown in the game, either team. No posted sportsbook market found for this prop; price is MitsNemo's own estimate, not a quoted line. Army's pass defense has allowed 9 TDs over its last 3 games (USA Today, 11/1/2026), making at least one passing TD likely despite both being triple-option offenses. Needs a manual result once the game is final."
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "team": "Northern Illinois",
+          "opponent": "San Jose State",
+          "type": "moneyline",
+          "odds": 320,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "team": "BYU",
+          "opponent": "Utah",
+          "type": "moneyline",
+          "odds": 152,
+          "date": "2026-11-07"
+        },
+        {
+          "id": "l4",
+          "league": "college-football",
+          "team": "Michigan State",
+          "opponent": "Michigan",
+          "type": "moneyline",
+          "odds": 480,
+          "date": "2026-11-07"
+        }
+      ]
+    },
+    {
       "id": "shadow-2026-11-07",
       "label": "Nov 7\u20138 \u00b7 Shadow Book 4",
       "weekOf": "2026-11-07",
