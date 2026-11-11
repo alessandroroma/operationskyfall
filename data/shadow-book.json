@@ -1,8 +1,32 @@
 {
   "weeks": [
     {
+      "id": "shadow-2026-11-12",
+      "label": "Nov 12 \u00b7 Shadow Book 4.5",
+      "weekOf": "2026-11-12",
+      "capturedAt": "2026-11-11T22:12:00Z",
+      "oddsSource": "DraftKings via ESPN",
+      "stake": 7,
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "team": "South Florida Bulls",
+          "opponent": "Memphis Tigers",
+          "type": "spread",
+          "odds": -110,
+          "date": "2026-11-12",
+          "eventId": "401862824",
+          "line": 3.5,
+          "kickoffAt": "2026-11-13T01:00Z",
+          "by": "MitsNemo",
+          "reasoning": "Fading Memphis -3.5, taking USF +3.5 instead. This is the 7th straight Thursday-night AAC game this season, and the home team has won all 6 of the previous ones (5 decided by one score). USF hasn't lost by more than one score all year despite a bottom-30 offense, because its defense ranks 10th nationally in scoring D (15.1 ppg) and has produced 3 defensive/special-teams TDs over its last 3 games. Memphis is 2-2 on the road, and its one bad offensive outing (6 turnovers) came against a scrappy desperate underdog at Tulane -- exactly USF's profile tonight. (Underdog Dynasty, gousfbulls.com, 11/7-11/11)"
+        }
+      ]
+    },
+    {
       "id": "shadow-2026-11-14",
-      "label": "Nov 14–15 · Shadow Book 5",
+      "label": "Nov 14\u201315 \u00b7 Shadow Book 5",
       "weekOf": "2026-11-14",
       "capturedAt": "2026-11-11T17:01:33Z",
       "oddsSource": "DraftKings via ESPN scoreboard (pointSpread.close)",
