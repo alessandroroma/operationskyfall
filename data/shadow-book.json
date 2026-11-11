@@ -206,7 +206,8 @@
           "type": "other",
           "odds": -300,
           "date": "2026-11-07",
-          "note": "Any passing touchdown in the game, either team. No posted sportsbook market found for this prop; price is MitsNemo's own estimate, not a quoted line. Army's pass defense has allowed 9 TDs over its last 3 games (USA Today, 11/1/2026), making at least one passing TD likely despite both being triple-option offenses. Needs a manual result once the game is final."
+          "note": "Any passing touchdown in the game, either team. No posted sportsbook market found for this prop; price is MitsNemo's own estimate, not a quoted line. Army's pass defense has allowed 9 TDs over its last 3 games (USA Today, 11/1/2026), making at least one passing TD likely despite both being triple-option offenses. Needs a manual result once the game is final. CONFIRMED: Air Force's Evan Medders hit Simon Kibbee for the game-winning passing TD with 14:25 left (AF won 24-21). Leg hit.",
+          "result": "hit"
         },
         {
           "id": "l2",
