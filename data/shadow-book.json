@@ -120,12 +120,24 @@
           "eventId": "401858523",
           "line": 10.5,
           "kickoffAt": "2026-11-14T20:30Z"
+        },
+        {
+          "id": "l10",
+          "league": "college-football",
+          "team": "Ole Miss",
+          "opponent": "Oklahoma",
+          "type": "moneyline",
+          "odds": -108,
+          "date": "2026-11-14",
+          "eventId": "401856887",
+          "kickoffAt": "2026-11-14T21:15Z",
+          "note": "Dalton asked for Ole Miss -1; live line is Oklahoma -1.5 (Ole Miss the +1.5 dog), so logged as Ole Miss ML at the real DraftKings price."
         }
       ]
     },
     {
       "id": "shadow-2026-11-12",
-      "label": "Nov 12 \u00b7 Shadow Book 4.5",
+      "label": "Nov 12 · Shadow Book 4.5",
       "weekOf": "2026-11-12",
       "capturedAt": "2026-11-11T22:12:00Z",
       "oddsSource": "DraftKings via ESPN",
@@ -149,7 +161,7 @@
     },
     {
       "id": "shadow-2026-11-14",
-      "label": "Nov 14\u201315 \u00b7 Shadow Book 5",
+      "label": "Nov 14–15 · Shadow Book 5",
       "weekOf": "2026-11-14",
       "capturedAt": "2026-11-11T17:01:33Z",
       "oddsSource": "DraftKings via ESPN scoreboard (pointSpread.close)",
@@ -363,7 +375,7 @@
     },
     {
       "id": "shadow-2026-11-07",
-      "label": "Nov 7\u20138 \u00b7 Shadow Book 4",
+      "label": "Nov 7–8 · Shadow Book 4",
       "weekOf": "2026-11-07",
       "capturedAt": "2026-11-04T17:01:29Z",
       "oddsSource": "DraftKings via ESPN",
@@ -527,7 +539,7 @@
     },
     {
       "id": "shadow-2026-10-31",
-      "label": "Oct 31\u2013Nov 1 \u00b7 Shadow Book 3",
+      "label": "Oct 31–Nov 1 · Shadow Book 3",
       "weekOf": "2026-10-31",
       "capturedAt": "2026-10-28T16:02:03Z",
       "oddsSource": "DraftKings via ESPN",
@@ -691,7 +703,7 @@
     },
     {
       "id": "shadow-2026-10-24",
-      "label": "Oct 24\u201325 \u00b7 Shadow Book 2",
+      "label": "Oct 24–25 · Shadow Book 2",
       "weekOf": "2026-10-24",
       "capturedAt": "2026-10-21T16:01:07Z",
       "oddsSource": "DraftKings via ESPN",
@@ -709,7 +721,7 @@
           "line": -2.5,
           "kickoffAt": "2026-10-24T17:00Z",
           "by": "MitsNemo",
-          "reasoning": "Swapped off Michigan this week per house instruction, and went looking further off the marquee schedule. Miami (OH) opened as a road underdog at Central Michigan and has flipped the board to -2.5 favorites at -115 \u2014 the only full favorite-flip on this slate, in a MAC matchup well outside the Big Ten/SEC."
+          "reasoning": "Swapped off Michigan this week per house instruction, and went looking further off the marquee schedule. Miami (OH) opened as a road underdog at Central Michigan and has flipped the board to -2.5 favorites at -115 — the only full favorite-flip on this slate, in a MAC matchup well outside the Big Ten/SEC."
         },
         {
           "id": "l2",
@@ -849,13 +861,13 @@
           "line": -4.5,
           "kickoffAt": "2026-10-27T00:15Z",
           "by": "MitsNemo",
-          "reasoning": "Swapped off the Lions game this week per house rule (never bet against Detroit). Dallas opened as the road underdog at Philadelphia and has flipped to -4.5 favorites at -112, the sharpest line move on the NFL side \u2014 backing the side Vegas swung behind in this Monday-night rivalry game."
+          "reasoning": "Swapped off the Lions game this week per house rule (never bet against Detroit). Dallas opened as the road underdog at Philadelphia and has flipped to -4.5 favorites at -112, the sharpest line move on the NFL side — backing the side Vegas swung behind in this Monday-night rivalry game."
         }
       ]
     },
     {
       "id": "shadow-2026-10-17",
-      "label": "Oct 17\u201318 \u00b7 Shadow Book 1",
+      "label": "Oct 17–18 · Shadow Book 1",
       "weekOf": "2026-10-17",
       "capturedAt": "2026-10-13T16:50:54Z",
       "oddsSource": "DraftKings via ESPN",
