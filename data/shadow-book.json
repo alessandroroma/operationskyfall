@@ -1,6 +1,129 @@
 {
   "weeks": [
     {
+      "id": "shadow-2026-11-14-dalton",
+      "label": "Nov 12-14 - Dalton's Slip",
+      "weekOf": "2026-11-14",
+      "capturedAt": "2026-11-12T17:55:47Z",
+      "oddsSource": "DraftKings via ESPN, captured 2026-11-12 (tracking only, no wager placed)",
+      "author": "Dalton",
+      "excludeFromStats": true,
+      "stake": 7,
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "team": "Clemson",
+          "opponent": "Georgia Tech",
+          "type": "total_under",
+          "odds": -105,
+          "date": "2026-11-14",
+          "eventId": "401858297",
+          "line": 47.5,
+          "kickoffAt": "2026-11-14T17:30Z"
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "team": "North Dakota State",
+          "opponent": "Hawai'i",
+          "type": "spread",
+          "odds": -112,
+          "date": "2026-11-14",
+          "eventId": "401864537",
+          "line": -6.5,
+          "kickoffAt": "2026-11-15T04:00Z"
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "team": "North Texas",
+          "opponent": "UTSA",
+          "type": "total_over",
+          "odds": -105,
+          "date": "2026-11-14",
+          "eventId": "401862827",
+          "line": 76.5,
+          "kickoffAt": "2026-11-15T02:00Z"
+        },
+        {
+          "id": "l4",
+          "league": "college-football",
+          "team": "Air Force",
+          "opponent": "San Jose State",
+          "type": "team_total_over",
+          "odds": -110,
+          "date": "2026-11-14",
+          "eventId": "401864538",
+          "line": 30,
+          "kickoffAt": "2026-11-15T00:00Z",
+          "note": "No standalone team-total market found; line is the fair number implied by the game line (AF -12.5, total 47.5)."
+        },
+        {
+          "id": "l5",
+          "league": "college-football",
+          "team": "Memphis",
+          "opponent": "South Florida",
+          "type": "team_total_over",
+          "odds": -110,
+          "date": "2026-11-12",
+          "eventId": "401862824",
+          "line": 27,
+          "kickoffAt": "2026-11-13T01:00Z",
+          "note": "No number given; line is the fair number implied by the game line (MEM -3.5, total 50.5)."
+        },
+        {
+          "id": "l6",
+          "league": "college-football",
+          "team": "Memphis",
+          "opponent": "South Florida",
+          "type": "spread",
+          "odds": -110,
+          "date": "2026-11-12",
+          "eventId": "401862824",
+          "line": -3.5,
+          "kickoffAt": "2026-11-13T01:00Z"
+        },
+        {
+          "id": "l7",
+          "league": "college-football",
+          "team": "Minnesota",
+          "opponent": "Penn State",
+          "type": "spread",
+          "odds": -108,
+          "date": "2026-11-14",
+          "eventId": "401858524",
+          "line": 9.5,
+          "kickoffAt": "2026-11-15T00:00Z"
+        },
+        {
+          "id": "l8",
+          "league": "nfl",
+          "team": "New York Giants",
+          "opponent": "Washington Commanders",
+          "type": "spread",
+          "odds": -108,
+          "date": "2026-11-12",
+          "eventId": "401873052",
+          "line": -2.5,
+          "kickoffAt": "2026-11-13T01:15Z",
+          "note": "Dalton specified -2; live market is -2.5 (opened -1.5), used the confirmed number."
+        },
+        {
+          "id": "l9",
+          "league": "college-football",
+          "team": "Michigan",
+          "opponent": "Oregon",
+          "type": "spread",
+          "odds": -110,
+          "date": "2026-11-14",
+          "eventId": "401858523",
+          "line": 10.5,
+          "kickoffAt": "2026-11-14T20:30Z"
+        }
+      ]
+    },
+    {
       "id": "shadow-2026-11-12",
       "label": "Nov 12 \u00b7 Shadow Book 4.5",
       "weekOf": "2026-11-12",
