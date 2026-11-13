@@ -92,7 +92,8 @@
           "type": "spread",
           "line": -4.5,
           "group": "sgp1",
-          "date": "2026-11-12"
+          "date": "2026-11-12",
+          "odds": -100
         },
         {
           "id": "l8",
@@ -103,7 +104,8 @@
           "type": "team_total_over",
           "line": 28.5,
           "group": "sgp1",
-          "date": "2026-11-12"
+          "date": "2026-11-12",
+          "odds": -100
         },
         {
           "id": "l9",
@@ -136,7 +138,8 @@
           "type": "total_under",
           "line": 41.5,
           "group": "sgp2",
-          "date": "2026-11-12"
+          "date": "2026-11-12",
+          "odds": -100
         },
         {
           "id": "l12",
@@ -147,7 +150,8 @@
           "type": "other",
           "group": "sgp2",
           "date": "2026-11-12",
-          "note": "Jayden Daniels Under 202.5 passing yards"
+          "note": "Jayden Daniels Under 202.5 passing yards",
+          "odds": -100
         },
         {
           "id": "l13",
