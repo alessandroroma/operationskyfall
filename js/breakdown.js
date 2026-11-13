@@ -1,6 +1,6 @@
 // Pure rows for the breakdown tab: no DOM, no network.
 const q = new URL(import.meta.url).search;
-const [{ formatOdds, legOdds, describeLeg }, { chronological, mergeGroups }] = await Promise.all([
+const [{ formatOdds, legOdds, describeLeg }, { chronological }] = await Promise.all([
   import(`./grade.js${q}`),
   import(`./order.js${q}`),
 ]);
@@ -20,7 +20,6 @@ export const TYPE_LABEL = {
   team_total_over: "Team total (over)",
   team_total_under: "Team total (under)",
   other: "Prop / other",
-  group: "Same-game parlay",
 };
 
 export function typeLabel(leg) {
@@ -72,12 +71,11 @@ export function outcomeText(result, margin) {
   return margin > 0 ? `won by ${abs}` : `lost by ${abs}`;
 }
 
-// One row per bet across every week, newest week first, kickoff order inside a week.
-// A same-game parlay's legs share a `group` and collapse into a single row.
+// One row per leg across every week, newest week first, kickoff order inside a week.
 export function breakdownRows(evaluated) {
   const rows = [];
   for (const ev of evaluated) {
-    for (const l of chronological(mergeGroups(ev.legs ?? []))) {
+    for (const l of chronological(ev.legs ?? [])) {
       const result = l.grade?.result ?? "unknown";
       const margin = l.grade?.margin ?? null;
       rows.push({

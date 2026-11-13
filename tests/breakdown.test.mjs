@@ -155,7 +155,7 @@ test("current streak follows week and kickoff order, skipping pushes and open le
   assert.deepEqual([people.get("Paul").streakType, people.get("Paul").streak], [null, 0]);
 });
 
-test("average line uses American odds, including open picks and the SGP's single group price", () => {
+test("average line uses American odds, including open picks and shared SGP prices", () => {
   const rows = breakdownRows([week({
     week: { groups: { sgp: { label: "SGP", odds: 130 } } },
     legs: [
@@ -167,13 +167,10 @@ test("average line uses American odds, including open picks and the SGP's single
     ],
   })]);
   const [person] = personTotals(rows);
-  // The two "sgp" legs collapse into one row priced at the group's shared +130, not each leg's own number.
-  assert.equal(person.avgLine, -60);
-  assert.equal(person.lineCount, 3);
-  // The merged SGP row's margin is null (its sub-legs don't share a unit), so only D's miss
-  // would count toward avgMiss - but D's margin is also null, leaving nothing to average.
-  assert.equal(person.avgMiss, null);
-  assert.equal(person.missCount, 0);
+  assert.equal(person.avgLine, -72.5);
+  assert.equal(person.lineCount, 4);
+  assert.equal(person.avgMiss, 4);
+  assert.equal(person.missCount, 1);
 });
 
 test("odds bands assign boundary prices exactly once", () => {
@@ -187,7 +184,7 @@ test("odds bands assign boundary prices exactly once", () => {
   assert.equal(oddsBandIndex(99), null);
 });
 
-test("results by odds count each person's settled W-L record, with a same-game parlay as one bet", () => {
+test("results by odds count each person's settled W-L record, including SGP leg prices", () => {
   const entries = [
     ["Roma", -200, "hit"], ["Roma", -150, "miss"], ["Roma", -120, "hit"],
     ["Roma", 100, "miss"], ["Roma", 125, "hit"], ["Roma", 185, "miss"],
@@ -198,8 +195,6 @@ test("results by odds count each person's settled W-L record, with a same-game p
     { id: `l${i}`, by, odds, team: `Team ${i}`, type: "moneyline" },
     { result, margin: null },
   ));
-  // One leg misses, so the combined SGP bet is a loss priced at the group's shared +135 (band 5),
-  // not two separate rows at +135 (loss) and -110 (win).
   legs.push(leg({ id: "sgp1", by: "Roma", group: "sgp", team: "SGP A", type: "other" }, { result: "miss", margin: null }));
   legs.push(leg({ id: "sgp2", by: "Roma", group: "sgp", odds: -110, team: "SGP B", type: "other" }, { result: "hit", margin: null }));
   legs.push(leg({ id: "unpriced", by: "Roma", team: "Unpriced", type: "other" }, { result: "miss", margin: null }));
@@ -207,7 +202,7 @@ test("results by odds count each person's settled W-L record, with a same-game p
   const records = resultsByOdds(rows);
   assert.deepEqual(records.find((p) => p.name === "Roma").records, [
     { wins: 1, losses: 0 }, { wins: 0, losses: 1 }, { wins: 1, losses: 0 },
-    { wins: 0, losses: 1 }, { wins: 1, losses: 0 }, { wins: 0, losses: 2 },
+    { wins: 1, losses: 1 }, { wins: 1, losses: 0 }, { wins: 0, losses: 2 },
     { wins: 1, losses: 0 },
   ]);
   assert.deepEqual(records.find((p) => p.name === "Dalton").records[6], { wins: 0, losses: 1 });
@@ -234,18 +229,16 @@ test("Betting War converts American odds and totals expected, earned, and delta 
   })]);
   const result = bettingWar(rows);
   const roma = result.find((p) => p.name === "Roma");
-  // E and F both hit, so the SGP counts as one winning bet priced at the group's shared +100,
-  // not two separate wins at -150 and the group price.
   // Expected: implied win probability × (decimal odds - 1), the implied winnings the odds promise.
   // Only settled legs count - the pending leg (team C) contributes nothing.
-  assert.ok(Math.abs(roma.expected - 2.1) < 1e-12);
+  assert.ok(Math.abs(roma.expected - 2.5) < 1e-12);
   // Earned: gross winnings only - payout on a win, zero on a loss (netUnits tracks the net result).
-  assert.ok(Math.abs(roma.earned - 1.5) < 1e-12);
-  assert.ok(Math.abs(roma.delta + 0.6) < 1e-12); // Earned Value - Expected Value
-  assert.ok(Math.abs(roma.netUnits + 0.5) < 1e-12); // net profit units; includes the unpriced loss
-  assert.equal(roma.bets, 6); // every attributed bet counts once, including the unpriced one and the merged SGP
+  assert.ok(Math.abs(roma.earned - 13 / 6) < 1e-12);
+  assert.ok(Math.abs(roma.delta + 1 / 3) < 1e-12); // Earned Value - Expected Value
+  assert.ok(Math.abs(roma.netUnits - 1 / 6) < 1e-12); // net profit units; includes the unpriced loss
+  assert.equal(roma.bets, 7); // every attributed leg counts, including the unpriced one
   // UGpB: net units divided by bets placed.
-  assert.ok(Math.abs(roma.ugpb - (-0.5 / 6)) < 1e-12);
+  assert.ok(Math.abs(roma.ugpb - (1 / 6) / 7) < 1e-12);
   assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: 0, delta: -0.5, netUnits: -1, bets: 1, ugpb: -1 });
 });
 
