@@ -1,6 +1,179 @@
 {
   "weeks": [
     {
+      "id": "2026-w9",
+      "label": "Week 9",
+      "weekOf": "2026-11-14",
+      "stake": "$7.00",
+      "payout": "$19,930.90",
+      "groups": {
+        "sgp1": {
+          "label": "Same-game parlay",
+          "odds": 130
+        },
+        "sgp2": {
+          "label": "Same-game parlay",
+          "odds": 175
+        }
+      },
+      "note": "Slip odds differ slightly from Dalton's planning notes on three legs (Memphis -3.5 noted vs -4.5 bet, Georgia Tech +14.5 noted vs +13.5 bet, Giants/Commanders Under 40.5 noted vs 41.5 bet) -- used the actual bet-slip numbers. Paul's 'Dolphins ML (maybe)' and Jacob's week were not placed.",
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Purdue",
+          "opponent": "Iowa",
+          "type": "total_under",
+          "line": 47.5,
+          "odds": -109,
+          "date": "2026-11-14"
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Houston",
+          "opponent": "Colorado",
+          "type": "spread",
+          "line": -9.5,
+          "odds": -111,
+          "date": "2026-11-13"
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "by": "Paul",
+          "team": "Tennessee",
+          "opponent": "Texas A&M",
+          "type": "moneyline",
+          "odds": -135,
+          "date": "2026-11-14"
+        },
+        {
+          "id": "l4",
+          "league": "nfl",
+          "by": "Paul",
+          "team": "New Orleans Saints",
+          "opponent": "Carolina Panthers",
+          "type": "spread",
+          "line": -2.5,
+          "odds": -110,
+          "date": "2026-11-15"
+        },
+        {
+          "id": "l5",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "North Dakota State",
+          "opponent": "Hawai'i",
+          "type": "spread",
+          "line": -6.5,
+          "odds": -113,
+          "date": "2026-11-14"
+        },
+        {
+          "id": "l6",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "North Texas",
+          "opponent": "UTSA",
+          "type": "total_over",
+          "line": 76.5,
+          "odds": -110,
+          "date": "2026-11-14"
+        },
+        {
+          "id": "l7",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Memphis",
+          "opponent": "South Florida",
+          "type": "spread",
+          "line": -4.5,
+          "group": "sgp1",
+          "date": "2026-11-12"
+        },
+        {
+          "id": "l8",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Memphis",
+          "opponent": "South Florida",
+          "type": "team_total_over",
+          "line": 28.5,
+          "group": "sgp1",
+          "date": "2026-11-12"
+        },
+        {
+          "id": "l9",
+          "league": "college-football",
+          "by": "Vuke",
+          "team": "Georgia Tech",
+          "opponent": "Clemson",
+          "type": "spread",
+          "line": 13.5,
+          "odds": 100,
+          "date": "2026-11-14"
+        },
+        {
+          "id": "l10",
+          "league": "college-football",
+          "by": "Luke",
+          "team": "Texas Tech",
+          "opponent": "Oklahoma State",
+          "type": "total_over",
+          "line": 73.5,
+          "odds": -107,
+          "date": "2026-11-14"
+        },
+        {
+          "id": "l11",
+          "league": "nfl",
+          "by": "Matt",
+          "team": "New York Giants",
+          "opponent": "Washington Commanders",
+          "type": "total_under",
+          "line": 41.5,
+          "group": "sgp2",
+          "date": "2026-11-12"
+        },
+        {
+          "id": "l12",
+          "league": "nfl",
+          "by": "Matt",
+          "team": "Washington Commanders",
+          "opponent": "New York Giants",
+          "type": "other",
+          "group": "sgp2",
+          "date": "2026-11-12",
+          "note": "Jayden Daniels Under 202.5 passing yards"
+        },
+        {
+          "id": "l13",
+          "league": "college-football",
+          "by": "Matt",
+          "team": "Ole Miss",
+          "opponent": "Oklahoma",
+          "type": "spread",
+          "line": 1.5,
+          "odds": -118,
+          "date": "2026-11-14"
+        },
+        {
+          "id": "l14",
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Wake Forest",
+          "opponent": "SMU",
+          "type": "spread",
+          "line": 1.5,
+          "odds": -111,
+          "date": "2026-11-14"
+        }
+      ]
+    },
+    {
       "id": "2026-w8-5",
       "label": "Week 8.5",
       "weekOf": "2026-11-08",
