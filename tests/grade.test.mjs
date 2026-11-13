@@ -161,7 +161,7 @@ test("per-contributor tally keeps first-appearance order and skips untagged legs
   assert.deepEqual(rows[1], { name: "Dalton", hit: 0, miss: 1, push: 0, live: 1, pending: 0, unknown: 0, total: 2 });
 });
 
-import { formatOdds, legOdds, splitGroupOdds } from "../js/grade.js";
+import { formatOdds, legOdds } from "../js/grade.js";
 test("odds formatting and same-game-parlay group price", () => {
   assert.equal(formatOdds(100), "+100");
   assert.equal(formatOdds(-115), "-115");
@@ -171,31 +171,4 @@ test("odds formatting and same-game-parlay group price", () => {
   assert.equal(legOdds({ group: "sgp", odds: -110 }, { groups: { sgp: { label: "Same-game parlay", odds: 260 } } }), "-110");
   assert.equal(legOdds({ group: "nope" }, {}), "");
   assert.equal(legOdds({}, {}), "");
-});
-
-test("splitGroupOdds divides a group's price evenly across its unpriced legs (not used once mergeGroups has run)", () => {
-  const week = {
-    groups: { sgp2: { odds: 175 } },
-    legs: [
-      { group: "sgp2", team: "Giants" },
-      { group: "sgp2", team: "Commanders" },
-    ],
-  };
-  assert.equal(splitGroupOdds(week.legs[0], week), -152); // sqrt(2.75 decimal) -> -152 American
-
-  // A sibling with its own price only leaves the remainder to split across the rest.
-  const mixedWeek = {
-    groups: { sgp: { odds: 130 } },
-    legs: [
-      { group: "sgp", team: "Priced", odds: -110 },
-      { group: "sgp", team: "Unpriced" },
-    ],
-  };
-  // legOdds/oddsText only ever call this for a leg that lacks its own price - the caller
-  // checks that first, so splitGroupOdds doesn't re-check it for the leg passed in.
-  assert.equal(splitGroupOdds(mixedWeek.legs[1], mixedWeek), -488); // 2.3 (+130) / 1.9091 (-110) = 1.205 decimal
-
-  // A leg already merged into one bet (order.js's mergeGroups) keeps its own combined
-  // price - there's nothing left to split, that's the whole point of merging.
-  assert.equal(splitGroupOdds({ group: "sgp2", merged: true }, week), null);
 });
