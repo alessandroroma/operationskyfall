@@ -137,14 +137,48 @@ export function formatOdds(n) {
   return v > 0 ? `+${v}` : `${v}`;
 }
 
-// Odds label for a leg: its own price, or the shared price of its same-game-parlay group.
+const decimalFromAmerican = (odds) => {
+  const o = Number(odds);
+  if (!Number.isFinite(o) || o === 0) return null;
+  return o > 0 ? 1 + o / 100 : 1 + 100 / Math.abs(o);
+};
+
+const americanFromDecimal = (d) => {
+  if (!Number.isFinite(d) || d <= 1) return null;
+  return d >= 2 ? Math.round((d - 1) * 100) : Math.round(-100 / (d - 1));
+};
+
+// A group leg without its own price doesn't get credited with the group's full combined
+// price (that would double-count a 2-leg SGP's price once per leg) - it gets an even split
+// of the group's decimal odds across the group's legs that also lack their own price.
+// A leg that does carry its own price keeps it, and only the remainder is split across
+// the rest. Needs the week's full `legs` list to find this leg's group siblings.
+export function splitGroupOdds(leg, week) {
+  if (!leg.group) return null;
+  const groupDecimal = decimalFromAmerican(week?.groups?.[leg.group]?.odds);
+  if (groupDecimal == null) return null;
+  const siblings = (week?.legs ?? []).filter((l) => l.group === leg.group);
+  let knownDecimal = 1;
+  let unpriced = 0;
+  for (const s of siblings) {
+    const d = decimalFromAmerican(s.odds);
+    if (d != null) knownDecimal *= d;
+    else unpriced++;
+  }
+  if (unpriced === 0) return null;
+  return americanFromDecimal(Math.pow(groupDecimal / knownDecimal, 1 / unpriced));
+}
+
+// Odds label for a leg: its own price, or its same-game-parlay group's price - split
+// evenly across unpriced siblings when the week's leg list resolves them, otherwise the
+// group's raw combined price as a fallback.
 export function legOdds(leg, week) {
   const ownOdds = formatOdds(leg.odds);
   if (ownOdds) return ownOdds;
   if (leg.group) {
     const g = week?.groups?.[leg.group];
-    const o = formatOdds(g?.odds);
-    return o ? `${g.label ?? "Group"} ${o}` : "";
+    const o = formatOdds(splitGroupOdds(leg, week) ?? g?.odds);
+    return o ? `${g?.label ?? "Group"} ${o}` : "";
   }
   return "";
 }

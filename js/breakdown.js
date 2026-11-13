@@ -1,6 +1,6 @@
 // Pure rows for the breakdown tab: no DOM, no network.
 const q = new URL(import.meta.url).search;
-const [{ formatOdds, legOdds, describeLeg }, { chronological }] = await Promise.all([
+const [{ formatOdds, legOdds, describeLeg, splitGroupOdds }, { chronological }] = await Promise.all([
   import(`./grade.js${q}`),
   import(`./order.js${q}`),
 ]);
@@ -52,11 +52,12 @@ export function pickText(leg) {
   return leg.team ?? "\u2014";
 }
 
-// Short price for a leg: its own odds, or the shared price of its same-game group.
+// Short price for a leg: its own odds, or its same-game group's price (split evenly
+// across unpriced siblings when resolvable, otherwise the group's raw combined price).
 export function oddsText(leg, week) {
   const ownOdds = formatOdds(leg.odds);
   if (ownOdds) return ownOdds;
-  if (leg.group) return formatOdds(week?.groups?.[leg.group]?.odds) || "\u2014";
+  if (leg.group) return formatOdds(splitGroupOdds(leg, week) ?? week?.groups?.[leg.group]?.odds) || "\u2014";
   return "\u2014";
 }
 
@@ -71,40 +72,10 @@ export function outcomeText(result, margin) {
   return margin > 0 ? `won by ${abs}` : `lost by ${abs}`;
 }
 
-// Inverse of decimalOdds: nearest American price for a decimal multiplier.
-function americanFromDecimal(d) {
-  if (!Number.isFinite(d) || d <= 1) return null;
-  return d >= 2 ? Math.round((d - 1) * 100) : Math.round(-100 / (d - 1));
-}
-
-// For stats only (not the "odds" display column): an unpriced group leg's fair share of
-// the group's combined price, split evenly across the group's legs that don't carry
-// their own odds. A leg that does carry its own odds keeps it as-is and isn't touched here.
-// This keeps a 2-leg SGP's +175 from counting as +175 twice toward averages/bands/WAR.
-function groupSplitOddsValue(leg, week, siblings) {
-  const groupDecimal = decimalOdds(week?.groups?.[leg.group]?.odds);
-  if (groupDecimal == null || !siblings?.length) return null;
-  let knownDecimal = 1;
-  let unpriced = 0;
-  for (const s of siblings) {
-    const d = decimalOdds(s.odds);
-    if (d != null) knownDecimal *= d;
-    else unpriced++;
-  }
-  if (unpriced === 0) return null;
-  return americanFromDecimal(Math.pow(groupDecimal / knownDecimal, 1 / unpriced));
-}
-
 // One row per leg across every week, newest week first, kickoff order inside a week.
 export function breakdownRows(evaluated) {
   const rows = [];
   for (const ev of evaluated) {
-    const siblingsByGroup = new Map();
-    for (const l of ev.legs ?? []) {
-      if (!l.leg.group) continue;
-      if (!siblingsByGroup.has(l.leg.group)) siblingsByGroup.set(l.leg.group, []);
-      siblingsByGroup.get(l.leg.group).push(l.leg);
-    }
     for (const l of chronological(ev.legs ?? [])) {
       const result = l.grade?.result ?? "unknown";
       const margin = l.grade?.margin ?? null;
@@ -123,7 +94,7 @@ export function breakdownRows(evaluated) {
         spread: spreadText(l.leg),
         line: num(l.leg.line),
         odds: oddsText(l.leg, ev.week),
-        oddsValue: num(ownOdds ? l.leg.odds : l.leg.group ? groupSplitOddsValue(l.leg, ev.week, siblingsByGroup.get(l.leg.group)) : null),
+        oddsValue: num(ownOdds ? l.leg.odds : l.leg.group ? (splitGroupOdds(l.leg, ev.week) ?? ev.week.groups?.[l.leg.group]?.odds) : null),
         oddsFull: legOdds(l.leg, ev.week),
         result,
         margin,

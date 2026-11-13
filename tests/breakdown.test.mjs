@@ -13,12 +13,18 @@ const ev = (overrides) => ({
   ...overrides,
 });
 
-const week = (overrides = {}) => ({
-  week: { id: "w", label: "Week 3", weekOf: "2026-10-01", stake: "$7", payout: "$4,449.57", ...(overrides.week ?? {}) },
-  legs: overrides.legs ?? [],
-  status: overrides.status ?? "WON",
-  counts: overrides.counts ?? {},
-});
+// The nested week.legs (raw) mirrors the outer, evaluated legs by default, same as the
+// real app where a week object always carries its own raw `legs` list alongside grading.
+const week = (overrides = {}) => {
+  const legs = overrides.legs ?? [];
+  const weekMeta = overrides.week ?? {};
+  return {
+    week: { id: "w", label: "Week 3", weekOf: "2026-10-01", stake: "$7", payout: "$4,449.57", ...weekMeta, legs: weekMeta.legs ?? legs.map((l) => l.leg) },
+    legs,
+    status: overrides.status ?? "WON",
+    counts: overrides.counts ?? {},
+  };
+};
 
 const leg = (legData, grade) => ({
   leg: legData,
@@ -56,7 +62,8 @@ test("odds column shows the leg price or the shared same-game price", () => {
 
 test("an unpriced group leg's stats price is an even split of the group's combined odds", () => {
   // Two legs, neither priced on its own: the group's +175 splits evenly into two ~-152
-  // legs (each leg's "odds" display column still shows the real group price, unaffected).
+  // legs, and each leg's "odds" display column shows its own split share, not the
+  // group's combined price twice.
   const rows = breakdownRows([week({
     week: { groups: { sgp2: { odds: 175 } } },
     legs: [
@@ -65,8 +72,8 @@ test("an unpriced group leg's stats price is an even split of the group's combin
     ],
   })]);
   assert.deepEqual(rows.map((r) => r.oddsValue), [-152, -152]);
-  assert.equal(rows[0].odds, "+175"); // display column still shows the real combined price
-  assert.equal(rows[1].odds, "+175");
+  assert.equal(rows[0].odds, "-152"); // display column shows the leg's own split share
+  assert.equal(rows[1].odds, "-152");
 
   // A leg with its own price keeps it; only the unpriced sibling absorbs the remainder.
   const mixed = breakdownRows([week({
