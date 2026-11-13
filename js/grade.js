@@ -154,7 +154,9 @@ const americanFromDecimal = (d) => {
 // A leg that does carry its own price keeps it, and only the remainder is split across
 // the rest. Needs the week's full `legs` list to find this leg's group siblings.
 export function splitGroupOdds(leg, week) {
-  if (!leg.group) return null;
+  // A merged multi-leg bet (order.js's mergeGroups) already is one bet at the group's
+  // own combined price - nothing to split, that fallback is for still-separate legs.
+  if (!leg.group || leg.merged) return null;
   const groupDecimal = decimalFromAmerican(week?.groups?.[leg.group]?.odds);
   if (groupDecimal == null) return null;
   const siblings = (week?.legs ?? []).filter((l) => l.group === leg.group);

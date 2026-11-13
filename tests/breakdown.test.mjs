@@ -60,33 +60,21 @@ test("odds column shows the leg price or the shared same-game price", () => {
   assert.equal(oddsText({}, {}), "\u2014");
 });
 
-test("an unpriced group leg's stats price is an even split of the group's combined odds", () => {
-  // Two legs, neither priced on its own: the group's +175 splits evenly into two ~-152
-  // legs, and each leg's "odds" display column shows its own split share, not the
-  // group's combined price twice.
+test("a same-game parlay collapses into one row at the group's own combined price", () => {
+  // Two legs, neither priced on its own: as one merged bet they're priced at the real
+  // group price (+175), not a per-leg split of it - splitting only matters for a leg
+  // that's priced on its own outside any merge (see grade.test.mjs).
   const rows = breakdownRows([week({
-    week: { groups: { sgp2: { odds: 175 } } },
+    week: { groups: { sgp2: { label: "Same-game parlay", odds: 175 } } },
     legs: [
       leg({ by: "Matt", group: "sgp2", team: "Giants", type: "total_under", line: 41.5 }, { result: "hit", margin: 1 }),
       leg({ by: "Matt", group: "sgp2", team: "Commanders", type: "other" }, { result: "hit", margin: null }),
     ],
   })]);
-  assert.deepEqual(rows.map((r) => r.oddsValue), [-152, -152]);
-  assert.equal(rows[0].odds, "-152"); // display column shows the leg's own split share
-  assert.equal(rows[1].odds, "-152");
-
-  // A leg with its own price keeps it; only the unpriced sibling absorbs the remainder.
-  const mixed = breakdownRows([week({
-    week: { groups: { sgp: { odds: 130 } } },
-    legs: [
-      leg({ by: "Roma", group: "sgp", team: "Priced", type: "moneyline", odds: -110 }, { result: "hit" }),
-      leg({ by: "Roma", group: "sgp", team: "Unpriced", type: "other" }, { result: "hit" }),
-    ],
-  })]);
-  const priced = mixed.find((r) => r.bet.startsWith("Priced"));
-  const unpriced = mixed.find((r) => r.bet.startsWith("Unpriced"));
-  assert.equal(priced.oddsValue, -110);
-  assert.equal(unpriced.oddsValue, -488); // 2.3 (+130) / 1.9091 (-110) = 1.205 decimal
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].oddsValue, 175);
+  assert.equal(rows[0].odds, "+175");
+  assert.equal(rows[0].oddsFull, "Same-game parlay +175");
 });
 
 test("won/lost by uses the graded margin", () => {
@@ -190,24 +178,26 @@ test("current streak follows week and kickoff order, skipping pushes and open le
   assert.deepEqual([people.get("Paul").streakType, people.get("Paul").streak], [null, 0]);
 });
 
-test("average line uses American odds, including open picks and a split SGP group price", () => {
+test("average line uses American odds, including open picks and shared SGP prices", () => {
   const rows = breakdownRows([week({
     week: { groups: { sgp: { label: "SGP", odds: 130 } } },
     legs: [
       leg({ by: "Roma", type: "spread", line: -7.5, odds: -200, team: "A" }, { result: "hit", margin: 3 }),
       leg({ by: "Roma", type: "total_over", line: 47.5, odds: -110, team: "B" }, { result: "pending", margin: null }),
-      // C has no own price; E is priced at -110. C's "fair" price for stats is whatever,
-      // multiplied with E's -110, reproduces the group's +130 combined price - not +130 itself.
+      // C and E share a group, so they collapse into one bet priced at the group's +130 -
+      // one line in the average, not two (and not E's own -110, which only applies alone).
       leg({ by: "Roma", type: "moneyline", group: "sgp", team: "C" }, { result: "miss", margin: -4 }),
       leg({ by: "Roma", type: "spread", group: "sgp", odds: -110, team: "E" }, { result: "hit", margin: 2 }),
       leg({ by: "Roma", type: "other", team: "D", result: "miss" }, { result: "miss", margin: null }),
     ],
   })]);
   const [person] = personTotals(rows);
-  assert.equal(person.avgLine, -227);
-  assert.equal(person.lineCount, 4);
-  assert.equal(person.avgMiss, 4);
-  assert.equal(person.missCount, 1);
+  assert.equal(person.avgLine, -60);
+  assert.equal(person.lineCount, 3);
+  // The merged SGP bet's margin is null (its sub-legs don't share a unit), so only D's miss
+  // would count toward avgMiss - but D's margin is also null, leaving nothing to average.
+  assert.equal(person.avgMiss, null);
+  assert.equal(person.missCount, 0);
 });
 
 test("odds bands assign boundary prices exactly once", () => {
@@ -221,7 +211,7 @@ test("odds bands assign boundary prices exactly once", () => {
   assert.equal(oddsBandIndex(99), null);
 });
 
-test("results by odds count each person's settled W-L record, with an unpriced SGP leg split from the group price", () => {
+test("results by odds count each person's settled W-L record, including SGP leg prices", () => {
   const entries = [
     ["Roma", -200, "hit"], ["Roma", -150, "miss"], ["Roma", -120, "hit"],
     ["Roma", 100, "miss"], ["Roma", 125, "hit"], ["Roma", 185, "miss"],
@@ -232,16 +222,16 @@ test("results by odds count each person's settled W-L record, with an unpriced S
     { id: `l${i}`, by, odds, team: `Team ${i}`, type: "moneyline" },
     { result, margin: null },
   ));
-  // sgp1 has no own price; sgp2 is priced at -110. sgp1's stats price is the group's +135
-  // divided by sgp2's -110 (i.e. the fair price that reproduces +135 combined), not +135 itself.
+  // sgp1 and sgp2 share a group, so one leg missing busts the combined bet - it counts
+  // once, at the group's own +135 price, not as two separate rows.
   legs.push(leg({ id: "sgp1", by: "Roma", group: "sgp", team: "SGP A", type: "other" }, { result: "miss", margin: null }));
   legs.push(leg({ id: "sgp2", by: "Roma", group: "sgp", odds: -110, team: "SGP B", type: "other" }, { result: "hit", margin: null }));
   legs.push(leg({ id: "unpriced", by: "Roma", team: "Unpriced", type: "other" }, { result: "miss", margin: null }));
   const rows = breakdownRows([week({ week: { groups: { sgp: { odds: 135 } } }, legs })]);
   const records = resultsByOdds(rows);
   assert.deepEqual(records.find((p) => p.name === "Roma").records, [
-    { wins: 1, losses: 1 }, { wins: 0, losses: 1 }, { wins: 1, losses: 0 },
-    { wins: 1, losses: 1 }, { wins: 1, losses: 0 }, { wins: 0, losses: 1 },
+    { wins: 1, losses: 0 }, { wins: 0, losses: 1 }, { wins: 1, losses: 0 },
+    { wins: 0, losses: 1 }, { wins: 1, losses: 0 }, { wins: 0, losses: 2 },
     { wins: 1, losses: 0 },
   ]);
   assert.deepEqual(records.find((p) => p.name === "Dalton").records[6], { wins: 0, losses: 1 });
@@ -268,18 +258,18 @@ test("Betting War converts American odds and totals expected, earned, and delta 
   })]);
   const result = bettingWar(rows);
   const roma = result.find((p) => p.name === "Roma");
-  // E has no own price; F is priced at -150. E's stats price is the group's +100 split
-  // against F's -150 (the fair price that reproduces +100 combined), not +100 itself.
+  // E and F share a group, so they're one bet at the group's own +100 price, not two
+  // separate wins (one at +100, one at -150).
   // Expected: implied win probability × (decimal odds - 1), the implied winnings the odds promise.
   // Only settled legs count - the pending leg (team C) contributes nothing.
-  assert.ok(Math.abs(roma.expected - 13 / 6) < 1e-9);
+  assert.ok(Math.abs(roma.expected - 2.1) < 1e-12);
   // Earned: gross winnings only - payout on a win, zero on a loss (netUnits tracks the net result).
-  assert.ok(Math.abs(roma.earned - 41 / 30) < 1e-9);
-  assert.ok(Math.abs(roma.delta + 0.8) < 1e-9); // Earned Value - Expected Value
-  assert.ok(Math.abs(roma.netUnits + 19 / 30) < 1e-9); // net profit units; includes the unpriced loss
-  assert.equal(roma.bets, 7); // every attributed leg counts, including the unpriced one
+  assert.ok(Math.abs(roma.earned - 1.5) < 1e-12);
+  assert.ok(Math.abs(roma.delta + 0.6) < 1e-12); // Earned Value - Expected Value
+  assert.ok(Math.abs(roma.netUnits + 0.5) < 1e-12); // net profit units; includes the unpriced loss
+  assert.equal(roma.bets, 6); // every attributed bet counts once, including the unpriced one and the merged SGP
   // UGpB: net units divided by bets placed.
-  assert.ok(Math.abs(roma.ugpb - (-19 / 30) / 7) < 1e-9);
+  assert.ok(Math.abs(roma.ugpb - (-0.5 / 6)) < 1e-12);
   assert.deepEqual(result.find((p) => p.name === "Dalton"), { name: "Dalton", expected: 0.5, earned: 0, delta: -0.5, netUnits: -1, bets: 1, ugpb: -1 });
 });
 
