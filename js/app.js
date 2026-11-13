@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }, { shadowQuote, shadowSeason, statsEligible }] =
+const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs, mergeGroups }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }, { shadowQuote, shadowSeason, statsEligible }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -26,7 +26,7 @@ async function evaluateWeek(week) {
       return { leg, game, grade: gradeLeg(leg, game), error };
     })
   );
-  const { status, counts } = weekStatus(week, legs.map((l) => l.grade.result));
+  const { status, counts } = weekStatus(week, mergeGroups(legs).map((l) => l.grade.result));
   return { week, legs, status, counts };
 }
 
@@ -101,14 +101,14 @@ function statsHtml(ev) {
 }
 
 function sectionsHtml(legs, week) {
-  const g = groupLegs(legs);
+  const g = groupLegs(mergeGroups(legs));
   const sec = (key, title, items) =>
     items.length ? `<h3 class="sec ${key}">${title} <span class="muted">(${items.length})</span></h3><div class="legs">${items.map((l) => legHtml(l, week)).join("")}</div>` : "";
   return sec("live", "🔴 Live now", g.live) + sec("upcoming", "Upcoming", g.upcoming) + sec("final", "Final", g.final);
 }
 
 function contributorsHtml(ev) {
-  const rows = byContributor(ev.legs.map((l) => ({ leg: l.leg, result: l.grade.result })));
+  const rows = byContributor(mergeGroups(ev.legs).map((l) => ({ leg: l.leg, result: l.grade.result })));
   if (!rows.length) return "";
   const chip = (c) => {
     const cls = c.miss ? "miss" : c.hit === c.total ? "hit" : "";
@@ -378,7 +378,7 @@ function shadowWeekHtml(ev, openWeekIds) {
     <div class="shadow-numbers"><span>Virtual stake <b>${esc(fmtMoney(quote.stake))}</b></span><span>Combined odds <b>×${quote.multiplier.toFixed(1)}</b></span><span>${settled == null ? "Projected return" : "Actual return"} <b>${esc(fmtMoney(settled ?? quote.return))}</b></span></div>
     ${statsHtml(ev)}
     <details class="legs-toggle" data-week-id="${esc(w.id)}"${open ? " open" : ""}>
-      <summary>Bets (${ev.legs.length})</summary>
+      <summary>Bets (${mergeGroups(ev.legs).length})</summary>
       ${sectionsHtml(ev.legs, w)}
     </details>
   </article>`;
@@ -417,9 +417,10 @@ function parlayHtml(ev) {
 }
 
 function historyHtml(ev) {
+  const legs = mergeGroups(ev.legs);
   return `<details class="hist-week"><summary><span>${esc(ev.week.label)}</span><span class="pill ${ev.status}">${ev.status}</span></summary>
     ${ev.week.note ? `<p class="muted pad">${esc(ev.week.note)}</p>` : ""}${contributorsHtml(ev)}
-    ${ev.legs.length ? `<div class="legs">${chronological(ev.legs).map((l) => legHtml(l, ev.week)).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
+    ${legs.length ? `<div class="legs">${chronological(legs).map((l) => legHtml(l, ev.week)).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
 }
 
 function render() {
