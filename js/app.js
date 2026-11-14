@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache, fetchScoreboard }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }, { shadowQuote, shadowSeason, statsEligible }, { dateWindow, buildRows: buildSlateRows, filterRows: filterSlateRows }] =
+const [{ findLegGame, clearCache, fetchScoreboard }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet, contributorColors, WAR_OTHER_COLOR }, { shadowQuote, shadowSeason, statsEligible }, { dateWindow, buildRows: buildSlateRows, filterRows: filterSlateRows }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`), import(`./slate.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -210,8 +210,6 @@ function bettingWarTableHtml(rows) {
   </table></div><p class="muted">Expected Value sums (1 ÷ decimal odds) × (decimal odds − 1) for every settled, priced leg — the implied winnings the odds promise. Earned Value is gross winnings only: decimal odds − 1 for wins, zero for losses and pushes. Delta EV = Earned Value − Expected Value. Open/pending/live legs don't count toward Expected, Earned, or Delta EV until they settle. Net Units is the net result instead: it adds decimal odds − 1 for wins and subtracts 1 for losses, even when the price wasn't recorded. UGpB (units gained per bet) = Net Units ÷ number of bets placed. SGP legs use their own odds when listed, otherwise the shared price.</p>`;
 }
 
-const WAR_COLORS = ["#58a6ff", "#ff7b72", "#3fb950", "#d29922", "#bc8cff", "#39c5cf", "#ffa657"];
-
 // A re-bet ticket (Week 4.5, Week 5.5) merges into its parent week's point on the chart; its
 // duplicate legs are already skipped by bettingWar via excludeFromStats, so only its new legs
 // (e.g. Portland State, the ND spread/CJ Carr props) add to the parent week's Delta EV here.
@@ -226,22 +224,23 @@ function mergeDuplicateWeeks(rows) {
   });
 }
 
-function warByWeekHtml(rows) {
+function warByWeekHtml(rows, allNames) {
   const { people, weeks } = cumulativeWarByWeek(mergeDuplicateWeeks(rows));
   if (!people.length || !weeks.length) return "";
-  const left = 48, top = 25, plotHeight = 220, groupWidth = 100;
-  const width = left + weeks.length * groupWidth + 20, height = top + plotHeight + 42;
+  const colorOf = contributorColors(allNames?.length ? allNames : people);
+  const left = 48, top = 25, plotHeight = 220, groupWidth = 100, labelGutter = 92;
+  const width = left + weeks.length * groupWidth + labelGutter, height = top + plotHeight + 42;
   const baseline = top + plotHeight / 2;
   const values = weeks.flatMap((week) => week.values);
   const bound = Math.max(1, Math.ceil(Math.max(0, ...values.map(Math.abs))));
   const y = (value) => baseline - value * plotHeight / (2 * bound);
   const ticks = [-bound, -bound / 2, 0, bound / 2, bound].map((value) => {
     const yy = y(value);
-    return `<line x1="${left}" y1="${yy}" x2="${width - 12}" y2="${yy}" class="war-grid${value === 0 ? " zero" : ""}"/><text x="${left - 8}" y="${yy + 4}" text-anchor="end" class="war-axis">${value > 0 ? "+" : ""}${Number(value.toFixed(1))}</text>`;
+    return `<line x1="${left}" y1="${yy}" x2="${width - labelGutter + 12}" y2="${yy}" class="war-grid${value === 0 ? " zero" : ""}"/><text x="${left - 8}" y="${yy + 4}" text-anchor="end" class="war-axis">${value > 0 ? "+" : ""}${Number(value.toFixed(1))}</text>`;
   }).join("");
   const weekLabels = weeks.map((week, i) => `<text x="${left + (i + 0.5) * groupWidth}" y="${height - 13}" text-anchor="middle" class="war-axis week">${esc(week.label)}</text>`).join("");
   const lines = people.map((name, j) => {
-    const color = WAR_COLORS[j % WAR_COLORS.length];
+    const color = colorOf.get(name) ?? WAR_OTHER_COLOR;
     const points = weeks.map((week, i) => ({
       x: left + (i + 0.5) * groupWidth,
       y: y(week.values[j]),
@@ -253,10 +252,19 @@ function warByWeekHtml(rows) {
       const label = `${point.week} · ${name}: ${point.value > 0 ? "+" : ""}${point.value.toFixed(2)} cumulative delta EV`;
       return `<circle cx="${point.x}" cy="${point.y}" r="4" fill="${color}" stroke="#0d1117" stroke-width="1.5" tabindex="0" aria-label="${esc(label)}"><title>${esc(label)}</title></circle>`;
     }).join("");
-    return `<path d="${path}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${markers}`;
+    const last = points[points.length - 1];
+    const directLabel = `<text x="${last.x + 8}" y="${last.y + 4}" class="war-direct-label" fill="${color}">${esc(name)}</text>`;
+    return `<path d="${path}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${markers}${directLabel}`;
   }).join("");
-  const legend = people.map((name, i) => `<span><i style="background:${WAR_COLORS[i % WAR_COLORS.length]}"></i>${esc(name)}</span>`).join("");
-  return `<h3 class="bd">WAR by week</h3><div class="war-chart-wrap"><svg class="war-chart" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="group" aria-label="Cumulative Delta EV through each week for each person">${ticks}${weekLabels}${lines}</svg></div><div class="war-legend">${legend}</div><p class="muted">Each point sums that person's Delta EV through that week, using the Betting War calculation. Weeks without a bet carry the prior total forward. Hover or focus a point for its value.</p>`;
+  const legend = people.map((name) => `<span><i style="background:${colorOf.get(name) ?? WAR_OTHER_COLOR}"></i>${esc(name)}</span>`).join("");
+  const tableRows = weeks.filter((w) => w.id !== "war-start").map((week) =>
+    `<tr><td class="wk">${esc(week.label)}</td>${people.map((name, j) => {
+      const v = week.values[j];
+      return `<td class="num ${v > 0 ? "won" : v < 0 ? "lost" : ""}">${v > 0 ? "+" : ""}${v.toFixed(2)}</td>`;
+    }).join("")}</tr>`
+  ).join("");
+  const table = `<details class="war-table-toggle"><summary>View as table</summary><div class="table-wrap"><table class="bd"><thead><tr><th>Week</th>${people.map((n) => `<th class="num">${esc(n)}</th>`).join("")}</tr></thead><tbody>${tableRows}</tbody></table></div></details>`;
+  return `<h3 class="bd">WAR by week</h3><div class="war-chart-wrap"><svg class="war-chart" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="group" aria-label="Cumulative Delta EV through each week for each person">${ticks}${weekLabels}${lines}</svg></div><div class="war-legend">${legend}</div><p class="muted">Each point sums that person's Delta EV through that week, using the Betting War calculation. Weeks without a bet carry the prior total forward. Hover or focus a point for its value. Colors are fixed per person (alphabetical palette assignment), not by current ranking.</p>${table}`;
 }
 
 function marginTablesHtml(rows) {
@@ -305,7 +313,7 @@ function breakdownHtml(everyLegOpen = false) {
     ${personTableHtml(statsRows)}
     ${oddsResultsTableHtml(statsRows)}
     ${bettingWarTableHtml(statsRows)}
-    ${warByWeekHtml(humanRows)}
+    ${warByWeekHtml(humanRows, people)}
     ${leagueTableHtml(humanRows)}
     ${marginTablesHtml(humanRows)}
     ${moneyTableHtml(seasonMoney(evaluated))}`;

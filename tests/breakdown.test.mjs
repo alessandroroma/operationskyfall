@@ -431,3 +431,17 @@ test("season money totals settled weeks and skips demo data", () => {
   assert.equal(totals.returned, 4449.57);
   assert.equal(totals.net, 4436.57);
 });
+
+import { contributorColors, WAR_COLORS, WAR_OTHER_COLOR } from "../js/breakdown.js";
+test("contributor colors are assigned alphabetically by name, not by sort-order position, and a 9th name falls to the shared 'other' color", () => {
+  const colors = contributorColors(["Roma", "Dalton", "Jacob", "Luke", "Mark", "Matt", "Paul", "Vuke"]);
+  assert.equal(colors.size, 8);
+  assert.equal(colors.get("Dalton"), WAR_COLORS[0]); // alphabetically first
+  assert.equal(colors.get("Vuke"), WAR_COLORS[7]); // alphabetically last
+  assert.notEqual(colors.get("Roma"), colors.get("Jacob")); // the live bug this fixes
+  // assignment is stable regardless of input order
+  const reordered = contributorColors(["Vuke", "Mark", "Dalton", "Jacob", "Luke", "Matt", "Paul", "Roma"]);
+  assert.deepEqual([...colors.entries()], [...reordered.entries()]);
+  const withNinth = contributorColors(["Dalton", "Jacob", "Luke", "Mark", "Matt", "Paul", "Roma", "Vuke", "Zelda"]);
+  assert.equal(withNinth.get("Zelda"), WAR_OTHER_COLOR); // sorts last, past the palette's 8 slots
+});

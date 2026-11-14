@@ -308,6 +308,21 @@ export function warByWeek(rows) {
   };
 }
 
+// Validated 8-slot categorical palette (dark mode, dataviz skill), checked against this
+// site's own #0d1117 surface: lightness band, chroma floor, CVD and normal-vision
+// separation, and contrast all pass. Exactly 8 slots for exactly 8 human contributors -
+// a 9th name does not get a 9th hue (see contributorColors below).
+export const WAR_COLORS = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"];
+export const WAR_OTHER_COLOR = "#8b949e"; // muted, for any name beyond the palette's 8 slots
+
+// Assigns each person a fixed hue by name (alphabetical), not by their position in a
+// performance-sorted list - so a color always means the same person, even as records
+// (and therefore sort order) change week to week, and a filter never repaints survivors.
+export function contributorColors(names) {
+  const sorted = [...new Set(names)].sort((a, b) => a.localeCompare(b));
+  return new Map(sorted.map((name, i) => [name, WAR_COLORS[i] ?? WAR_OTHER_COLOR]));
+}
+
 export function cumulativeWarByWeek(rows) {
   const { people, weeks } = warByWeek(rows);
   const running = people.map(() => 0);
