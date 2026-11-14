@@ -172,3 +172,12 @@ test("odds formatting and same-game-parlay group price", () => {
   assert.equal(legOdds({ group: "nope" }, {}), "");
   assert.equal(legOdds({}, {}), "");
 });
+
+import { extractWeather } from "../js/match.js";
+test("weather extraction reads pre-kickoff event.weather, capture-only", () => {
+  assert.deepEqual(extractWeather({ weather: { displayValue: "Sunny", temperature: 70, highTemperature: 70, conditionId: "1" } }), { displayValue: "Sunny", temperature: 70 });
+  assert.equal(extractWeather({ weather: null }), null);
+  assert.equal(extractWeather({}), null);
+  assert.equal(extractWeather(undefined), null);
+  assert.deepEqual(extractWeather({ weather: { displayValue: "Dome" } }), { displayValue: "Dome" });
+});

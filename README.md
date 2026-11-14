@@ -35,8 +35,24 @@ Leg fields:
 | `group` | name of a same-game-parlay group; its shared price lives on the week as `"groups": { "sgp": { "label": "Same-game parlay", "odds": 260 } }`. A leg's own `odds`, when provided, takes precedence for that leg |
 | `note` | optional text shown on the card |
 | `result` (on a leg) | optional manual override: `hit`, `miss` or `push` (use for `other` legs like props) |
+| `weather` | optional, set by `scripts/capture-weather.mjs` — `{ "displayValue": "Sunny", "temperature": 70 }`. Not meant to be hand-edited; see below |
 
 Rules: one parlay per week, newest `weekOf` shows on top and the rest go under History. A single missed leg busts the parlay; pushes are dropped. Spreads are graded against **your** line (bet365's), not ESPN's. A week can also carry `"result": "WON" | "BUSTED" | "VOID"` (with `"legs": []`) to record a past parlay whose legs weren't saved; it counts toward the season record. Set `"example": true` on a week to mark it as demo data (excluded from the season record).
+
+After adding a week's legs, and **before any of its games kick off**, run:
+
+```sh
+node scripts/capture-weather.mjs            # most recent week by weekOf
+node scripts/capture-weather.mjs --week=2026-w9   # or target one explicitly
+```
+
+ESPN only exposes `event.weather` while a game is still upcoming — it disappears from
+both the scoreboard and the summary endpoint the moment a game goes live or final.
+That makes this **capture-only**: run it before kickoff or the window is gone for
+good, and there is no way to backfill weather onto a past week. The script skips
+legs that already have `weather`, legs whose game has already started, and legs
+ESPN has no game for; it writes straight back into `data/parlays.json`, same as
+any other edit, and logs what it did and why for every leg.
 
 ## Breakdown tab
 

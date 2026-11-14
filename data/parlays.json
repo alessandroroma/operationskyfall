@@ -27,7 +27,11 @@
           "type": "total_under",
           "line": 47.5,
           "odds": -109,
-          "date": "2026-11-14"
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Mostly clear",
+            "temperature": 37
+          }
         },
         {
           "id": "l2",
@@ -48,7 +52,11 @@
           "opponent": "Texas A&M",
           "type": "moneyline",
           "odds": -135,
-          "date": "2026-11-14"
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Cloudy",
+            "temperature": 68
+          }
         },
         {
           "id": "l4",
@@ -59,7 +67,11 @@
           "type": "spread",
           "line": -2.5,
           "odds": -110,
-          "date": "2026-11-15"
+          "date": "2026-11-15",
+          "weather": {
+            "displayValue": "Mostly cloudy",
+            "temperature": 63
+          }
         },
         {
           "id": "l5",
@@ -70,7 +82,11 @@
           "type": "spread",
           "line": -6.5,
           "odds": -113,
-          "date": "2026-11-14"
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Mostly cloudy",
+            "temperature": 77
+          }
         },
         {
           "id": "l6",
@@ -81,7 +97,11 @@
           "type": "total_over",
           "line": 76.5,
           "odds": -110,
-          "date": "2026-11-14"
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Thunderstorms",
+            "temperature": 65
+          }
         },
         {
           "id": "l7",
@@ -116,7 +136,11 @@
           "type": "spread",
           "line": 13.5,
           "odds": 100,
-          "date": "2026-11-14"
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Sunny",
+            "temperature": 52
+          }
         },
         {
           "id": "l10",
@@ -127,7 +151,11 @@
           "type": "total_over",
           "line": 73.5,
           "odds": -107,
-          "date": "2026-11-14"
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Rain",
+            "temperature": 48
+          }
         },
         {
           "id": "l11",
@@ -162,7 +190,11 @@
           "type": "spread",
           "line": 1.5,
           "odds": -118,
-          "date": "2026-11-14"
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Cloudy",
+            "temperature": 43
+          }
         },
         {
           "id": "l14",
@@ -173,7 +205,11 @@
           "type": "spread",
           "line": 1.5,
           "odds": -111,
-          "date": "2026-11-14"
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Intermittent clouds",
+            "temperature": 56
+          }
         }
       ]
     },
@@ -1128,7 +1164,7 @@
           "type": "other",
           "date": "2026-10-04",
           "result": "miss",
-          "note": "Amon-Ra St. Brown anytime TD scorer (SGP leg) \u2013 did not score"
+          "note": "Amon-Ra St. Brown anytime TD scorer (SGP leg) – did not score"
         },
         {
           "id": "l3",
@@ -1319,7 +1355,7 @@
           "opponent": "Iowa",
           "type": "other",
           "date": "2026-09-26",
-          "note": "Bryce Underwood anytime TD (SGP leg) \u2013 did not score",
+          "note": "Bryce Underwood anytime TD (SGP leg) – did not score",
           "result": "miss"
         },
         {
@@ -1414,7 +1450,7 @@
           "team": "Portland State",
           "opponent": "Oregon",
           "type": "spread",
-          "line": 59.0,
+          "line": 59,
           "date": "2026-09-19"
         },
         {
@@ -1447,7 +1483,7 @@
           "team": "Toledo",
           "opponent": "Temple",
           "type": "spread",
-          "line": -6.0,
+          "line": -6,
           "date": "2026-09-19"
         },
         {
@@ -1479,7 +1515,7 @@
           "team": "Clemson",
           "opponent": "North Carolina",
           "type": "spread",
-          "line": -3.0,
+          "line": -3,
           "date": "2026-09-19"
         },
         {

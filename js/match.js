@@ -25,6 +25,19 @@ export function teamScore(query, team) {
   return 0;
 }
 
+// Pull a leg's weather off its matched ESPN event. ESPN only populates `event.weather`
+// while the game is upcoming (pre-kickoff) - it's absent once an event goes live or
+// final, on both the scoreboard and the summary endpoint. Capture-only: there is no
+// way to backfill this for a game after the fact.
+export function extractWeather(event) {
+  const w = event?.weather;
+  if (!w) return null;
+  const out = {};
+  if (w.displayValue != null) out.displayValue = w.displayValue;
+  if (w.temperature != null) out.temperature = w.temperature;
+  return Object.keys(out).length ? out : null;
+}
+
 // Find the game in `events` (ESPN scoreboard events) that the leg refers to.
 // Returns { event, picked, other } or null.
 export function findGame(events, leg) {

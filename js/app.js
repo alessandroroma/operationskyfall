@@ -51,6 +51,12 @@ function teamHtml(c, cls, picked) {
   return `<div class="team ${cls}${picked ? " picked" : ""}">${cls === "away" && t.logo ? `<img src="${esc(t.logo)}" alt="" loading="lazy">` : ""}<span class="name">${esc(t.displayName)}</span>${cls === "home" && t.logo ? `<img src="${esc(t.logo)}" alt="" loading="lazy">` : ""}</div>`;
 }
 
+function weatherText(w) {
+  const temp = w.temperature != null ? `${w.temperature}°F` : "";
+  const display = w.displayValue ?? "";
+  return `🌤️ ${esc([display, temp].filter(Boolean).join(", "))}`;
+}
+
 function legHtml({ leg, game, grade, error }, week) {
   const label = grade.result === "live_push" && leg.type === "moneyline" ? "Tied" : (RESULT_LABEL[grade.result] ?? grade.result);
   const badge = `<span class="pill ${grade.result}">${label}${grade.margin != null && grade.result !== "pending" ? ` (${grade.margin > 0 ? "+" : ""}${grade.margin.toFixed(1).replace(/\.0$/, "")})` : ""}</span>`;
@@ -77,7 +83,7 @@ function legHtml({ leg, game, grade, error }, week) {
       <div class="score">${showScore ? `${esc(away.score)} – ${esc(home.score)}` : "@"}</div>
       ${teamHtml(home, "home", home === game.picked)}
     ${link ? `</a>` : `</div>`}
-    <div class="meta"><span>${status}${link ? ` · <a class="gc" href="${esc(link)}" target="_blank" rel="noopener noreferrer">Gamecast ↗</a>` : ""}</span>${watch ? `<span class="watch">📺 ${esc(watch)}</span>` : ""}</div>
+    <div class="meta"><span>${status}${link ? ` · <a class="gc" href="${esc(link)}" target="_blank" rel="noopener noreferrer">Gamecast ↗</a>` : ""}</span>${watch ? `<span class="watch">📺 ${esc(watch)}</span>` : ""}${leg.weather ? `<span>${weatherText(leg.weather)}</span>` : ""}</div>
     ${leg.note ? `<div class="meta"><span>${esc(leg.note)}</span></div>` : ""}
     ${leg.reasoning ? `<div class="reason"><span class="rk">Why</span>${esc(leg.reasoning)}</div>` : ""}
   </div>`;
