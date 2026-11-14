@@ -38,6 +38,23 @@ export function extractWeather(event) {
   return Object.keys(out).length ? out : null;
 }
 
+// Pull venue/surface/conference-game facts off an ESPN `summary?event=<id>` response.
+// Unlike weather, this is retained indefinitely (verified against games weeks old), so it's
+// backfillable for every historical leg, not capture-only. There is no verified `indoor`
+// field anywhere in the summary payload (checked a dome venue directly) - only `grass`
+// (surface type) is reliable, so this does not claim an indoor/outdoor split.
+export function extractVenue(summary) {
+  const venue = summary?.gameInfo?.venue;
+  const comp = summary?.header?.competitions?.[0];
+  if (!venue && comp?.neutralSite == null && comp?.conferenceCompetition == null) return null;
+  const out = {};
+  if (venue?.fullName != null) out.name = venue.fullName;
+  if (typeof venue?.grass === "boolean") out.grass = venue.grass;
+  if (typeof comp?.neutralSite === "boolean") out.neutralSite = comp.neutralSite;
+  if (typeof comp?.conferenceCompetition === "boolean") out.conferenceGame = comp.conferenceCompetition;
+  return Object.keys(out).length ? out : null;
+}
+
 // Find the game in `events` (ESPN scoreboard events) that the leg refers to.
 // Returns { event, picked, other } or null.
 export function findGame(events, leg) {

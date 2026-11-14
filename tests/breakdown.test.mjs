@@ -113,6 +113,7 @@ test("rows cover every leg, newest week first, kickoff order inside a week", () 
     weekId: "w3", week: "Week 3", weekOf: "2026-10-01", weekStatus: "BUSTED",
     by: "Roma", league: "", bet: "Texas Tech -12.5", pick: "Texas Tech", note: "", type: "Spread", spread: "-12.5", line: -12.5, odds: "\u2014", oddsValue: null,
     oddsFull: "", result: "miss", margin: -3, outcome: "lost by 3", excludeFromStats: false,
+    teamId: null, conferenceId: null, venue: null, eventId: null, reasoning: "",
   });
   assert.equal(rows[2].by, "");
   assert.equal(rows[0].outcome, "won by 7");

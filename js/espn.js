@@ -36,6 +36,24 @@ export async function fetchScoreboard(league, dateStr, { fresh = false, fetchImp
   }
 }
 
+// Per-game detail (venue, neutral site, conference-game flag, ...) - retained indefinitely,
+// even long after a game goes final, unlike the scoreboard's odds/weather blocks.
+export async function fetchSummary(league, eventId, { fresh = false, fetchImpl = fetch } = {}) {
+  const key = `summary:${league}:${eventId}`;
+  if (!fresh && cache.has(key)) return cache.get(key);
+  const p = fetchImpl(`${BASE}/${league}/summary?event=${eventId}`).then(async (r) => {
+    if (!r.ok) throw new Error(`ESPN ${r.status} for ${key}`);
+    return r.json();
+  });
+  cache.set(key, p);
+  try {
+    return await p;
+  } catch (e) {
+    cache.delete(key);
+    throw e;
+  }
+}
+
 // Find the game for a leg on its date, falling back to the neighbouring days.
 export async function findLegGame(leg, opts = {}) {
   const dates = [leg.date, shiftDate(leg.date, -1), shiftDate(leg.date, 1)];

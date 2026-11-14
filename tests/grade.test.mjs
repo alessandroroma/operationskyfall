@@ -181,3 +181,14 @@ test("weather extraction reads pre-kickoff event.weather, capture-only", () => {
   assert.equal(extractWeather(undefined), null);
   assert.deepEqual(extractWeather({ weather: { displayValue: "Dome" } }), { displayValue: "Dome" });
 });
+
+import { extractVenue } from "../js/match.js";
+test("venue extraction reads surface/neutral-site/conference-game from a summary response, no fabricated indoor field", () => {
+  assert.deepEqual(
+    extractVenue({ gameInfo: { venue: { fullName: "Hard Rock Stadium", grass: true } }, header: { competitions: [{ neutralSite: false, conferenceCompetition: true }] } }),
+    { name: "Hard Rock Stadium", grass: true, neutralSite: false, conferenceGame: true }
+  );
+  assert.equal(extractVenue({}), null);
+  assert.equal(extractVenue(undefined), null);
+  assert.deepEqual(extractVenue({ header: { competitions: [{ neutralSite: true }] } }), { neutralSite: true });
+});

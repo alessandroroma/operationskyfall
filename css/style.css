@@ -135,3 +135,7 @@ td.pick-cell { white-space: normal; min-width: 160px; }
 .slate-filters select, .slate-filters input[type="search"] { background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font: inherit; font-size: .85rem; }
 .slate-filters input[type="search"] { min-width: 200px; }
 .slate-filters select:focus-visible, .slate-filters input[type="search"]:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
+
+/* Venue/surface split tables sit side by side on wide screens. */
+.venue-splits { display: flex; flex-wrap: wrap; gap: 12px; }
+.venue-splits > .table-wrap { flex: 1 1 220px; min-width: 220px; margin-top: 0; }

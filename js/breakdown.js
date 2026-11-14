@@ -100,6 +100,16 @@ export function breakdownRows(evaluated) {
         margin,
         outcome: outcomeText(result, margin),
         excludeFromStats: !!l.leg.excludeFromStats,
+        // Resolved ESPN identity for the picked side, when the game resolved - lets team/
+        // conference reports merge by stable id instead of fuzzy-matching free text. Null for
+        // an unresolved game (e.g. an FCS team ESPN's FBS scoreboard never finds).
+        teamId: l.game?.picked?.team?.id ?? null,
+        conferenceId: l.game?.picked?.team?.conferenceId != null ? String(l.game.picked.team.conferenceId) : null,
+        // Backfilled by scripts/capture-venue.mjs, stored on the leg itself (unlike
+        // teamId/conferenceId above, which are live-resolved every render).
+        venue: l.leg.venue ?? null,
+        eventId: l.game?.event?.id ?? null,
+        reasoning: l.leg.reasoning ?? "",
       });
     }
   }

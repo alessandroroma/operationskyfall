@@ -1,7 +1,7 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache, fetchScoreboard }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet, contributorColors, WAR_OTHER_COLOR }, { shadowQuote, shadowSeason, statsEligible }, { dateWindow, buildRows: buildSlateRows, filterRows: filterSlateRows }] =
-  await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`), import(`./slate.js${q}`)]);
+const [{ findLegGame, clearCache, fetchScoreboard }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet, contributorColors, WAR_OTHER_COLOR }, { shadowQuote, shadowSeason, statsEligible }, { dateWindow, buildRows: buildSlateRows, filterRows: filterSlateRows }, { teamReportRows, conferenceReportRows, venueReportRows, collisionRows }] =
+  await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`), import(`./slate.js${q}`), import(`./reports.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -16,6 +16,7 @@ let evaluated = []; // [{week, legs:[{leg, game, grade, error}], status, counts}
 let shadowData = null;
 let shadowEvaluated = [];
 let shadowError = null;
+let conferenceNames = null; // data/conferences.json: FBS conferenceId -> name, for the division report card
 let refreshTimer = null;
 let slateRows = [];
 let slateError = null;
@@ -200,6 +201,55 @@ function leagueTableHtml(rows) {
   </table></div><p class="muted">Records cover settled legs only, split by league. Pushes, open legs, and legs with no attributed bettor (Week 2.5) are excluded. The All row combines everyone.</p>`;
 }
 
+function teamReportHtml(rows) {
+  const teams = teamReportRows(rows);
+  if (!teams.length) return "";
+  const body = teams.map((t) => {
+    const who = t.people.map(([name, n]) => `${esc(name)}${n > 1 ? ` (${n})` : ""}`).join(", ");
+    return `<tr><td class="wk">${esc(t.name)}</td><td>${t.league === "nfl" ? "NFL" : "CFB"}</td><td class="num">${t.total}</td><td class="num">${t.hit}-${t.miss}${t.push ? `-${t.push}` : ""}</td><td class="num ${t.netUnits > 0 ? "won" : t.netUnits < 0 ? "lost" : ""}">${t.netUnits > 0 ? "+" : ""}${t.netUnits.toFixed(2)}</td><td class="pick-cell">${who}</td></tr>`;
+  }).join("");
+  return `<details class="every-leg"><summary>Team report card (${teams.length} teams)</summary>
+    <div class="table-wrap"><table class="bd">
+      <thead><tr><th>Team</th><th>League</th><th class="num">Picked</th><th class="num">Record</th><th class="num">Net units</th><th>By</th></tr></thead>
+      <tbody>${body}</tbody>
+    </table></div>
+    <p class="muted">One row per team picked on a side (spread, moneyline or team total - a game total isn't "picking a team"). Merged by ESPN's resolved team id when available, otherwise by the typed name, so a team never splits across two rows for a spelling difference. Sorted by times picked.</p>
+  </details>`;
+}
+
+function divisionReportHtml(rows, conferenceNames) {
+  if (!conferenceNames) return "";
+  const { conferences, unresolved } = conferenceReportRows(rows, conferenceNames);
+  if (!conferences.length) return "";
+  const body = conferences.map((c) =>
+    `<tr><td class="wk">${esc(c.name)}</td><td class="num">${c.total}</td><td class="num">${c.hit}-${c.miss}${c.push ? `-${c.push}` : ""}</td><td class="num ${c.netUnits > 0 ? "won" : c.netUnits < 0 ? "lost" : ""}">${c.netUnits > 0 ? "+" : ""}${c.netUnits.toFixed(2)}</td></tr>`
+  ).join("");
+  return `<h3 class="bd">Division report card (CFB)</h3><div class="table-wrap"><table class="bd">
+    <thead><tr><th>Conference</th><th class="num">Picks</th><th class="num">Record</th><th class="num">Net units</th></tr></thead>
+    <tbody>${body}</tbody>
+  </table></div><p class="muted">CFB legs only, split by the picked team's conference.${unresolved ? ` ${unresolved} CFB leg${unresolved === 1 ? "" : "s"} ESPN never resolved to a team (e.g. an FCS opponent) ${unresolved === 1 ? "isn't" : "aren't"} counted here.` : ""}</p>`;
+}
+
+function venueSplitTableHtml(title, rows) {
+  if (!rows.length) return "";
+  const body = rows.map((r) =>
+    `<tr><td class="wk">${esc(r.name)}</td><td class="num">${r.total}</td><td class="num">${r.hit}-${r.miss}${r.push ? `-${r.push}` : ""}</td><td class="num ${r.netUnits > 0 ? "won" : r.netUnits < 0 ? "lost" : ""}">${r.netUnits > 0 ? "+" : ""}${r.netUnits.toFixed(2)}</td></tr>`
+  ).join("");
+  return `<div class="table-wrap"><table class="bd"><thead><tr><th>${esc(title)}</th><th class="num">Legs</th><th class="num">Record</th><th class="num">Net units</th></tr></thead><tbody>${body}</tbody></table></div>`;
+}
+
+function venueReportHtml(rows) {
+  const { surface, site, conferenceGame, missing } = venueReportRows(rows);
+  if (!surface.length && !site.length && !conferenceGame.length) return "";
+  return `<h3 class="bd">Venue and surface splits</h3>
+    <div class="venue-splits">
+      ${venueSplitTableHtml("Surface", surface)}
+      ${venueSplitTableHtml("Site", site)}
+      ${venueSplitTableHtml("CFB conference game", conferenceGame)}
+    </div>
+    <p class="muted">Backfilled by <code>scripts/capture-venue.mjs</code> from ESPN's per-game data - retained indefinitely, unlike weather.${missing ? ` ${missing} leg${missing === 1 ? "" : "s"} ${missing === 1 ? "has" : "have"} no venue data yet (not yet backfilled, or ESPN never resolved the game) and ${missing === 1 ? "is" : "are"} excluded here.` : ""}</p>`;
+}
+
 function bettingWarTableHtml(rows) {
   const people = bettingWar(rows).sort((a, b) => b.delta - a.delta || a.name.localeCompare(b.name));
   if (!people.length) return "";
@@ -315,6 +365,9 @@ function breakdownHtml(everyLegOpen = false) {
     ${bettingWarTableHtml(statsRows)}
     ${warByWeekHtml(humanRows, people)}
     ${leagueTableHtml(humanRows)}
+    ${teamReportHtml(humanRows)}
+    ${divisionReportHtml(humanRows, conferenceNames)}
+    ${venueReportHtml(humanRows)}
     ${marginTablesHtml(humanRows)}
     ${moneyTableHtml(seasonMoney(evaluated))}`;
 }
@@ -405,6 +458,26 @@ function shadowWeekHtml(ev, openWeekIds) {
   </article>`;
 }
 
+const RELATION_LABEL = { agree: "Agreed", fade: "Faded", "different market": "Different market" };
+
+function collisionLogHtml() {
+  const collisions = collisionRows(breakdownRows(evaluated), breakdownRows(shadowEvaluated));
+  if (!collisions.length) return "";
+  const body = collisions.map((c) => `<tr>
+      <td class="wk">${esc(c.real.week)}</td>
+      <td><b>${esc(c.real.by)}</b>: ${esc(c.real.bet)} <span class="pill ${c.real.result}">${esc(RESULT_LABEL[c.real.result] ?? c.real.result)}</span></td>
+      <td>${esc(c.shadow.bet)} <span class="pill ${c.shadow.result}">${esc(RESULT_LABEL[c.shadow.result] ?? c.shadow.result)}</span>${c.shadow.reasoning ? `<div class="reason"><span class="rk">Why</span>${esc(c.shadow.reasoning)}</div>` : ""}</td>
+      <td><span class="pill ${c.relation === "agree" ? "hit" : c.relation === "fade" ? "miss" : "pending"}">${esc(RELATION_LABEL[c.relation])}</span></td>
+    </tr>`).join("");
+  return `<details class="every-leg"><summary>Collision log (${collisions.length}) — Shadow Book picks that landed on the same game as a real leg</summary>
+    <div class="table-wrap"><table class="bd">
+      <thead><tr><th>Week</th><th>Real leg</th><th>Shadow pick</th><th>Relation</th></tr></thead>
+      <tbody>${body}</tbody>
+    </table></div>
+    <p class="muted">Every (shadow pick, real leg) pair on the same ESPN event. "Agreed" and "Faded" compare the same kind of bet (both team-side, or both a total); anything else — e.g. a spread against a total — is marked "Different market" since the two aren't a clean head-to-head. This is a list, not a win rate: most games have no shadow pick at all, or no real leg.</p>
+  </details>`;
+}
+
 function renderShadow() {
   const el = $("shadow");
   if (shadowError) {
@@ -422,6 +495,7 @@ function renderShadow() {
   );
   el.innerHTML = `<div class="shadow-intro"><h2>Shadow Book</h2><p>A separate, hypothetical NFL + CFB parlay each week, picked by MitsNemo, plus any slip a member uploads. Prices are locked when recorded and no wager is placed, so the stake and return here never touch the group's season money. Slates MitsNemo picks count toward MitsNemo's record in the Breakdown tab's WAR and stats tables, same as everyone else's picks. Uploaded slips are marked on their card and are excluded from every other page's stats.</p>
     <p class="record">Record: <b>${record.won}</b> won · <b>${record.lost}</b> busted${record.open ? ` · <b>${record.open}</b> open` : ""} · Settled virtual net <b>${esc(fmtNet(money.net))}</b></p></div>
+    ${collisionLogHtml()}
     ${shadowEvaluated.map((ev) => shadowWeekHtml(ev, openWeekIds)).join("")}`;
 }
 
@@ -576,6 +650,15 @@ async function main() {
     shadowData.weeks.sort((a, b) => b.weekOf.localeCompare(a.weekOf));
   } catch (e) {
     shadowError = e;
+  }
+  try {
+    const res = await fetch("data/conferences.json", { cache: "no-store" });
+    if (res.ok) {
+      conferenceNames = await res.json();
+      delete conferenceNames._comment;
+    }
+  } catch {
+    // Division report card just won't render; everything else works without it.
   }
   setInterval(tick, 1000);
   setupTabs();

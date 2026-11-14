@@ -1,0 +1,15 @@
+{
+  "_comment": "ESPN's scoreboard exposes a numeric team.conferenceId but no conference name anywhere in the payload. These ids were confirmed live against sports.core.api.espn.com/v2/sports/football/leagues/college-football/groups/<id> on 2026-11-14. Mostly FBS, plus any FCS conference that's actually shown up (an FCS team playing an FBS opponent still appears in the FBS scoreboard with its real conferenceId, e.g. 20 = Big Sky). An id that shows up here later and isn't in this map falls back to a generic 'Conference <id>' label in code rather than erroring - add it here when that happens.",
+  "1": "ACC",
+  "4": "Big 12",
+  "5": "Big Ten",
+  "8": "SEC",
+  "9": "Pac-12",
+  "12": "Conference USA",
+  "15": "MAC",
+  "17": "Mountain West",
+  "18": "FBS Independents",
+  "20": "Big Sky",
+  "37": "Sun Belt",
+  "151": "American"
+}

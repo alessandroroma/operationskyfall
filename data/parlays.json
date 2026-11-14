@@ -31,6 +31,12 @@
           "weather": {
             "displayValue": "Mostly clear",
             "temperature": 37
+          },
+          "venue": {
+            "name": "Kinnick Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
           }
         },
         {
@@ -42,7 +48,13 @@
           "type": "spread",
           "line": -9.5,
           "odds": -111,
-          "date": "2026-11-13"
+          "date": "2026-11-13",
+          "venue": {
+            "name": "Folsom Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l3",
@@ -56,6 +68,12 @@
           "weather": {
             "displayValue": "Cloudy",
             "temperature": 68
+          },
+          "venue": {
+            "name": "Kyle Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
           }
         },
         {
@@ -71,6 +89,12 @@
           "weather": {
             "displayValue": "Mostly cloudy",
             "temperature": 63
+          },
+          "venue": {
+            "name": "Caesars Superdome",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
           }
         },
         {
@@ -86,6 +110,12 @@
           "weather": {
             "displayValue": "Mostly cloudy",
             "temperature": 77
+          },
+          "venue": {
+            "name": "Clarence T.C. Ching Athletics Complex",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
           }
         },
         {
@@ -101,6 +131,12 @@
           "weather": {
             "displayValue": "Thunderstorms",
             "temperature": 65
+          },
+          "venue": {
+            "name": "Alamodome",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
           }
         },
         {
@@ -113,7 +149,13 @@
           "line": -4.5,
           "group": "sgp1",
           "date": "2026-11-12",
-          "odds": -100
+          "odds": -100,
+          "venue": {
+            "name": "Raymond James Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -125,7 +167,13 @@
           "line": 28.5,
           "group": "sgp1",
           "date": "2026-11-12",
-          "odds": -100
+          "odds": -100,
+          "venue": {
+            "name": "Raymond James Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l9",
@@ -140,6 +188,12 @@
           "weather": {
             "displayValue": "Sunny",
             "temperature": 52
+          },
+          "venue": {
+            "name": "Memorial Stadium (Clemson, SC)",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
           }
         },
         {
@@ -155,6 +209,12 @@
           "weather": {
             "displayValue": "Rain",
             "temperature": 48
+          },
+          "venue": {
+            "name": "Boone Pickens Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
           }
         },
         {
@@ -167,7 +227,13 @@
           "line": 41.5,
           "group": "sgp2",
           "date": "2026-11-12",
-          "odds": -100
+          "odds": -100,
+          "venue": {
+            "name": "MetLife Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l12",
@@ -179,7 +245,13 @@
           "group": "sgp2",
           "date": "2026-11-12",
           "note": "Jayden Daniels Under 202.5 passing yards",
-          "odds": -100
+          "odds": -100,
+          "venue": {
+            "name": "MetLife Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l13",
@@ -194,6 +266,12 @@
           "weather": {
             "displayValue": "Cloudy",
             "temperature": 43
+          },
+          "venue": {
+            "name": "Memorial Stadium (Norman, OK)",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
           }
         },
         {
@@ -209,6 +287,12 @@
           "weather": {
             "displayValue": "Intermittent clouds",
             "temperature": 56
+          },
+          "venue": {
+            "name": "Gerald J. Ford Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
           }
         }
       ]
@@ -231,7 +315,13 @@
           "line": -5.5,
           "odds": -114,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Ben Hill Griffin Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -243,7 +333,13 @@
           "line": 49.5,
           "odds": -135,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Sun Bowl",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l3",
@@ -255,7 +351,13 @@
           "line": 16.5,
           "odds": -111,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Galaxy Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l4",
@@ -267,7 +369,13 @@
           "line": -3.5,
           "odds": 105,
           "date": "2026-11-08",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Santiago Bernabéu",
+            "grass": true,
+            "neutralSite": true,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l5",
@@ -279,7 +387,13 @@
           "line": 7.5,
           "odds": -109,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Ohio Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -291,7 +405,13 @@
           "line": 44.5,
           "odds": 132,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "DATCU Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -303,7 +423,13 @@
           "line": 49.5,
           "odds": -111,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Neyland Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -315,7 +441,13 @@
           "line": 70.5,
           "odds": -110,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Reser Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l9",
@@ -327,7 +459,13 @@
           "line": 49.5,
           "odds": -111,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "JMA Wireless Dome",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l10",
@@ -339,7 +477,13 @@
           "line": -4.5,
           "odds": -107,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Rice-Eccles Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l11",
@@ -351,7 +495,13 @@
           "line": -6.5,
           "odds": -118,
           "date": "2026-11-07",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Bill Snyder Family Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l12",
@@ -363,7 +513,13 @@
           "line": -3.5,
           "odds": 105,
           "date": "2026-11-08",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Lincoln Financial Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         }
       ]
     },
@@ -384,7 +540,13 @@
           "type": "spread",
           "line": -5.5,
           "odds": -114,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "Ben Hill Griffin Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -395,7 +557,13 @@
           "type": "total_under",
           "line": 49.5,
           "odds": -135,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "Sun Bowl",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l3",
@@ -406,7 +574,13 @@
           "type": "spread",
           "line": 16.5,
           "odds": -111,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "Galaxy Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l4",
@@ -417,7 +591,13 @@
           "type": "spread",
           "line": -3.5,
           "odds": 105,
-          "date": "2026-11-08"
+          "date": "2026-11-08",
+          "venue": {
+            "name": "Santiago Bernabéu",
+            "grass": true,
+            "neutralSite": true,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l5",
@@ -428,7 +608,13 @@
           "type": "spread",
           "line": 7.5,
           "odds": -109,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "Ohio Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -439,7 +625,13 @@
           "type": "team_total_over",
           "line": 44.5,
           "odds": 132,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "DATCU Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -450,7 +642,13 @@
           "type": "total_under",
           "line": 49.5,
           "odds": -111,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "Neyland Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -461,7 +659,13 @@
           "type": "total_over",
           "line": 70.5,
           "odds": -110,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "Reser Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l9",
@@ -472,7 +676,13 @@
           "type": "spread",
           "line": -4.5,
           "odds": -107,
-          "date": "2026-11-06"
+          "date": "2026-11-06",
+          "venue": {
+            "name": "Gies Memorial Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l10",
@@ -483,7 +693,13 @@
           "type": "total_over",
           "line": 49.5,
           "odds": -111,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "JMA Wireless Dome",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l11",
@@ -494,7 +710,13 @@
           "type": "spread",
           "line": -4.5,
           "odds": -107,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "Rice-Eccles Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l12",
@@ -505,7 +727,13 @@
           "type": "spread",
           "line": -6.5,
           "odds": -118,
-          "date": "2026-11-07"
+          "date": "2026-11-07",
+          "venue": {
+            "name": "Bill Snyder Family Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l13",
@@ -516,7 +744,13 @@
           "type": "spread",
           "line": -3.5,
           "odds": 105,
-          "date": "2026-11-08"
+          "date": "2026-11-08",
+          "venue": {
+            "name": "Lincoln Financial Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         }
       ]
     },
@@ -544,7 +778,13 @@
           "type": "spread",
           "line": 1.5,
           "date": "2026-10-17",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Rose Bowl",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -555,7 +795,13 @@
           "opponent": "Houston Texans",
           "type": "moneyline",
           "date": "2026-10-18",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Wembley Stadium",
+            "grass": true,
+            "neutralSite": true,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l3",
@@ -567,7 +813,13 @@
           "type": "spread",
           "line": -7.5,
           "date": "2026-10-17",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Spartan Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l4",
@@ -579,7 +831,13 @@
           "type": "total_under",
           "line": 49.5,
           "date": "2026-10-17",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Memorial Stadium (Bloomington, IN)",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l5",
@@ -591,7 +849,13 @@
           "type": "spread",
           "line": -6.5,
           "date": "2026-10-17",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Doyt L. Perry Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -603,7 +867,13 @@
           "type": "spread",
           "line": -2.5,
           "date": "2026-10-17",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Michie Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -628,7 +898,13 @@
           "type": "total_over",
           "line": 56.5,
           "date": "2026-10-17",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Hard Rock Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l9",
@@ -640,7 +916,13 @@
           "type": "spread",
           "line": -4.5,
           "date": "2026-10-17",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Vaught-Hemingway Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l10",
@@ -651,7 +933,13 @@
           "opponent": "Houston",
           "type": "moneyline",
           "date": "2026-10-17",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "TDECU Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l11",
@@ -664,7 +952,13 @@
           "type": "spread",
           "line": -9.5,
           "date": "2026-10-17",
-          "note": "Notre Dame -9.5 (SGP leg)"
+          "note": "Notre Dame -9.5 (SGP leg)",
+          "venue": {
+            "name": "LaVell Edwards Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l12",
@@ -677,7 +971,13 @@
           "line": 47.5,
           "date": "2026-10-17",
           "note": "Under 47.5 (SGP leg)",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "LaVell Edwards Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l13",
@@ -690,7 +990,13 @@
           "type": "other",
           "date": "2026-10-17",
           "note": "CJ Carr 150+ pass yards (SGP leg)",
-          "result": "hit"
+          "result": "hit",
+          "venue": {
+            "name": "LaVell Edwards Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         }
       ]
     },
@@ -711,7 +1017,13 @@
           "opponent": "UCLA",
           "type": "spread",
           "line": 2.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "Rose Bowl",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -721,7 +1033,13 @@
           "team": "Jacksonville Jaguars",
           "opponent": "Houston Texans",
           "type": "moneyline",
-          "date": "2026-10-18"
+          "date": "2026-10-18",
+          "venue": {
+            "name": "Wembley Stadium",
+            "grass": true,
+            "neutralSite": true,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l3",
@@ -732,7 +1050,13 @@
           "opponent": "Michigan State",
           "type": "spread",
           "line": -7.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "Spartan Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l4",
@@ -743,7 +1067,13 @@
           "opponent": "BYU",
           "type": "total_under",
           "line": 46.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "LaVell Edwards Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l5",
@@ -754,7 +1084,13 @@
           "opponent": "Indiana",
           "type": "total_under",
           "line": 50.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "Memorial Stadium (Bloomington, IN)",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -765,7 +1101,13 @@
           "opponent": "Ball State",
           "type": "spread",
           "line": -6.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "Doyt L. Perry Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -776,7 +1118,13 @@
           "opponent": "Florida Atlantic",
           "type": "spread",
           "line": -1.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "Michie Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -799,7 +1147,13 @@
           "opponent": "Miami",
           "type": "total_over",
           "line": 56.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "Hard Rock Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l10",
@@ -810,7 +1164,13 @@
           "opponent": "Missouri",
           "type": "spread",
           "line": -5.5,
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "Vaught-Hemingway Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l11",
@@ -820,7 +1180,13 @@
           "team": "Oklahoma State",
           "opponent": "Houston",
           "type": "moneyline",
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "TDECU Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l12",
@@ -830,7 +1196,13 @@
           "team": "Purdue",
           "opponent": "Washington",
           "type": "moneyline",
-          "date": "2026-10-17"
+          "date": "2026-10-17",
+          "venue": {
+            "name": "Ross-Ade Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         }
       ]
     },
@@ -851,7 +1223,13 @@
           "type": "other",
           "date": "2026-10-10",
           "note": "Jeremiah Smith longest reception over 42.5 yards",
-          "result": "miss"
+          "result": "miss",
+          "venue": {
+            "name": "Ohio Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -862,7 +1240,13 @@
           "opponent": "Alabama",
           "type": "moneyline",
           "date": "2026-10-10",
-          "note": "Early payout offered on this leg"
+          "note": "Early payout offered on this leg",
+          "venue": {
+            "name": "Bryant-Denny Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l3",
@@ -874,7 +1258,13 @@
           "type": "other",
           "date": "2026-10-10",
           "note": "Aidan Chiles anytime TD scorer",
-          "result": "hit"
+          "result": "hit",
+          "venue": {
+            "name": "Ryan Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l4",
@@ -885,7 +1275,13 @@
           "opponent": "Sacramento State",
           "type": "spread",
           "line": -8.5,
-          "date": "2026-10-10"
+          "date": "2026-10-10",
+          "venue": {
+            "name": "Doyt L. Perry Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l5",
@@ -896,7 +1292,13 @@
           "opponent": "USC",
           "type": "spread",
           "line": -1.5,
-          "date": "2026-10-10"
+          "date": "2026-10-10",
+          "venue": {
+            "name": "Beaver Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -907,7 +1309,13 @@
           "opponent": "Arkansas",
           "type": "spread",
           "line": -13.5,
-          "date": "2026-10-10"
+          "date": "2026-10-10",
+          "venue": {
+            "name": "Donald W. Reynolds Razorback Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -918,7 +1326,13 @@
           "opponent": "Wyoming",
           "type": "spread",
           "line": -4.5,
-          "date": "2026-10-09"
+          "date": "2026-10-09",
+          "venue": {
+            "name": "CEFCU Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -929,7 +1343,13 @@
           "opponent": "Nebraska",
           "type": "total_under",
           "line": 48.5,
-          "date": "2026-10-10"
+          "date": "2026-10-10",
+          "venue": {
+            "name": "Memorial Stadium (Lincoln, NE)",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l9",
@@ -940,7 +1360,13 @@
           "opponent": "Indiana",
           "type": "spread",
           "line": 7.5,
-          "date": "2026-10-10"
+          "date": "2026-10-10",
+          "venue": {
+            "name": "Memorial Stadium (Lincoln, NE)",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l10",
@@ -951,7 +1377,13 @@
           "opponent": "LSU",
           "type": "spread",
           "line": 8.5,
-          "date": "2026-10-10"
+          "date": "2026-10-10",
+          "venue": {
+            "name": "Kroger Field",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l11",
@@ -962,7 +1394,13 @@
           "opponent": "NC State",
           "type": "moneyline",
           "date": "2026-10-10",
-          "note": "Early payout offered on this leg"
+          "note": "Early payout offered on this leg",
+          "venue": {
+            "name": "Carter-Finley Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l12",
@@ -973,7 +1411,13 @@
           "opponent": "Green Bay Packers",
           "type": "spread",
           "line": -1.5,
-          "date": "2026-10-11"
+          "date": "2026-10-11",
+          "venue": {
+            "name": "Lambeau Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         }
       ]
     },
@@ -995,7 +1439,13 @@
           "date": "2026-10-10",
           "note": "Jeremiah Smith longest reception over 42.5 yards",
           "result": "miss",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Ohio Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -1007,7 +1457,13 @@
           "type": "moneyline",
           "date": "2026-10-10",
           "note": "Early payout offered on this leg",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Bryant-Denny Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l3",
@@ -1020,7 +1476,13 @@
           "date": "2026-10-10",
           "note": "Aidan Chiles anytime TD scorer",
           "result": "hit",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Ryan Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l4",
@@ -1032,7 +1494,13 @@
           "type": "spread",
           "line": -8.5,
           "date": "2026-10-10",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Doyt L. Perry Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l5",
@@ -1044,7 +1512,13 @@
           "type": "spread",
           "line": -1.5,
           "date": "2026-10-10",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Beaver Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -1056,7 +1530,13 @@
           "type": "spread",
           "line": -13.5,
           "date": "2026-10-10",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Donald W. Reynolds Razorback Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -1068,7 +1548,13 @@
           "type": "total_under",
           "line": 48.5,
           "date": "2026-10-10",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Memorial Stadium (Lincoln, NE)",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l9",
@@ -1080,7 +1566,13 @@
           "type": "spread",
           "line": 7.5,
           "date": "2026-10-10",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Memorial Stadium (Lincoln, NE)",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l10",
@@ -1092,7 +1584,13 @@
           "type": "spread",
           "line": 8.5,
           "date": "2026-10-10",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Kroger Field",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l11",
@@ -1104,7 +1602,13 @@
           "type": "moneyline",
           "date": "2026-10-10",
           "note": "Early payout offered on this leg",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Carter-Finley Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l12",
@@ -1116,7 +1620,13 @@
           "type": "spread",
           "line": -1.5,
           "date": "2026-10-11",
-          "excludeFromStats": true
+          "excludeFromStats": true,
+          "venue": {
+            "name": "Lambeau Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l13",
@@ -1151,7 +1661,13 @@
           "opponent": "Carolina Panthers",
           "type": "moneyline",
           "date": "2026-10-04",
-          "note": "Early payout offered on this leg"
+          "note": "Early payout offered on this leg",
+          "venue": {
+            "name": "Bank of America Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l2",
@@ -1164,7 +1680,13 @@
           "type": "other",
           "date": "2026-10-04",
           "result": "miss",
-          "note": "Amon-Ra St. Brown anytime TD scorer (SGP leg) – did not score"
+          "note": "Amon-Ra St. Brown anytime TD scorer (SGP leg) – did not score",
+          "venue": {
+            "name": "Bank of America Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l3",
@@ -1175,7 +1697,13 @@
           "opponent": "Pittsburgh Steelers",
           "type": "spread",
           "line": 3.5,
-          "date": "2026-10-01"
+          "date": "2026-10-01",
+          "venue": {
+            "name": "Huntington Bank Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l4",
@@ -1186,7 +1714,13 @@
           "opponent": "Alabama",
           "type": "moneyline",
           "date": "2026-10-03",
-          "note": "Early payout offered on this leg"
+          "note": "Early payout offered on this leg",
+          "venue": {
+            "name": "Davis Wade Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l5",
@@ -1197,7 +1731,13 @@
           "opponent": "Washington",
           "type": "spread",
           "line": -8.5,
-          "date": "2026-10-03"
+          "date": "2026-10-03",
+          "venue": {
+            "name": "Los Angeles Memorial Coliseum",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -1208,7 +1748,13 @@
           "opponent": "Iowa",
           "type": "total_under",
           "line": 45.5,
-          "date": "2026-10-03"
+          "date": "2026-10-03",
+          "venue": {
+            "name": "Kinnick Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -1219,7 +1765,13 @@
           "opponent": "Pittsburgh",
           "type": "spread",
           "line": -3.5,
-          "date": "2026-10-02"
+          "date": "2026-10-02",
+          "venue": {
+            "name": "Lane Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -1230,7 +1782,13 @@
           "opponent": "Colorado",
           "type": "spread",
           "line": -12.5,
-          "date": "2026-10-03"
+          "date": "2026-10-03",
+          "venue": {
+            "name": "Folsom Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l9",
@@ -1241,7 +1799,13 @@
           "opponent": "Navy",
           "type": "spread",
           "line": -3.5,
-          "date": "2026-10-03"
+          "date": "2026-10-03",
+          "venue": {
+            "name": "Falcon Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l10",
@@ -1252,7 +1816,13 @@
           "opponent": "Minnesota",
           "type": "spread",
           "line": -5.5,
-          "date": "2026-10-03"
+          "date": "2026-10-03",
+          "venue": {
+            "name": "Huntington Bank Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         }
       ],
       "groups": {
@@ -1278,7 +1848,13 @@
           "opponent": "USC",
           "type": "spread",
           "line": -3.5,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Los Angeles Memorial Coliseum",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -1288,7 +1864,13 @@
           "team": "California",
           "opponent": "Clemson",
           "type": "moneyline",
-          "date": "2026-09-25"
+          "date": "2026-09-25",
+          "venue": {
+            "name": "California Memorial Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l3",
@@ -1299,7 +1881,13 @@
           "opponent": "Florida",
           "type": "spread",
           "line": 3.5,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Ben Hill Griffin Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l4",
@@ -1309,7 +1897,13 @@
           "team": "Army",
           "opponent": "Temple",
           "type": "moneyline",
-          "date": "2026-09-25"
+          "date": "2026-09-25",
+          "venue": {
+            "name": "Lincoln Financial Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l5",
@@ -1320,7 +1914,13 @@
           "opponent": "Cleveland Browns",
           "type": "spread",
           "line": -2.5,
-          "date": "2026-09-27"
+          "date": "2026-09-27",
+          "venue": {
+            "name": "Huntington Bank Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l6",
@@ -1331,7 +1931,13 @@
           "opponent": "Penn State",
           "type": "total_over",
           "line": 43.5,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Beaver Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -1343,7 +1949,13 @@
           "opponent": "Iowa",
           "type": "spread",
           "line": -5.5,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Michigan Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -1356,7 +1968,13 @@
           "type": "other",
           "date": "2026-09-26",
           "note": "Bryce Underwood anytime TD (SGP leg) – did not score",
-          "result": "miss"
+          "result": "miss",
+          "venue": {
+            "name": "Michigan Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l9",
@@ -1367,7 +1985,13 @@
           "opponent": "West Virginia",
           "type": "total_over",
           "line": 62.5,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Milan Puskar Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l10",
@@ -1378,7 +2002,13 @@
           "opponent": "Texas A&M",
           "type": "spread",
           "line": -8.5,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Tiger Stadium (LA)",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l11",
@@ -1389,7 +2019,13 @@
           "opponent": "Purdue",
           "type": "spread",
           "line": -27.5,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Ross-Ade Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l12",
@@ -1400,7 +2036,13 @@
           "opponent": "Lindenwood",
           "type": "spread",
           "line": -25.5,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Rynearson Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         }
       ],
       "groups": {
@@ -1427,7 +2069,13 @@
           "opponent": "UTEP",
           "type": "spread",
           "line": -35.5,
-          "date": "2026-09-19"
+          "date": "2026-09-19",
+          "venue": {
+            "name": "Michigan Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l2",
@@ -1440,7 +2088,13 @@
           "type": "other",
           "result": "hit",
           "date": "2026-09-19",
-          "note": "Bryce Underwood 200+ pass yards (SGP leg)"
+          "note": "Bryce Underwood 200+ pass yards (SGP leg)",
+          "venue": {
+            "name": "Michigan Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l3",
@@ -1451,7 +2105,13 @@
           "opponent": "Oregon",
           "type": "spread",
           "line": 59,
-          "date": "2026-09-19"
+          "date": "2026-09-19",
+          "venue": {
+            "name": "Autzen Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l4",
@@ -1462,7 +2122,13 @@
           "opponent": "Ole Miss",
           "type": "team_total_over",
           "line": 34.5,
-          "date": "2026-09-19"
+          "date": "2026-09-19",
+          "venue": {
+            "name": "Vaught-Hemingway Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l5",
@@ -1473,7 +2139,13 @@
           "opponent": "Texas Tech",
           "type": "total_over",
           "line": 52.5,
-          "date": "2026-09-19"
+          "date": "2026-09-19",
+          "venue": {
+            "name": "Galaxy Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -1484,7 +2156,13 @@
           "opponent": "Temple",
           "type": "spread",
           "line": -6,
-          "date": "2026-09-19"
+          "date": "2026-09-19",
+          "venue": {
+            "name": "Glass Bowl",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l7",
@@ -1494,7 +2172,13 @@
           "team": "Louisville",
           "opponent": "SMU",
           "type": "moneyline",
-          "date": "2026-09-19"
+          "date": "2026-09-19",
+          "venue": {
+            "name": "L&N Federal Credit Union Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -1505,7 +2189,13 @@
           "opponent": "Chicago Bears",
           "type": "total_over",
           "line": 48.5,
-          "date": "2026-09-20"
+          "date": "2026-09-20",
+          "venue": {
+            "name": "Soldier Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l9",
@@ -1516,7 +2206,13 @@
           "opponent": "North Carolina",
           "type": "spread",
           "line": -3,
-          "date": "2026-09-19"
+          "date": "2026-09-19",
+          "venue": {
+            "name": "Memorial Stadium (Clemson, SC)",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l10",
@@ -1527,7 +2223,13 @@
           "opponent": "Wisconsin",
           "type": "spread",
           "line": 23.5,
-          "date": "2026-09-19"
+          "date": "2026-09-19",
+          "venue": {
+            "name": "Camp Randall Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         }
       ],
       "stake": "$6",
@@ -1555,7 +2257,13 @@
           "type": "spread",
           "line": -5.5,
           "odds": -110,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Michigan Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -1565,7 +2273,13 @@
           "type": "spread",
           "line": -3.5,
           "odds": -110,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Los Angeles Memorial Coliseum",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l3",
@@ -1575,7 +2289,13 @@
           "type": "spread",
           "line": 3.5,
           "odds": -110,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Ben Hill Griffin Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l4",
@@ -1585,7 +2305,13 @@
           "type": "spread",
           "line": -2.5,
           "odds": -110,
-          "date": "2026-09-27"
+          "date": "2026-09-27",
+          "venue": {
+            "name": "Huntington Bank Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l5",
@@ -1595,7 +2321,13 @@
           "type": "total_over",
           "line": 43.5,
           "odds": -115,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Beaver Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -1605,7 +2337,13 @@
           "type": "total_over",
           "line": 62.5,
           "odds": 100,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Milan Puskar Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -1615,7 +2353,13 @@
           "type": "spread",
           "line": -8.5,
           "odds": -110,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Tiger Stadium (LA)",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -1625,7 +2369,13 @@
           "type": "spread",
           "line": -27.5,
           "odds": -110,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Ross-Ade Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l9",
@@ -1635,7 +2385,13 @@
           "type": "spread",
           "line": -24.5,
           "odds": -105,
-          "date": "2026-09-26"
+          "date": "2026-09-26",
+          "venue": {
+            "name": "Rynearson Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l10",
@@ -1645,7 +2401,13 @@
           "type": "moneyline",
           "odds": -305,
           "date": "2026-09-27",
-          "note": "Early payout offered on this leg"
+          "note": "Early payout offered on this leg",
+          "venue": {
+            "name": "Ford Field",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l11",
@@ -1655,7 +2417,13 @@
           "type": "moneyline",
           "odds": -200,
           "date": "2026-09-26",
-          "note": "Early payout offered on this leg"
+          "note": "Early payout offered on this leg",
+          "venue": {
+            "name": "Neyland Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         }
       ]
     },
@@ -1676,7 +2444,13 @@
           "type": "total_over",
           "line": 57.5,
           "date": "2026-10-24",
-          "group": "sgp"
+          "group": "sgp",
+          "venue": {
+            "name": "Nippert Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -1687,7 +2461,13 @@
           "type": "spread",
           "line": -10.5,
           "date": "2026-10-24",
-          "group": "sgp"
+          "group": "sgp",
+          "venue": {
+            "name": "Nippert Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l3",
@@ -1698,7 +2478,13 @@
           "opponent": "Houston",
           "type": "spread",
           "line": -6.5,
-          "date": "2026-10-24"
+          "date": "2026-10-24",
+          "venue": {
+            "name": "Rice-Eccles Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l4",
@@ -1709,7 +2495,13 @@
           "opponent": "Western Michigan",
           "type": "spread",
           "line": -2.5,
-          "date": "2026-10-24"
+          "date": "2026-10-24",
+          "venue": {
+            "name": "Glass Bowl",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l5",
@@ -1720,7 +2512,13 @@
           "opponent": "Colorado",
           "type": "spread",
           "line": -13.5,
-          "date": "2026-10-24"
+          "date": "2026-10-24",
+          "venue": {
+            "name": "Boone Pickens Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l6",
@@ -1731,7 +2529,13 @@
           "opponent": "Navy",
           "type": "spread",
           "line": -3.5,
-          "date": "2026-10-24"
+          "date": "2026-10-24",
+          "venue": {
+            "name": "Navy-Marine Corps Memorial Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -1742,7 +2546,13 @@
           "opponent": "Virginia Tech",
           "type": "spread",
           "line": -2.5,
-          "date": "2026-10-24"
+          "date": "2026-10-24",
+          "venue": {
+            "name": "Memorial Stadium (Clemson, SC)",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -1753,7 +2563,13 @@
           "opponent": "Green Bay Packers",
           "type": "spread",
           "line": -3.5,
-          "date": "2026-10-25"
+          "date": "2026-10-25",
+          "venue": {
+            "name": "Ford Field",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l9",
@@ -1764,7 +2580,13 @@
           "opponent": "Houston Texans",
           "type": "spread",
           "line": 10.5,
-          "date": "2026-10-25"
+          "date": "2026-10-25",
+          "venue": {
+            "name": "Reliant Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l10",
@@ -1775,7 +2597,13 @@
           "opponent": "California",
           "type": "spread",
           "line": -18.5,
-          "date": "2026-10-24"
+          "date": "2026-10-24",
+          "venue": {
+            "name": "Gerald J. Ford Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l11",
@@ -1786,7 +2614,13 @@
           "opponent": "South Carolina",
           "type": "total_over",
           "line": 50.5,
-          "date": "2026-10-24"
+          "date": "2026-10-24",
+          "venue": {
+            "name": "Williams-Brice Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l12",
@@ -1797,7 +2631,13 @@
           "opponent": "Hawai'i",
           "type": "moneyline",
           "date": "2026-10-24",
-          "note": "Early payout offered on this leg"
+          "note": "Early payout offered on this leg",
+          "venue": {
+            "name": "Huskie Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         }
       ]
     },
@@ -1825,7 +2665,13 @@
           "date": "2026-10-31",
           "group": "sgp",
           "line": 36.5,
-          "odds": -109
+          "odds": -109,
+          "venue": {
+            "name": "Kinnick Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l2",
@@ -1837,7 +2683,13 @@
           "date": "2026-10-31",
           "group": "sgp",
           "line": 3.5,
-          "odds": -170
+          "odds": -170,
+          "venue": {
+            "name": "Kinnick Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l3",
@@ -1848,7 +2700,13 @@
           "type": "spread",
           "date": "2026-10-31",
           "line": 3.5,
-          "odds": -110
+          "odds": -110,
+          "venue": {
+            "name": "Autzen Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l4",
@@ -1859,7 +2717,13 @@
           "type": "spread",
           "date": "2026-10-31",
           "line": -8.5,
-          "odds": 120
+          "odds": 120,
+          "venue": {
+            "name": "Los Angeles Memorial Coliseum",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l5",
@@ -1870,7 +2734,13 @@
           "type": "total_over",
           "date": "2026-10-31",
           "line": 56.5,
-          "odds": -106
+          "odds": -106,
+          "venue": {
+            "name": "Gillette Stadium",
+            "grass": false,
+            "neutralSite": true,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l6",
@@ -1881,7 +2751,13 @@
           "type": "spread",
           "date": "2026-10-31",
           "line": 7.5,
-          "odds": -109
+          "odds": -109,
+          "venue": {
+            "name": "Acrisure Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l7",
@@ -1892,7 +2768,13 @@
           "type": "total_over",
           "date": "2026-10-31",
           "line": 58.5,
-          "odds": -107
+          "odds": -107,
+          "venue": {
+            "name": "Valley Children's Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l8",
@@ -1903,7 +2785,13 @@
           "type": "moneyline",
           "date": "2026-10-31",
           "odds": -109,
-          "note": "Early payout offered on this leg (slip listed it as Connecticut)"
+          "note": "Early payout offered on this leg (slip listed it as Connecticut)",
+          "venue": {
+            "name": "Falcon Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
         },
         {
           "id": "l9",
@@ -1914,7 +2802,13 @@
           "type": "total_over",
           "date": "2026-10-31",
           "line": 45.5,
-          "odds": -115
+          "odds": -115,
+          "venue": {
+            "name": "Jerry Richardson Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l10",
@@ -1925,7 +2819,13 @@
           "type": "spread",
           "date": "2026-10-31",
           "line": 3.5,
-          "odds": -117
+          "odds": -117,
+          "venue": {
+            "name": "Memorial Stadium (Norman, OK)",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l11",
@@ -1936,7 +2836,13 @@
           "type": "total_over",
           "date": "2026-10-31",
           "line": 61.5,
-          "odds": -112
+          "odds": -112,
+          "venue": {
+            "name": "Maverik Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l12",
@@ -1947,7 +2853,13 @@
           "type": "spread",
           "date": "2026-10-31",
           "line": -2.5,
-          "odds": -115
+          "odds": -115,
+          "venue": {
+            "name": "SECU Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         },
         {
           "id": "l13",
@@ -1958,7 +2870,13 @@
           "type": "total_over",
           "date": "2026-10-31",
           "line": 58.5,
-          "odds": -106
+          "odds": -106,
+          "venue": {
+            "name": "JMA Wireless Dome",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
         }
       ]
     }
