@@ -299,6 +299,272 @@
       ]
     },
     {
+      "id": "2026-w9-5",
+      "label": "Week 9.5",
+      "weekOf": "2026-11-14",
+      "stake": "$7.00",
+      "payout": "$29,072.14",
+      "note": "Mid-week reload of Week 9. The Wake Forest/SMU pick is now structured as a same-game parlay on the slip (Wake Forest +2.5 / Over 60.5, +260 combined), but that's recorded here as a dupe of the existing standalone Wake Forest spread leg from Week 9 rather than as two new legs, since the Over 60.5 half was never tracked on its own. Every other leg here is the same pick as Week 9, just re-placed, and is excluded from stats to avoid double-counting; odds/lines are carried over from the original Week 9 entry rather than this ticket's current price, same as prior reload weeks. Three picks are genuinely new and are not excluded: Amon-Ra St. Brown 9+ receptions (Roma), Minnesota +12.5 at Penn State (Dalton), and Indiana -6.5 vs. USC (Mark).",
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "by": "Roma",
+          "team": "Purdue",
+          "opponent": "Iowa",
+          "type": "total_under",
+          "line": 47.5,
+          "odds": -109,
+          "date": "2026-11-14",
+          "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Mostly clear",
+            "temperature": 39
+          },
+          "venue": {
+            "name": "Kinnick Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "by": "Paul",
+          "team": "Tennessee",
+          "opponent": "Texas A&M",
+          "type": "moneyline",
+          "odds": -135,
+          "date": "2026-11-14",
+          "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Cloudy",
+            "temperature": 67
+          },
+          "venue": {
+            "name": "Kyle Field",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l3",
+          "league": "nfl",
+          "by": "Paul",
+          "team": "New Orleans Saints",
+          "opponent": "Carolina Panthers",
+          "type": "spread",
+          "line": -2.5,
+          "odds": -110,
+          "date": "2026-11-15",
+          "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Mostly cloudy",
+            "temperature": 62
+          },
+          "venue": {
+            "name": "Caesars Superdome",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": false
+          }
+        },
+        {
+          "id": "l4",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "North Dakota State",
+          "opponent": "Hawai'i",
+          "type": "spread",
+          "line": -6.5,
+          "odds": -113,
+          "date": "2026-11-14",
+          "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Intermittent clouds",
+            "temperature": 78
+          },
+          "venue": {
+            "name": "Clarence T.C. Ching Athletics Complex",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l5",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "North Texas",
+          "opponent": "UTSA",
+          "type": "total_over",
+          "line": 76.5,
+          "odds": -110,
+          "date": "2026-11-14",
+          "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Cloudy",
+            "temperature": 63
+          },
+          "venue": {
+            "name": "Alamodome",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l6",
+          "league": "college-football",
+          "by": "Vuke",
+          "team": "Georgia Tech",
+          "opponent": "Clemson",
+          "type": "spread",
+          "line": 13.5,
+          "odds": 100,
+          "date": "2026-11-14",
+          "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Sunny",
+            "temperature": 53
+          },
+          "venue": {
+            "name": "Memorial Stadium (Clemson, SC)",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l7",
+          "league": "college-football",
+          "by": "Luke",
+          "team": "Texas Tech",
+          "opponent": "Oklahoma State",
+          "type": "total_over",
+          "line": 73.5,
+          "odds": -107,
+          "date": "2026-11-14",
+          "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Cloudy",
+            "temperature": 51
+          },
+          "venue": {
+            "name": "Boone Pickens Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l8",
+          "league": "college-football",
+          "by": "Matt",
+          "team": "Ole Miss",
+          "opponent": "Oklahoma",
+          "type": "spread",
+          "line": 1.5,
+          "odds": -118,
+          "date": "2026-11-14",
+          "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Cloudy",
+            "temperature": 41
+          },
+          "venue": {
+            "name": "Memorial Stadium (Norman, OK)",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l9",
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Wake Forest",
+          "opponent": "SMU",
+          "type": "spread",
+          "line": 1.5,
+          "odds": -111,
+          "date": "2026-11-14",
+          "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Intermittent clouds",
+            "temperature": 57
+          },
+          "venue": {
+            "name": "Gerald J. Ford Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l10",
+          "league": "nfl",
+          "by": "Roma",
+          "team": "Detroit Lions",
+          "opponent": "New England Patriots",
+          "type": "other",
+          "note": "Amon-Ra St. Brown 9+ receptions",
+          "odds": 160,
+          "date": "2026-11-15",
+          "venue": {
+            "name": "FC Bayern Munich Stadium",
+            "grass": true,
+            "neutralSite": true,
+            "conferenceGame": false
+          }
+        },
+        {
+          "id": "l11",
+          "league": "college-football",
+          "by": "Dalton",
+          "team": "Minnesota",
+          "opponent": "Penn State",
+          "type": "spread",
+          "line": 12.5,
+          "odds": -109,
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Cloudy",
+            "temperature": 39
+          },
+          "venue": {
+            "name": "Beaver Stadium",
+            "grass": true,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l12",
+          "league": "college-football",
+          "by": "Mark",
+          "team": "Indiana",
+          "opponent": "USC",
+          "type": "spread",
+          "line": -6.5,
+          "odds": -170,
+          "date": "2026-11-14",
+          "weather": {
+            "displayValue": "Mostly sunny",
+            "temperature": 48
+          },
+          "venue": {
+            "name": "Memorial Stadium (Bloomington, IN)",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        }
+      ]
+    },
+    {
       "id": "2026-w8-5",
       "label": "Week 8.5",
       "weekOf": "2026-11-08",
