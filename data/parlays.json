@@ -304,7 +304,13 @@
       "weekOf": "2026-11-14",
       "stake": "$7.00",
       "payout": "$29,072.14",
-      "note": "Mid-week reload of Week 9. The Wake Forest/SMU pick is now structured as a same-game parlay on the slip (Wake Forest +2.5 / Over 60.5, +260 combined), but that's recorded here as a dupe of the existing standalone Wake Forest spread leg from Week 9 rather than as two new legs, since the Over 60.5 half was never tracked on its own. Every other leg here is the same pick as Week 9, just re-placed, and is excluded from stats to avoid double-counting; odds/lines are carried over from the original Week 9 entry rather than this ticket's current price, same as prior reload weeks. Three picks are genuinely new and are not excluded: Amon-Ra St. Brown 9+ receptions (Roma), Minnesota +12.5 at Penn State (Dalton), and Indiana -6.5 vs. USC (Mark).",
+      "note": "Mid-week reload of Week 9. The Wake Forest/SMU same-game parlay (Wake Forest +2.5 / Over 60.5, +260 combined) splits across two people: the spread side is a dupe of Mark's existing standalone Wake Forest leg from Week 9 (excluded from stats, odds carried over), the Over 60.5 side is Matt's new pick (not excluded; its price isn't on the slip individually, so it's derived from the shared +260 group price against Mark's known -111). Every other leg here is the same pick as Week 9, just re-placed, and is excluded from stats to avoid double-counting; odds/lines are carried over from the original Week 9 entry rather than this ticket's current price, same as prior reload weeks. Four picks are genuinely new and are not excluded: Amon-Ra St. Brown 9+ receptions (Roma), Minnesota +12.5 at Penn State (Dalton), Indiana -6.5 vs. USC (Mark), and Wake Forest/SMU Over 60.5 (Matt).",
+      "groups": {
+        "sgp": {
+          "label": "Same-game parlay",
+          "odds": 260
+        }
+      },
       "legs": [
         {
           "id": "l1",
@@ -490,8 +496,30 @@
           "type": "spread",
           "line": 1.5,
           "odds": -111,
+          "group": "sgp",
           "date": "2026-11-14",
           "excludeFromStats": true,
+          "weather": {
+            "displayValue": "Intermittent clouds",
+            "temperature": 57
+          },
+          "venue": {
+            "name": "Gerald J. Ford Stadium",
+            "grass": false,
+            "neutralSite": false,
+            "conferenceGame": true
+          }
+        },
+        {
+          "id": "l9b",
+          "league": "college-football",
+          "by": "Matt",
+          "team": "Wake Forest",
+          "opponent": "SMU",
+          "type": "total_over",
+          "line": 60.5,
+          "group": "sgp",
+          "date": "2026-11-14",
           "weather": {
             "displayValue": "Intermittent clouds",
             "temperature": 57
