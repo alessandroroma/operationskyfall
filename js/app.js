@@ -1,7 +1,7 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }, { shadowQuote, shadowSeason, statsEligible }] =
-  await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`)]);
+const [{ findLegGame, clearCache, fetchScoreboard }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet }, { shadowQuote, shadowSeason, statsEligible }, { dateWindow, buildRows: buildSlateRows, filterRows: filterSlateRows }] =
+  await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`), import(`./slate.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -17,6 +17,11 @@ let shadowData = null;
 let shadowEvaluated = [];
 let shadowError = null;
 let refreshTimer = null;
+let slateRows = [];
+let slateError = null;
+let slateLoaded = false; // becomes true once the tab has been opened at least once
+let slateFilter = { league: "all", query: "" };
+const SLATE_WINDOW_DAYS = 6; // today through +5 days; covers a typical Thu-Tue slate
 const frozen = new Map(); // week id -> evaluation once every leg is final (no need to refetch)
 
 async function evaluateWeek(week) {
@@ -328,7 +333,7 @@ function selectMarginTab(id, focus = false) {
 }
 
 function showTab(name) {
-  const target = ["parlays", "breakdown", "shadow"].includes(name) ? name : "parlays";
+  const target = ["parlays", "breakdown", "shadow", "slate"].includes(name) ? name : "parlays";
   document.querySelectorAll("#tabs .tab").forEach((b) => {
     const on = b.dataset.tab === target;
     b.classList.toggle("on", on);
@@ -337,7 +342,9 @@ function showTab(name) {
   $("view-parlays").hidden = target !== "parlays";
   $("view-breakdown").hidden = target !== "breakdown";
   $("view-shadow").hidden = target !== "shadow";
+  $("view-slate").hidden = target !== "slate";
   if (target === "breakdown") renderBreakdown(true);
+  if (target === "slate" && !slateLoaded) loadSlate();
   tick();
 }
 
@@ -368,7 +375,7 @@ function setupTabs() {
     e.preventDefault();
     selectMarginTab(MARGIN_TABS[next][0], true);
   });
-  showTab(location.hash === "#breakdown" ? "breakdown" : location.hash === "#shadow" ? "shadow" : "parlays");
+  showTab(location.hash === "#breakdown" ? "breakdown" : location.hash === "#shadow" ? "shadow" : location.hash === "#slate" ? "slate" : "parlays");
 }
 
 function shadowWeekHtml(ev, openWeekIds) {
@@ -428,6 +435,70 @@ function historyHtml(ev) {
     ${ev.legs.length ? `<div class="legs">${chronological(ev.legs).map((l) => legHtml(l, ev.week)).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
 }
 
+function slateRowHtml(r) {
+  const league = r.league === "nfl" ? "NFL" : "CFB";
+  const kickoff = r.date ? fmtKickoff(r.date) : "TBD";
+  const side = (t) => `${t.rank ? `#${t.rank} ` : ""}${esc(t.name)}`;
+  const spread = r.spreadDetails ? esc(r.spreadDetails) : "—";
+  const total = r.overUnder != null ? `O/U ${r.overUnder}` : "—";
+  const ml = r.moneyline && (r.moneyline.home || r.moneyline.away)
+    ? `${esc(r.away.abbreviation)} ${esc(r.moneyline.away ?? "—")} / ${esc(r.home.abbreviation)} ${esc(r.moneyline.home ?? "—")}`
+    : "—";
+  return `<tr><td>${esc(kickoff)}</td><td>${league}</td><td>${side(r.away)} @ ${side(r.home)}</td><td class="num">${spread}</td><td class="num">${total}</td><td class="num">${ml}</td></tr>`;
+}
+
+// The filter controls (select/input) are only created once, on first render, and kept in
+// place after that - only the tbody and count get replaced on a filter change, so a user
+// typing in the search box never loses focus/cursor position mid-keystroke.
+function renderSlate() {
+  const el = $("slate");
+  if (slateError) {
+    el.innerHTML = `<p class="error">Could not load this week's games: ${esc(slateError.message)}</p>`;
+    el.dataset.ready = "";
+    return;
+  }
+  if (!slateLoaded) {
+    el.innerHTML = `<p class="muted">Loading…</p>`;
+    return;
+  }
+  if (!el.dataset.ready) {
+    el.innerHTML = `<div class="slate-intro"><h2>This Week</h2><p class="muted">NFL + CFB games kicking off in the next ${SLATE_WINDOW_DAYS} days. Odds are DraftKings, pulled live from ESPN — the only odds provider ESPN exposes without a backend, so treat this as one market's number, not a shopped line.</p></div>
+      <div class="slate-filters">
+        <select id="slate-league" aria-label="Filter by league">
+          <option value="all">All leagues</option>
+          <option value="nfl">NFL</option>
+          <option value="college-football">CFB</option>
+        </select>
+        <input id="slate-search" type="search" placeholder="Search a team…" value="${esc(slateFilter.query)}">
+        <span id="slate-count" class="muted"></span>
+      </div>
+      <div class="table-wrap"><table class="bd"><thead><tr><th>Kickoff</th><th>League</th><th>Matchup</th><th class="num">Spread</th><th class="num">Total</th><th class="num">Moneyline</th></tr></thead><tbody id="slate-tbody"></tbody></table></div>`;
+    el.querySelector("#slate-league").value = slateFilter.league;
+    el.querySelector("#slate-league").addEventListener("change", (e) => { slateFilter.league = e.target.value; renderSlate(); });
+    el.querySelector("#slate-search").addEventListener("input", (e) => { slateFilter.query = e.target.value; renderSlate(); });
+    el.dataset.ready = "1";
+  }
+  const filtered = filterSlateRows(slateRows, slateFilter);
+  $("slate-tbody").innerHTML = filtered.map(slateRowHtml).join("") || `<tr><td colspan="6">No games match.</td></tr>`;
+  $("slate-count").textContent = `${filtered.length} of ${slateRows.length} games`;
+}
+
+async function loadSlate() {
+  try {
+    const dates = dateWindow(new Date(), SLATE_WINDOW_DAYS);
+    const fetches = await Promise.all(dates.flatMap((d) => [
+      fetchScoreboard("nfl", d).then((events) => ({ league: "nfl", events })).catch(() => ({ league: "nfl", events: [] })),
+      fetchScoreboard("college-football", d).then((events) => ({ league: "college-football", events })).catch(() => ({ league: "college-football", events: [] })),
+    ]));
+    slateRows = buildSlateRows(fetches);
+    slateError = null;
+  } catch (e) {
+    slateError = e;
+  }
+  slateLoaded = true;
+  renderSlate();
+}
+
 function render() {
   const [current, ...past] = evaluated;
   $("current").innerHTML = current ? parlayHtml(current) : `<p class="muted">No parlays yet. Add one to <code>data/parlays.json</code>.</p>`;
@@ -470,6 +541,7 @@ async function refresh() {
         return ev;
       }));
     }
+    if (slateLoaded) await loadSlate();
     render();
     $("updated").textContent = `Last updated ${new Date().toLocaleTimeString()}`;
   } catch (e) {

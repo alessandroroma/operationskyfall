@@ -121,3 +121,12 @@ td.pick-cell { white-space: normal; min-width: 160px; }
 .legs-toggle > summary:hover, .legs-toggle > summary:focus-visible { border-color: var(--blue); }
 .reason { margin-top: 8px; padding-left: 9px; border-left: 2px solid var(--amber); color: var(--muted); font-size: .8rem; }
 .reason .rk { display: inline-block; margin-right: 6px; color: var(--amber); font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+
+/* "This Week" slate tab. */
+.slate-intro { margin: 14px 0; border-left: 3px solid var(--blue); padding: 4px 0 4px 14px; color: var(--muted); }
+.slate-intro h2 { color: var(--text); margin: 0 0 4px; font-size: 1.1rem; }
+.slate-intro p { margin: 4px 0; font-size: .85rem; }
+.slate-filters { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+.slate-filters select, .slate-filters input[type="search"] { background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font: inherit; font-size: .85rem; }
+.slate-filters input[type="search"] { min-width: 200px; }
+.slate-filters select:focus-visible, .slate-filters input[type="search"]:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }

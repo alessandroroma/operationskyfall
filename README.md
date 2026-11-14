@@ -73,6 +73,22 @@ Below WAR by week, one tabbed ranking area switches between **Best Wins**, **Wor
 
 To add the next slate, fetch ESPN's single-date NFL/CFB scoreboards (CFB uses `groups=80&limit=400`), choose distinct unstarted games, record the exact `close` odds and spread `line` for the selected side plus `capturedAt` and `eventId`, and prepend a week in `data/shadow-book.json`. Give every pick a short `reasoning` excerpt, shown as a "Why" note on its card and grounded in the recorded line and price — cite the open-to-close movement when the feed provides it, and say plainly when a move went against the pick. Check `shadowQuote`'s return against the real slips' approximate 700–1,300× stake target. Run `npm test` and confirm each team/opponent resolves on ESPN before publishing. These are simulated picks, not placed bets or claims of an edge.
 
+## This Week tab
+
+A browse/filter view of upcoming NFL + CFB games — not a pick-submission tool, just a
+way to shop games before placing the weekly slip. On first open it fetches ESPN's
+scoreboard for today through the next 5 days (both leagues don't line up Thu–Mon
+exactly, so this window is a fixed default, shown in the tab's own subhead) and lists
+kickoff time, matchup (with a `#rank` badge for ranked CFB teams), spread, total and
+moneyline. Odds are DraftKings prices off ESPN's scoreboard feed — the only provider
+ESPN exposes without an API key, so treat it as one market's number, not a shopped
+consensus line. Filter by league or search a team name; both just re-filter the
+already-fetched games client-side, no extra requests. The tab refetches on the site's
+normal periodic refresh once it's been opened. Row-building and filtering logic is
+pure and lives in `js/slate.js` (`buildRows`, `filterRows`), tested in
+`tests/slate.test.mjs`; the network fetch and DOM wiring live in `js/app.js` next to
+the other tabs' equivalents.
+
 ## Publish
 
 Settings -> Pages -> Source: **Deploy from a branch** -> `main` / `(root)`.
