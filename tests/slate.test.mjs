@@ -1,14 +1,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { buildRows, dateWindow, eventToRow, filterRows, groupByDay } from "../js/slate.js";
+import { buildRows, dateWindow, eventToRow, filterRows, groupByDay, leagueLabel } from "../js/slate.js";
 
 test("date window is deterministic and UTC-based", () => {
   assert.deepEqual(dateWindow("2026-11-14", 3), ["2026-11-14", "2026-11-15", "2026-11-16"]);
   assert.deepEqual(dateWindow(new Date("2026-11-14T23:00:00Z"), 1), ["2026-11-14"]);
 });
 
-const team = (displayName, abbreviation, rank) => ({
-  team: { displayName, abbreviation },
+const team = (displayName, abbreviation, rank, conferenceId) => ({
+  team: { displayName, abbreviation, ...(conferenceId != null ? { conferenceId } : {}) },
   ...(rank != null ? { curatedRank: { current: rank } } : {}),
 });
 
@@ -42,6 +42,22 @@ test("eventToRow reads teams, rank and DraftKings odds", () => {
   assert.equal(row.overUnder, 54.5);
   assert.deepEqual(row.moneyline, { home: "-575", away: "+425" });
   assert.equal(row.oddsProvider, "DraftKings");
+});
+
+test("eventToRow carries each side's conferenceId for leagueLabel to resolve", () => {
+  const row = eventToRow(event({ home: team("Miami Hurricanes", "MIA", 7, 1), away: team("Duke Blue Devils", "DUKE", 99, 1) }), "college-football");
+  assert.equal(row.home.conferenceId, "1");
+  assert.equal(row.away.conferenceId, "1");
+});
+
+test("leagueLabel: NFL stays NFL; CFB resolves a shared conference, flags cross-conference, falls back gracefully", () => {
+  const conferenceNames = { "1": "ACC", "5": "Big Ten" };
+  const cfbRow = (hConf, aConf) => ({ league: "college-football", home: { conferenceId: hConf }, away: { conferenceId: aConf } });
+  assert.equal(leagueLabel({ league: "nfl" }, conferenceNames), "NFL");
+  assert.equal(leagueLabel(cfbRow("1", "1"), conferenceNames), "ACC"); // same conference
+  assert.equal(leagueLabel(cfbRow("1", "5"), conferenceNames), "Non-Conference"); // different conferences
+  assert.equal(leagueLabel(cfbRow("1", "1"), {}), "CFB"); // id not in the map yet
+  assert.equal(leagueLabel(cfbRow(null, null), conferenceNames), "CFB"); // ESPN never resolved it
 });
 
 test("eventToRow returns null for anything that isn't a normal two-team game", () => {

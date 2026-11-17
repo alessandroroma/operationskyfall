@@ -99,7 +99,11 @@ of every game at once; a manually-opened day stays open across a filter change. 
 is a small card: kickoff time, matchup (with a `#rank` badge for ranked CFB teams),
 spread, total and moneyline. Odds are DraftKings prices off ESPN's scoreboard feed — the
 only provider ESPN exposes without an API key, so treat it as one market's number, not a
-shopped consensus line. Filter by league or search a team name; both just re-filter the
+shopped consensus line. The league badge says "NFL" as-is, but for a CFB game it names the
+conference (`data/conferences.json`, same id→name map the Division report card uses) when
+both sides share one, "Non-Conference" when they don't, or a plain "CFB" fallback if ESPN
+never resolved the id. Pure resolution logic is `leagueLabel` in `js/slate.js`. Filter by
+league or search a team name; both just re-filter the
 already-fetched games client-side, no extra requests. A "View as table" toggle below the
 cards shows the same filtered games as a flat table, for anyone who wants the dense view
 back. The tab refetches on the site's normal periodic refresh once it's been opened.

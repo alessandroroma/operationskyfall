@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache, fetchScoreboard }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet, contributorColors, WAR_OTHER_COLOR }, { shadowQuote, shadowSeason, statsEligible }, { dateWindow, buildRows: buildSlateRows, filterRows: filterSlateRows, groupByDay: groupSlateByDay }, { teamReportRows, conferenceReportRows, venueReportRows, collisionRows }] =
+const [{ findLegGame, clearCache, fetchScoreboard }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet, contributorColors, WAR_OTHER_COLOR }, { shadowQuote, shadowSeason, statsEligible }, { dateWindow, buildRows: buildSlateRows, filterRows: filterSlateRows, groupByDay: groupSlateByDay, leagueLabel }, { teamReportRows, conferenceReportRows, venueReportRows, collisionRows }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`), import(`./slate.js${q}`), import(`./reports.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -527,7 +527,7 @@ function slateOddsText(r) {
 }
 
 function slateRowHtml(r) {
-  const league = r.league === "nfl" ? "NFL" : "CFB";
+  const league = leagueLabel(r, conferenceNames ?? {});
   const kickoff = r.date ? fmtKickoff(r.date) : "TBD";
   const side = (t) => `${t.rank ? `#${t.rank} ` : ""}${esc(t.name)}`;
   const { spread, total, ml } = slateOddsText(r);
@@ -535,7 +535,7 @@ function slateRowHtml(r) {
 }
 
 function slateCardHtml(r) {
-  const league = r.league === "nfl" ? "NFL" : "CFB";
+  const league = leagueLabel(r, conferenceNames ?? {});
   // Just the time, not the full date - the day section header already carries the date.
   const time = r.date ? new Date(r.date).toLocaleString([], { hour: "numeric", minute: "2-digit" }) : "TBD";
   const side = (t) => `${t.rank ? `<span class="slate-rank">#${t.rank}</span> ` : ""}${esc(t.name)}`;

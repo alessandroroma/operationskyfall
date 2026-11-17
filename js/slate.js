@@ -38,8 +38,8 @@ export function eventToRow(event, league) {
     id: event.id,
     league,
     date: event.date ?? null,
-    home: { name: home.team.displayName ?? home.team.name ?? "?", abbreviation: home.team.abbreviation ?? "", rank: rankOf(home) },
-    away: { name: away.team.displayName ?? away.team.name ?? "?", abbreviation: away.team.abbreviation ?? "", rank: rankOf(away) },
+    home: { name: home.team.displayName ?? home.team.name ?? "?", abbreviation: home.team.abbreviation ?? "", rank: rankOf(home), conferenceId: home.team.conferenceId != null ? String(home.team.conferenceId) : null },
+    away: { name: away.team.displayName ?? away.team.name ?? "?", abbreviation: away.team.abbreviation ?? "", rank: rankOf(away), conferenceId: away.team.conferenceId != null ? String(away.team.conferenceId) : null },
     spreadDetails: odds?.details ?? null,
     overUnder: odds?.overUnder ?? null,
     moneyline: ml ? { home: moneylineOdds(ml.home), away: moneylineOdds(ml.away) } : null,
@@ -75,6 +75,16 @@ export function filterRows(rows, { league = "all", query = "" } = {}) {
     const hay = `${r.home.name} ${r.home.abbreviation} ${r.away.name} ${r.away.abbreviation}`.toLowerCase();
     return hay.includes(q);
   });
+}
+
+// Badge text for a row's league: "NFL" as-is; for CFB, the shared conference name when both
+// sides play in the same one (most games), "Non-Conference" when they don't, or a generic
+// "CFB" fallback when a side's conferenceId wasn't resolved or isn't in the map yet.
+export function leagueLabel(row, conferenceNames = {}) {
+  if (row.league !== "college-football") return "NFL";
+  const h = row.home?.conferenceId, a = row.away?.conferenceId;
+  if (h && a) return h === a ? (conferenceNames[h] ?? "CFB") : "Non-Conference";
+  return "CFB";
 }
 
 const dayKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
