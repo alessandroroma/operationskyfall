@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { buildRows, dateWindow, eventToRow, filterRows } from "../js/slate.js";
+import { buildRows, dateWindow, eventToRow, filterRows, groupByDay } from "../js/slate.js";
 
 test("date window is deterministic and UTC-based", () => {
   assert.deepEqual(dateWindow("2026-11-14", 3), ["2026-11-14", "2026-11-15", "2026-11-16"]);
@@ -74,4 +74,22 @@ test("filterRows narrows by league and a case-insensitive team substring", () =>
   assert.equal(filterRows(rows, { query: "OSU" }).length, 1);
   assert.equal(filterRows(rows, { league: "nfl", query: "osu" }).length, 0);
   assert.equal(filterRows(rows, {}).length, 2);
+});
+
+test("groupByDay buckets by local calendar day, labels today/tomorrow, and sorts TBD last", () => {
+  const now = new Date(2026, 10, 21, 9, 0); // Sat Nov 21, 9am local
+  const rowOn = (id, y, m, d, h = 12) => ({ id, home: { name: "H", abbreviation: "H" }, away: { name: "A", abbreviation: "A" }, date: new Date(y, m, d, h).toISOString() });
+  const rows = [
+    rowOn("today-late", 2026, 10, 21, 20),
+    rowOn("today-early", 2026, 10, 21, 12),
+    rowOn("tomorrow", 2026, 10, 22, 12),
+    rowOn("in-3-days", 2026, 10, 24, 12),
+    { id: "tbd", home: { name: "H", abbreviation: "H" }, away: { name: "A", abbreviation: "A" }, date: null },
+  ];
+  const groups = groupByDay(rows, { now });
+  assert.deepEqual(groups.map((g) => g.label), ["Today", "Tomorrow", "Tuesday, Nov 24", "Date TBD"]);
+  assert.equal(groups[0].isToday, true);
+  assert.equal(groups[1].isToday, false);
+  // within a day, original row order (already kickoff-sorted by buildRows upstream) is preserved
+  assert.deepEqual(groups[0].games.map((g) => g.id), ["today-late", "today-early"]);
 });

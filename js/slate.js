@@ -76,3 +76,31 @@ export function filterRows(rows, { league = "all", query = "" } = {}) {
     return hay.includes(q);
   });
 }
+
+const dayKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+// Groups rows by the LOCAL calendar day of kickoff (the viewer's own timezone, matching how
+// each card's kickoff time is already displayed), so a page full of games reads as a handful
+// of day sections instead of one long list. A row with no date goes in a trailing "Date TBD"
+// group. `now` is injectable for deterministic tests; defaults to the real current time.
+export function groupByDay(rows, { now = new Date() } = {}) {
+  const todayKey = dayKey(now);
+  const tomorrowKey = dayKey(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1));
+  const groups = new Map();
+  for (const r of rows) {
+    const d = r.date ? new Date(r.date) : null;
+    const key = d ? dayKey(d) : "tbd";
+    if (!groups.has(key)) groups.set(key, { key, date: d, games: [] });
+    groups.get(key).games.push(r);
+  }
+  return [...groups.values()]
+    .sort((a, b) => (a.key === "tbd" ? 1 : b.key === "tbd" ? -1 : a.key.localeCompare(b.key)))
+    .map((g) => ({
+      ...g,
+      label: g.key === "tbd" ? "Date TBD"
+        : g.key === todayKey ? "Today"
+        : g.key === tomorrowKey ? "Tomorrow"
+        : g.date.toLocaleDateString([], { weekday: "long", month: "short", day: "numeric" }),
+      isToday: g.key === todayKey,
+    }));
+}

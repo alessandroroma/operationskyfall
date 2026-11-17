@@ -139,3 +139,25 @@ td.pick-cell { white-space: normal; min-width: 160px; }
 /* Venue/surface split tables sit side by side on wide screens. */
 .venue-splits { display: flex; flex-wrap: wrap; gap: 12px; }
 .venue-splits > .table-wrap { flex: 1 1 220px; min-width: 220px; margin-top: 0; }
+
+/* "This Week" slate: day sections of game cards, collapsed beyond today/tomorrow. */
+.slate-day { margin: 10px 0; }
+.slate-day > summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 10px 2px; border-bottom: 1px solid var(--border); list-style: none; }
+.slate-day > summary::-webkit-details-marker { display: none; }
+.slate-day-label { font-weight: 700; font-size: 1rem; }
+.slate-day-label::before { content: "▸ "; display: inline-block; color: var(--muted); transition: transform .15s; }
+.slate-day[open] > summary .slate-day-label::before { content: "▾ "; }
+.slate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin-top: 10px; }
+.slate-card { border: 1px solid var(--border); border-radius: 10px; padding: 10px; background: #0f141b; }
+.slate-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.slate-time { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pill.league-nfl { color: var(--blue); border-color: var(--blue); }
+.pill.league-college-football { color: var(--amber); border-color: var(--amber); }
+.slate-matchup { display: flex; align-items: baseline; gap: 6px; font-weight: 700; margin-bottom: 8px; flex-wrap: wrap; }
+.slate-at { color: var(--muted); font-weight: 400; font-size: .8rem; }
+.slate-rank { color: var(--muted); font-weight: 600; font-size: .78rem; }
+.slate-odds { display: flex; flex-direction: column; gap: 2px; font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.slate-odds b { color: var(--text); font-weight: 600; margin-right: 4px; }
+.slate-table-toggle { margin-top: 14px; }
+.slate-table-toggle > summary { width: fit-content; cursor: pointer; border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; color: var(--text); background: var(--card); font-size: .8rem; font-weight: 600; }
+.slate-table-toggle > summary:hover, .slate-table-toggle > summary:focus-visible { border-color: var(--blue); }

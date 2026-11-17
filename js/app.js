@@ -1,6 +1,6 @@
 // Sibling modules are loaded with the same ?v= query as this file so a fresh deploy is never mixed with cached parts.
 const q = new URL(import.meta.url).search;
-const [{ findLegGame, clearCache, fetchScoreboard }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet, contributorColors, WAR_OTHER_COLOR }, { shadowQuote, shadowSeason, statsEligible }, { dateWindow, buildRows: buildSlateRows, filterRows: filterSlateRows }, { teamReportRows, conferenceReportRows, venueReportRows, collisionRows }] =
+const [{ findLegGame, clearCache, fetchScoreboard }, { whereToWatch, watchText, gameLink }, { chronological, groupLegs }, { gradeLeg, weekStatus, seasonRecord, describeLeg, gameState, byContributor, legOdds }, { breakdownRows, filterRows, contributors: peopleIn, personTotals, resultsByOdds, leagueRecords, ODDS_BANDS, bettingWar, cumulativeWarByWeek, marginLeaders, seasonMoney, fmtMoney, fmtNet, contributorColors, WAR_OTHER_COLOR }, { shadowQuote, shadowSeason, statsEligible }, { dateWindow, buildRows: buildSlateRows, filterRows: filterSlateRows, groupByDay: groupSlateByDay }, { teamReportRows, conferenceReportRows, venueReportRows, collisionRows }] =
   await Promise.all([import(`./espn.js${q}`), import(`./watch.js${q}`), import(`./order.js${q}`), import(`./grade.js${q}`), import(`./breakdown.js${q}`), import(`./shadow.js${q}`), import(`./slate.js${q}`), import(`./reports.js${q}`)]);
 
 const $ = (id) => document.getElementById(id);
@@ -517,20 +517,46 @@ function historyHtml(ev) {
     ${ev.legs.length ? `<div class="legs">${chronological(ev.legs).map((l) => legHtml(l, ev.week)).join("")}</div>` : `<p class="muted pad">Leg details weren't recorded for this week.</p>`}</details>`;
 }
 
-function slateRowHtml(r) {
-  const league = r.league === "nfl" ? "NFL" : "CFB";
-  const kickoff = r.date ? fmtKickoff(r.date) : "TBD";
-  const side = (t) => `${t.rank ? `#${t.rank} ` : ""}${esc(t.name)}`;
+function slateOddsText(r) {
   const spread = r.spreadDetails ? esc(r.spreadDetails) : "—";
   const total = r.overUnder != null ? `O/U ${r.overUnder}` : "—";
   const ml = r.moneyline && (r.moneyline.home || r.moneyline.away)
     ? `${esc(r.away.abbreviation)} ${esc(r.moneyline.away ?? "—")} / ${esc(r.home.abbreviation)} ${esc(r.moneyline.home ?? "—")}`
     : "—";
+  return { spread, total, ml };
+}
+
+function slateRowHtml(r) {
+  const league = r.league === "nfl" ? "NFL" : "CFB";
+  const kickoff = r.date ? fmtKickoff(r.date) : "TBD";
+  const side = (t) => `${t.rank ? `#${t.rank} ` : ""}${esc(t.name)}`;
+  const { spread, total, ml } = slateOddsText(r);
   return `<tr><td>${esc(kickoff)}</td><td>${league}</td><td>${side(r.away)} @ ${side(r.home)}</td><td class="num">${spread}</td><td class="num">${total}</td><td class="num">${ml}</td></tr>`;
 }
 
+function slateCardHtml(r) {
+  const league = r.league === "nfl" ? "NFL" : "CFB";
+  // Just the time, not the full date - the day section header already carries the date.
+  const time = r.date ? new Date(r.date).toLocaleString([], { hour: "numeric", minute: "2-digit" }) : "TBD";
+  const side = (t) => `${t.rank ? `<span class="slate-rank">#${t.rank}</span> ` : ""}${esc(t.name)}`;
+  const { spread, total, ml } = slateOddsText(r);
+  return `<div class="slate-card">
+    <div class="slate-card-head"><span class="pill league-${esc(r.league)}">${league}</span><span class="slate-time">${esc(time)}</span></div>
+    <div class="slate-matchup"><span class="slate-team">${side(r.away)}</span><span class="slate-at">@</span><span class="slate-team">${side(r.home)}</span></div>
+    <div class="slate-odds"><span><b>Spread</b> ${spread}</span><span><b>Total</b> ${total}</span><span><b>ML</b> ${ml}</span></div>
+  </div>`;
+}
+
+function slateDayHtml(group, openDays) {
+  const open = openDays?.has(group.key) ? openDays.get(group.key) : group.isToday || group.label === "Tomorrow";
+  return `<details class="slate-day" data-day-key="${esc(group.key)}"${open ? " open" : ""}>
+    <summary><span class="slate-day-label">${esc(group.label)}</span><span class="muted">${group.games.length} game${group.games.length === 1 ? "" : "s"}</span></summary>
+    <div class="slate-grid">${group.games.map(slateCardHtml).join("")}</div>
+  </details>`;
+}
+
 // The filter controls (select/input) are only created once, on first render, and kept in
-// place after that - only the tbody and count get replaced on a filter change, so a user
+// place after that - only the results area gets replaced on a filter change, so a user
 // typing in the search box never loses focus/cursor position mid-keystroke.
 function renderSlate() {
   const el = $("slate");
@@ -544,7 +570,7 @@ function renderSlate() {
     return;
   }
   if (!el.dataset.ready) {
-    el.innerHTML = `<div class="slate-intro"><h2>This Week</h2><p class="muted">NFL + CFB games kicking off in the next ${SLATE_WINDOW_DAYS} days. Odds are DraftKings, pulled live from ESPN — the only odds provider ESPN exposes without a backend, so treat this as one market's number, not a shopped line.</p></div>
+    el.innerHTML = `<div class="slate-intro"><h2>This Week</h2><p class="muted">NFL + CFB games kicking off in the next ${SLATE_WINDOW_DAYS} days, grouped by day — Today and Tomorrow start open, the rest tucked away so it's not a wall of games. Odds are DraftKings, pulled live from ESPN — the only odds provider ESPN exposes without a backend, so treat this as one market's number, not a shopped line.</p></div>
       <div class="slate-filters">
         <select id="slate-league" aria-label="Filter by league">
           <option value="all">All leagues</option>
@@ -554,13 +580,17 @@ function renderSlate() {
         <input id="slate-search" type="search" placeholder="Search a team…" value="${esc(slateFilter.query)}">
         <span id="slate-count" class="muted"></span>
       </div>
-      <div class="table-wrap"><table class="bd"><thead><tr><th>Kickoff</th><th>League</th><th>Matchup</th><th class="num">Spread</th><th class="num">Total</th><th class="num">Moneyline</th></tr></thead><tbody id="slate-tbody"></tbody></table></div>`;
+      <div id="slate-results"></div>
+      <details class="slate-table-toggle"><summary>View as table</summary><div class="table-wrap"><table class="bd"><thead><tr><th>Kickoff</th><th>League</th><th>Matchup</th><th class="num">Spread</th><th class="num">Total</th><th class="num">Moneyline</th></tr></thead><tbody id="slate-tbody"></tbody></table></div></details>`;
     el.querySelector("#slate-league").value = slateFilter.league;
     el.querySelector("#slate-league").addEventListener("change", (e) => { slateFilter.league = e.target.value; renderSlate(); });
     el.querySelector("#slate-search").addEventListener("input", (e) => { slateFilter.query = e.target.value; renderSlate(); });
     el.dataset.ready = "1";
   }
+  const openDays = new Map([...el.querySelectorAll("details.slate-day")].map((d) => [d.dataset.dayKey, d.open]));
   const filtered = filterSlateRows(slateRows, slateFilter);
+  const days = groupSlateByDay(filtered);
+  $("slate-results").innerHTML = days.length ? days.map((g) => slateDayHtml(g, openDays)).join("") : `<p class="muted">No games match.</p>`;
   $("slate-tbody").innerHTML = filtered.map(slateRowHtml).join("") || `<tr><td colspan="6">No games match.</td></tr>`;
   $("slate-count").textContent = `${filtered.length} of ${slateRows.length} games`;
 }

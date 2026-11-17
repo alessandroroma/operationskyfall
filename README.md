@@ -92,15 +92,20 @@ Above the weekly cards, the **Collision log** lists every (shadow pick, real leg
 A browse/filter view of upcoming NFL + CFB games — not a pick-submission tool, just a
 way to shop games before placing the weekly slip. On first open it fetches ESPN's
 scoreboard for today through the next 5 days (both leagues don't line up Thu–Mon
-exactly, so this window is a fixed default, shown in the tab's own subhead) and lists
-kickoff time, matchup (with a `#rank` badge for ranked CFB teams), spread, total and
-moneyline. Odds are DraftKings prices off ESPN's scoreboard feed — the only provider
-ESPN exposes without an API key, so treat it as one market's number, not a shopped
-consensus line. Filter by league or search a team name; both just re-filter the
-already-fetched games client-side, no extra requests. The tab refetches on the site's
-normal periodic refresh once it's been opened. Row-building and filtering logic is
-pure and lives in `js/slate.js` (`buildRows`, `filterRows`), tested in
-`tests/slate.test.mjs`; the network fetch and DOM wiring live in `js/app.js` next to
+exactly, so this window is a fixed default, shown in the tab's own subhead). Games are
+grouped into collapsible day sections (Today and Tomorrow start open, everything further
+out starts collapsed) so the tab reads as a handful of sections instead of one long wall
+of every game at once; a manually-opened day stays open across a filter change. Each game
+is a small card: kickoff time, matchup (with a `#rank` badge for ranked CFB teams),
+spread, total and moneyline. Odds are DraftKings prices off ESPN's scoreboard feed — the
+only provider ESPN exposes without an API key, so treat it as one market's number, not a
+shopped consensus line. Filter by league or search a team name; both just re-filter the
+already-fetched games client-side, no extra requests. A "View as table" toggle below the
+cards shows the same filtered games as a flat table, for anyone who wants the dense view
+back. The tab refetches on the site's normal periodic refresh once it's been opened.
+Row-building, filtering, and day-grouping logic is pure and lives in `js/slate.js`
+(`buildRows`, `filterRows`, `groupByDay`), tested in `tests/slate.test.mjs`; the network
+fetch and DOM wiring live in `js/app.js` next to
 the other tabs' equivalents.
 
 ## Publish
