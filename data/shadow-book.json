@@ -68,6 +68,74 @@
       ]
     },
     {
+      "id": "shadow-2026-11-21-fliers",
+      "label": "Nov 18–20 · Flier watch (not tracked)",
+      "weekOf": "2026-11-21",
+      "capturedAt": "2026-11-18T15:51:03Z",
+      "oddsSource": "DraftKings via ESPN scoreboard (pointSpread.close), captured 2026-11-18",
+      "excludeFromStats": true,
+      "note": "Low-confidence watch picks, kept in their own entry so a miss here can't flip Shadow Book 6's own WON/BUSTED status — these are picks to watch play out, not ones backed with real conviction. Every leg here is excluded from Breakdown, Betting WAR, and every other stats table, same as an uploaded member slip.",
+      "stake": 7,
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "team": "Massachusetts Minutemen",
+          "opponent": "Akron Zips",
+          "type": "spread",
+          "odds": -105,
+          "date": "2026-11-18",
+          "eventId": "401866467",
+          "line": -3.5,
+          "kickoffAt": "2026-11-19T00:00Z",
+          "by": "MitsNemo",
+          "reasoning": "UMass Minutemen -3.5. A win tonight (it's Senior Night in Amherst) clinches bowl eligibility for the first time since UMass joined FBS in 2012 — genuinely program history on the line. Akron (1-9, 0-6 MAC) hasn't won a conference game all season. This isn't a sharp, data-driven side; it's a program-milestone story worth watching more than a number worth laying confidently."
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "team": "Georgia Tech Yellow Jackets",
+          "opponent": "Wake Forest Demon Deacons",
+          "type": "spread",
+          "odds": -115,
+          "date": "2026-11-21",
+          "eventId": "401858310",
+          "line": 21,
+          "kickoffAt": "2026-11-21T17:00Z",
+          "by": "MitsNemo",
+          "reasoning": "Georgia Tech +21. Georgia Tech fired much of its defensive coaching staff and showed real life in the result that followed, upsetting a fading Clemson team. Wake Forest has been steamrolling everyone for two months, so this is a true longshot — 21 points is a lot to need — but a team playing loose under new voices covering a number this big is exactly the kind of spot worth tracking rather than ignoring. Low confidence by design."
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "team": "Memphis Tigers",
+          "opponent": "Navy Midshipmen",
+          "type": "total_over",
+          "odds": -108,
+          "date": "2026-11-21",
+          "eventId": "401862834",
+          "line": 67.5,
+          "kickoffAt": "2026-11-21T17:00Z",
+          "by": "MitsNemo",
+          "reasoning": "Over 67.5 (Memphis / Navy). Direct tension with Shadow Book 6's Navy +3.5 leg on this same game, on purpose: Memphis is averaging 39.0 points and 520.1 yards a game, and Navy's defense has slipped hard lately (-8.3 scoring margin over its last three games, versus +2.3 before that). The Senior Day emotion that argues for Navy keeping the spread close could just as easily mean a track meet instead of a defensive stand. Watching this one rather than leaning hard on either read."
+        },
+        {
+          "id": "l4",
+          "league": "nfl",
+          "team": "Indianapolis Colts",
+          "opponent": "Houston Texans",
+          "type": "spread",
+          "odds": -112,
+          "date": "2026-11-19",
+          "eventId": "401873066",
+          "line": 12.5,
+          "kickoffAt": "2026-11-20T01:15Z",
+          "by": "MitsNemo",
+          "reasoning": "Colts +12.5. Houston carries close to an 80% win probability on paper and this is a Thursday-night short week for Indianapolis, but 12.5 is a lot of points to need to cover for a team that's still live in a Thursday-night game. A pure get-the-free-points dog flier, nothing more."
+        }
+      ]
+    },
+    {
       "id": "shadow-2026-11-14-dalton",
       "label": "Nov 12-14 - Dalton's Slip",
       "weekOf": "2026-11-14",
