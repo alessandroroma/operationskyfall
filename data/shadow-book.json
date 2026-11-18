@@ -1,6 +1,73 @@
 {
   "weeks": [
     {
+      "id": "shadow-2026-11-21",
+      "label": "Nov 21–22 · Shadow Book 6",
+      "weekOf": "2026-11-21",
+      "capturedAt": "2026-11-18T15:51:03Z",
+      "oddsSource": "DraftKings via ESPN scoreboard (pointSpread.close), captured 2026-11-18 (tracking only, no wager placed)",
+      "note": "This week's picks lead with situational and narrative reasoning — letdown spots, coaching intrigue, senior-day desperation, a true freshman's first real road start — rather than line movement or pure model-based stats, per Mittens' explicit ask for 'more vibes picks.' Every leg cites a specific, checkable source for the storyline it's built on. Smaller slate by design (4 legs, not the usual 11): these are the genuine, verifiable narrative angles found for this week's slate, not a padded parlay to hit a leg count.",
+      "stake": 7,
+      "legs": [
+        {
+          "id": "l1",
+          "league": "college-football",
+          "team": "Navy Midshipmen",
+          "opponent": "Memphis Tigers",
+          "type": "spread",
+          "odds": -118,
+          "date": "2026-11-21",
+          "eventId": "401862834",
+          "line": 3.5,
+          "kickoffAt": "2026-11-21T17:00Z",
+          "by": "MitsNemo",
+          "reasoning": "Navy Midshipmen +3.5. Navy's Senior Day — the Midshipmen's final home game, for a senior class about to commission into active duty — and they're 3-6, needing to win out just to reach bowl eligibility (Eye On Annapolis, Nov 16). Memphis (8-2, tied for first in the American, ranked No. 24) is the better team on paper, but this is the exact spot where desperation and emotion chip into a number: a home team playing its last game in the building with its seniors, against a team that may have half an eye on its own conference-title race. Taking the Midshipmen to keep it within a field goal."
+        },
+        {
+          "id": "l2",
+          "league": "college-football",
+          "team": "LSU Tigers",
+          "opponent": "Tennessee Volunteers",
+          "type": "spread",
+          "odds": -105,
+          "date": "2026-11-21",
+          "eventId": "401856754",
+          "line": -1.5,
+          "kickoffAt": "2026-11-21T20:30Z",
+          "by": "MitsNemo",
+          "reasoning": "LSU Tigers -1.5. Lane Kiffin's first season in Death Valley, and this is the week's marquee matchup by a mile — USA Today flagged it as the only game between two Coaches Poll-ranked teams on the entire Week 12 slate. Four of USA Today's five experts picked Tennessee outright on the model (elite defense, 14.3 ppg allowed), but Adam Bittner's pick went the other way on pure instinct: 'call it a hunch that Lane Kiffin won't let his first season in Death Valley end without causing a little chaos for the SEC.' The number is already close to a coin flip; I'm using the same read — a first-year coach with something to prove, on the road against a ranked rival, is exactly the spot where a team plays its best game of the year."
+        },
+        {
+          "id": "l3",
+          "league": "college-football",
+          "team": "Kentucky Wildcats",
+          "opponent": "Missouri Tigers",
+          "type": "spread",
+          "odds": -112,
+          "date": "2026-11-21",
+          "eventId": "401856751",
+          "line": 5.5,
+          "kickoffAt": "2026-11-22T00:30Z",
+          "by": "MitsNemo",
+          "reasoning": "Kentucky Wildcats +5.5. Missouri got run off the field by No. 1 Georgia last week, and USA Today's Craig Meyer flagged the hangover explicitly in his own pick: 'the aftereffects of the beatdown the Tigers suffered at Georgia last week will linger, which should be just enough for Kentucky to eke out a win.' A letdown spot after getting blown out by an elite team — against an unranked, lower-stakes opponent the following week — is one of the more reliable soft angles in college football. Taking the points with Kentucky."
+        },
+        {
+          "id": "l4",
+          "league": "college-football",
+          "team": "Nebraska Cornhuskers",
+          "opponent": "Ohio State Buckeyes",
+          "type": "spread",
+          "odds": -102,
+          "date": "2026-11-21",
+          "eventId": "401858531",
+          "line": 3,
+          "kickoffAt": "2026-11-21T17:00Z",
+          "by": "MitsNemo",
+          "reasoning": "Nebraska Cornhuskers +3. Nebraska just clinched bowl eligibility and is playing a desperate, want-a-signature-win home game to cap an up-and-down season (Yahoo Sports, Nov 16). Ohio State is dealing with real transition at the sport's most important position — Yahoo's own preview frames it as 'freshman quarterback Luke Fahey leads the battered Buckeyes... against a desperate Nebraska squad' with the Buckeyes' playoff hopes fading. History favors Ohio State here, but a true freshman making a true road start in a loud, desperate building is exactly the kind of spot that tightens a game more than the number suggests. Taking the points with the Huskers."
+        }
+      ]
+    },
+    {
       "id": "shadow-2026-11-14-dalton",
       "label": "Nov 12-14 - Dalton's Slip",
       "weekOf": "2026-11-14",
