@@ -44,6 +44,19 @@ test("eventToRow reads teams, rank and DraftKings odds", () => {
   assert.equal(row.oddsProvider, "DraftKings");
 });
 
+test("eventToRow carries weather when ESPN provides it (upcoming games only)", () => {
+  const ev = event({ home: team("Miami Hurricanes", "MIA", 7), away: team("Duke Blue Devils", "DUKE", 99) });
+  ev.weather = { displayValue: "Partly Cloudy", temperature: 68 };
+  const row = eventToRow(ev, "college-football");
+  assert.deepEqual(row.weather, { displayValue: "Partly Cloudy", temperature: 68 });
+});
+
+test("eventToRow has no weather once a game is final (ESPN drops the field)", () => {
+  const ev = event({ home: team("Miami Hurricanes", "MIA", 7), away: team("Duke Blue Devils", "DUKE", 99) });
+  const row = eventToRow(ev, "college-football");
+  assert.equal(row.weather, null);
+});
+
 test("eventToRow carries each side's conferenceId for leagueLabel to resolve", () => {
   const row = eventToRow(event({ home: team("Miami Hurricanes", "MIA", 7, 1), away: team("Duke Blue Devils", "DUKE", 99, 1) }), "college-football");
   assert.equal(row.home.conferenceId, "1");

@@ -544,6 +544,7 @@ function slateCardHtml(r) {
     <div class="slate-card-head"><span class="pill league-${esc(r.league)}">${league}</span><span class="slate-time">${esc(time)}</span></div>
     <div class="slate-matchup"><span class="slate-team">${side(r.away)}</span><span class="slate-at">@</span><span class="slate-team">${side(r.home)}</span></div>
     <div class="slate-odds"><span><b>Spread</b> ${spread}</span><span><b>Total</b> ${total}</span><span><b>ML</b> ${ml}</span></div>
+    ${r.weather ? `<div class="slate-weather">${weatherText(r.weather)}</div>` : ""}
   </div>`;
 }
 

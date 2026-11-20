@@ -158,6 +158,7 @@ td.pick-cell { white-space: normal; min-width: 160px; }
 .slate-rank { color: var(--muted); font-weight: 600; font-size: .78rem; }
 .slate-odds { display: flex; flex-direction: column; gap: 2px; font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .slate-odds b { color: var(--text); font-weight: 600; margin-right: 4px; }
+.slate-weather { font-size: .78rem; color: var(--muted); margin-top: 6px; }
 .slate-table-toggle { margin-top: 14px; }
 .slate-table-toggle > summary { width: fit-content; cursor: pointer; border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; color: var(--text); background: var(--card); font-size: .8rem; font-weight: 600; }
 .slate-table-toggle > summary:hover, .slate-table-toggle > summary:focus-visible { border-color: var(--blue); }

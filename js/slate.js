@@ -1,5 +1,7 @@
 // Pure logic for the "This Week" slate tab: turning raw ESPN scoreboard events into
 // display rows and filtering them. No DOM, no network — see js/espn.js for fetching.
+const q = new URL(import.meta.url).search;
+const { extractWeather } = await import(`./match.js${q}`);
 
 const UNRANKED = 99; // ESPN's curatedRank sentinel for "not ranked"; see js/match.js-adjacent notes.
 
@@ -44,6 +46,9 @@ export function eventToRow(event, league) {
     overUnder: odds?.overUnder ?? null,
     moneyline: ml ? { home: moneylineOdds(ml.home), away: moneylineOdds(ml.away) } : null,
     oddsProvider: odds?.provider?.displayName ?? null,
+    // Only present pre-kickoff (ESPN drops it once a game goes final) — fine here since
+    // the slate only ever shows upcoming games. See js/match.js's extractWeather.
+    weather: extractWeather(event),
   };
 }
 
